@@ -30,15 +30,16 @@ const StyledHeader = styled.header`
    border-top-right-radius: 10px;
    display: flex;
    justify-content: center;
-   align-items: flex-end;
+   align-items: center;
 `
 const StyledHeaderTitle = styled.h1`
    color: #ffff;
-   font-size: 20px;
+   font-size: 26px;
    font-style: normal;
    line-height: 27px;
    font-weight: 400;
    align-items: center;
+   font-family: var(--base-font);
 `
 const StyledContentContainer = styled.div`
    padding: 25px;
