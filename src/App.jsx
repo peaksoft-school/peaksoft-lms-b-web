@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { CustomDatePicker } from './components/UI/CustomDatePicker'
 
 function App() {
