@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { useState } from 'react'
 import styled from 'styled-components'
+import { Buttons } from './Buttons'
 
 const style = {
    position: 'absolute',
@@ -46,6 +47,11 @@ const StyledFooter = styled.footer`
    display: flex;
    justify-content: flex-end;
    padding: 25px;
+   div {
+      width: 250px;
+      display: flex;
+      justify-content: space-around;
+   }
 `
 export const BasicModal = ({ title, children }) => {
    const [open, setOpen] = useState(true)
@@ -68,12 +74,23 @@ export const BasicModal = ({ title, children }) => {
             </StyledHeader>
             <StyledContentContainer>{children}</StyledContentContainer>
             <StyledFooter>
-               <button type="button" onClick={handleClose}>
-                  Cancel
-               </button>
-               <button type="button" onClick={handleToggle}>
-                  Add
-               </button>
+               <div>
+                  <Buttons
+                     width="100px"
+                     fontcolor="#3772ff"
+                     onClick={handleClose}
+                  >
+                     Cancel
+                  </Buttons>
+                  <Buttons
+                     width="100px"
+                     fontcolor="#fff"
+                     background="#3772ff"
+                     onClick={handleToggle}
+                  >
+                     Add
+                  </Buttons>
+               </div>
             </StyledFooter>
          </Box>
       </StyledModal>
