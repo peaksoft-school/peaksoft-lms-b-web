@@ -16,7 +16,7 @@ const ButtonWrapper = styled(Button)`
          padding,
          margin,
          background,
-         color,
+         fontcolor,
          border,
          borderRadius,
          hoverBack,
@@ -29,7 +29,7 @@ const ButtonWrapper = styled(Button)`
          padding: ${padding || ''} !important;
          margin: ${margin || ''} !important ;
          background-color: ${background || ''} !important;
-         color: ${color || 'white'};
+         color: ${fontcolor || 'red'}!important;
          border: ${border || ''}!important;
          border-radius: ${borderRadius || ''} !important;
          &:hover {
