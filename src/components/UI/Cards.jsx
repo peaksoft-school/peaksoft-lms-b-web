@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Title } from './Title'
+import { ReactComponent as OptionsIcon } from '../../assets/icons/option.svg'
 
 export const Cards = () => {
    return (
@@ -35,6 +36,9 @@ export const Cards = () => {
                pretium placerat ut ...
             </InfoGroup>
          </WrapperInfoGroup>
+         <WrapperOptionsIcon>
+            <OptionsIcon />
+         </WrapperOptionsIcon>
       </Card>
    )
 }
@@ -72,4 +76,10 @@ const InfoGroup = styled(Title)`
    width: 270px;
    word-wrap: break-word;
    padding: 0 18px 8px 18px;
+`
+const WrapperOptionsIcon = styled.div`
+   display: flex;
+   justify-content: end;
+   margin: 8px 21px 13px;
+   cursor: pointer;
 `
