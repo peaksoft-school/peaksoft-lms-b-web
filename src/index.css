@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 :root {
    --base-font: 'Open Sans', sans-serif;
+   --base-color: #3772ff;
+   --background-color: #eff0f4;
+   --error-color: #c91e1e;
+   --success-color: #36ac0c;
+   --font-color: #000000;
+   --placheholder-color: #8d949e;
+   --checked-content-background-color: rgba(26, 35, 126, 0.07);
 }
