@@ -54,18 +54,17 @@ const StyledFooter = styled.footer`
       justify-content: space-around;
    }
 `
-export const BasicModal = ({ title, children }) => {
-   const [open, setOpen] = useState(true)
-   const handleClose = () => {
-      setOpen(false)
-   }
-   const handleToggle = () => {
-      setOpen(true)
-   }
+export const BasicModal = ({
+   isActive,
+   modalCloseHanlder,
+   addHandler,
+   title,
+   children,
+}) => {
    return (
       <StyledModal
-         open={open}
-         onClose={handleToggle}
+         open={isActive}
+         onClose={modalCloseHanlder}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
       >
@@ -79,7 +78,7 @@ export const BasicModal = ({ title, children }) => {
                   <Buttons
                      width="100px"
                      fontcolor="#3772ff"
-                     onClick={handleClose}
+                     onClick={modalCloseHanlder}
                   >
                      Cancel
                   </Buttons>
@@ -87,7 +86,7 @@ export const BasicModal = ({ title, children }) => {
                      width="100px"
                      fontcolor="#fff"
                      background="#3772ff"
-                     onClick={handleToggle}
+                     onClick={addHandler}
                   >
                      Add
                   </Buttons>
