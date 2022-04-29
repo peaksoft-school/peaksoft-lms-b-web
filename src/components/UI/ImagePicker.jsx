@@ -21,8 +21,10 @@ const DropZoneWrapper = styled.div`
    margin-bottom: 20px;
 `
 
-export const ImagePicker = () => {
-   const onDrop = useCallback((acceptedFiles) => {}, [])
+export const ImagePicker = ({ getPhoto, image }) => {
+   const onDrop = useCallback((acceptedFiles) => {
+      getPhoto(acceptedFiles)
+   }, [])
    const { getRootProps, getInputProps, isDragAccept, isDragReject } =
       useDropzone({
          onDrop,

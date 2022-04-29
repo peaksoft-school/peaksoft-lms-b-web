@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import IconButton from '@mui/material/IconButton'
 import { Title } from './Title'
 import { ReactComponent as OptionsIcon } from '../../assets/icons/option.svg'
 
-export const Cards = () => {
+export const Cards = ({ image, title, duration, description }) => {
    return (
       <Card>
-         <WrapperImg>IMG</WrapperImg>
+         <WrapperImg>{image}</WrapperImg>
          <WrapperGroupTitle>
             <Title
                lineHeight="25px"
@@ -14,7 +15,7 @@ export const Cards = () => {
                fontSize="18px"
                color="#1D293F"
             >
-               Data Engineer
+               {title}
             </Title>
             <Title
                lineHeight="140.1%"
@@ -22,7 +23,7 @@ export const Cards = () => {
                fontSize="12px"
                color="#1D293F"
             >
-               2019-2020
+               {duration}
             </Title>
          </WrapperGroupTitle>
          <WrapperInfoGroup>
@@ -32,18 +33,25 @@ export const Cards = () => {
                fontSize="16px"
                color="#1D293F"
             >
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ornare
-               pretium placerat ut ...
+               {description}
             </InfoGroup>
          </WrapperInfoGroup>
          <WrapperOptionsIcon>
-            <OptionsIcon />
+            <IconButton
+               size="medium"
+               color="primary"
+               aria-label="upload picture"
+               component="span"
+            >
+               <OptionsIcon fontSize={40} />
+            </IconButton>
          </WrapperOptionsIcon>
       </Card>
    )
 }
 const Card = styled.div`
-   width: 270px;
+   min-width: 270px;
+   max-width: 340px;
    height: 311px;
    display: flex;
    flex-direction: column;
@@ -60,7 +68,7 @@ const WrapperImg = styled.div`
    border-top-right-radius: 10px;
 `
 const WrapperGroupTitle = styled.div`
-   width: 270px;
+   min-width: 270px;
    display: flex;
    justify-content: space-between;
    align-items: center;

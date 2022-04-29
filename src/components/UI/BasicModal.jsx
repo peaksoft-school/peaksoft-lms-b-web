@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import { useState } from 'react'
 import styled from 'styled-components'
 import { Buttons } from './Buttons'
 
@@ -17,6 +16,7 @@ const style = {
    border: 'none',
    outline: 'none',
 }
+
 const StyledModal = styled(Modal)`
    .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
       background-color: #ffff;
@@ -78,6 +78,9 @@ export const BasicModal = ({
                   <Buttons
                      width="100px"
                      fontcolor="#3772ff"
+                     background="#fff"
+                     border="1px solid #3772ff"
+                     hoverBack="none"
                      onClick={modalCloseHanlder}
                   >
                      Cancel

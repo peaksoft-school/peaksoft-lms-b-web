@@ -1,8 +1,8 @@
 import React from 'react'
-import { Buttons } from './components/UI/Buttons'
+import { BasicModal } from './components/UI/BasicModal'
 
 function App() {
-   return <Buttons>add</Buttons>
+   return <BasicModal isActive />
 }
 
 export default App

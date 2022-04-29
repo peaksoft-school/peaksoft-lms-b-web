@@ -6,7 +6,6 @@ export const Inputs = forwardRef((props, ref) => {
       type,
       maxLength,
       name,
-      email,
       value,
       autoFocus,
       password,
@@ -16,7 +15,6 @@ export const Inputs = forwardRef((props, ref) => {
       pattern,
       lung,
       onChange,
-      href,
       placeholder,
    } = props
    return (
@@ -26,7 +24,6 @@ export const Inputs = forwardRef((props, ref) => {
          type={type}
          maxLength={maxLength}
          name={name}
-         email={email}
          value={value}
          autoFocus={autoFocus}
          password={password}
@@ -36,7 +33,6 @@ export const Inputs = forwardRef((props, ref) => {
          pattern={pattern}
          lang={lung}
          onChange={onChange}
-         href={href}
          placeholder={placeholder}
       />
    )
