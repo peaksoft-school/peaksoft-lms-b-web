@@ -78,7 +78,10 @@ export const BasicModal = ({ title, children }) => {
                <div>
                   <Buttons
                      width="100px"
+                     background="none"
+                     border="1px solid #3772ff"
                      fontcolor="#3772ff"
+                     hoverBack="none"
                      onClick={handleClose}
                   >
                      Cancel

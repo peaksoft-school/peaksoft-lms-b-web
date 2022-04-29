@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import styled from 'styled-components'
-import { Buttons } from './UI/Buttons'
-import { Title } from './UI/Title'
+import { Buttons } from './Buttons'
 
 const style = {
    position: 'absolute',
@@ -42,39 +41,54 @@ const StyledFooter = styled.footer`
    justify-content: center;
    margin-top: 30px;
    div {
-      width: 250px;
       display: flex;
       justify-content: space-around;
    }
 `
+const button = {
+   marginRight: '12px',
+}
 
-export const ConfirmModal = ({ cancel, title, deleted }) => {
-   const [open, setOpen] = useState(true)
-
+export const ConfirmModal = ({ isActive, toggleModal, deleteHandler }) => {
    const handleClose = () => {
-      setOpen(false)
+      toggleModal()
    }
 
    const handleDelete = () => {
-      setOpen(true)
+      deleteHandler()
    }
    return (
       <StyledModal
-         open={open}
+         open={isActive}
          onClose={handleDelete}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
       >
          <Box sx={style}>
-            <Title margin="18px 62px">
+            <StyledHeaderTitle>
                Вы уверены, что хотите удалить группу...?
-            </Title>
+            </StyledHeaderTitle>
             <StyledFooter>
                <div>
-                  <Buttons type="button" onClick={cancel}>
+                  <Buttons
+                     width="108px"
+                     background="#fffff"
+                     fontcolor="#3772FF"
+                     border="1px solid #3772FF"
+                     type="button"
+                     onClick={handleClose}
+                     sx={button}
+                     hoverBack="none"
+                  >
                      Отмена
                   </Buttons>
-                  <Buttons type="button" onClick={deleted}>
+                  <Buttons
+                     width="108px"
+                     background="#C91E1E"
+                     type="button"
+                     onClick={handleDelete}
+                     hoverBack="none"
+                  >
                      Удалить
                   </Buttons>
                </div>

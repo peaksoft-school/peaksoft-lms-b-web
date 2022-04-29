@@ -1,17 +1,33 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Title = (props) => {
    const { children } = props
    return <TitleStyle {...props}>{children}</TitleStyle>
 }
 const TitleStyle = styled.p`
-   font-family: var(--base-font);
-   font-style: normal;
-   font-weight: ${({ fontWeight }) => fontWeight || ''}!important;
-   font-size: ${({ fontSize }) => fontSize || ''}!important;
-   line-height: ${({ lineHeight }) => lineHeight || ''}!important;
-   letter-spacing: ${({ letterSpacing }) => letterSpacing || ''}!important;
-   color: ${({ color }) => color || 'black'}!important;
-   margin: ${({ margin }) => margin || ''};
+   ${(
+      props,
+      {
+         margin,
+         fontFamily,
+         fontStyle,
+         fontcolor,
+         fontWeight,
+         fontSize,
+         lineHeight,
+         letterSpacing,
+      } = props
+   ) =>
+      css`
+         margin: ${margin || ''}px !important;
+         font-family: ${fontFamily || 'var(--base-font)'} !important;
+         font-style: ${fontStyle || 'normal'} !important;
+         color: ${fontcolor || 'var(--font-color)'} !important;
+         font-weight: ${fontWeight || '600'} !important;
+         font-size: ${fontSize || '12'}px !important;
+         line-height: ${lineHeight || '16'}px !important;
+         letter-spacing: ${letterSpacing || '0.001'}em !important;
+         text-transform: none;
+      `}
 `
