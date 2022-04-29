@@ -1,8 +1,7 @@
 import React from 'react'
-import { BasicModal } from './components/UI/BasicModal'
 
 function App() {
-   return <BasicModal isActive />
+   return <div>app</div>
 }
 
 export default App
