@@ -13,4 +13,5 @@ const TitleStyle = styled.p`
    line-height: ${({ lineHeight }) => lineHeight || ''}!important;
    letter-spacing: ${({ letterSpacing }) => letterSpacing || ''}!important;
    color: ${({ color }) => color || 'black'}!important;
+   margin: ${({ margin }) => margin || ''};
 `
