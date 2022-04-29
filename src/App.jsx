@@ -1,7 +1,8 @@
 import React from 'react'
+import { LoginPage } from './containers/LoginPage'
 
 function App() {
-   return <div>app</div>
+   return <LoginPage />
 }
 
 export default App
