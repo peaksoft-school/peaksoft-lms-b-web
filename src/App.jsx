@@ -1,17 +1,8 @@
 import React from 'react'
-import { CustomDatePicker } from './components/UI/CustomDatePicker'
-import { BasicModal } from './components/UI/BasicModal'
-import { ImagePicker } from './components/UI/ImagePicker'
+import { Buttons } from './components/UI/Buttons'
 
 function App() {
-   return (
-      <div>
-         <CustomDatePicker />
-         <BasicModal title="hello world">
-            <ImagePicker />
-         </BasicModal>
-      </div>
-   )
+   return <Buttons>add</Buttons>
 }
 
 export default App
