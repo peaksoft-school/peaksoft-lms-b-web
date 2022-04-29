@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 import { ReactComponent as DropZone } from '../../assets/icons/DropZone.svg'
@@ -22,9 +22,7 @@ const DropZoneWrapper = styled.div`
 `
 
 export const ImagePicker = () => {
-   const onDrop = useCallback((acceptedFiles) => {
-      console.log(acceptedFiles)
-   }, [])
+   const onDrop = useCallback((acceptedFiles) => {}, [])
    const { getRootProps, getInputProps, isDragAccept, isDragReject } =
       useDropzone({
          onDrop,
