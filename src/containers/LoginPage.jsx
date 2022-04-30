@@ -6,6 +6,9 @@ import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 
 export const LoginPage = () => {
+   const onClickButton = () => {
+      console.log(process.env)
+   }
    return (
       <StyledLoginPage>
          <StyledLeftSection>
@@ -23,10 +26,13 @@ export const LoginPage = () => {
                <StyledInputsWrapper>
                   <StyledLabel>Логин:</StyledLabel>
                   <Inputs type="email" />
+                  <br />
                   <StyledLabel>Пароль:</StyledLabel>
                   <Inputs type="password" />
                </StyledInputsWrapper>
-               <StyledButton>Войти</StyledButton>
+               <Buttons onClick={onClickButton} margin="15px 0 0 0">
+                  Войти
+               </Buttons>
             </StyledLoginForm>
          </StyledRightSection>
       </StyledLoginPage>
@@ -35,7 +41,7 @@ export const LoginPage = () => {
 
 const StyledLoginPage = styled.div`
    display: grid;
-   grid-template-columns: 1fr 1.3fr;
+   grid-template-columns: 1fr 1.2fr;
    height: 100vh;
 `
 const StyledLeftSection = styled.div`
@@ -71,7 +77,7 @@ const StyledRedSpan = styled.span`
 `
 
 const StyledInputsWrapper = styled.div`
-   height: 200px;
+   height: 250px;
    display: flex;
    flex-direction: column;
    justify-content: space-around;
@@ -88,9 +94,5 @@ const StyledLoginForm = styled.form`
    justify-content: space-around;
    align-items: center;
    width: 440px;
-   height: 300px;
-`
-const StyledButton = styled(Buttons)`
-   display: flex;
-   align-self: center;
+   height: 230px;
 `

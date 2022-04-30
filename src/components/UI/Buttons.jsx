@@ -3,8 +3,12 @@ import Button from '@mui/material/Button'
 import styled, { css } from 'styled-components'
 
 export function Buttons(props) {
-   const { children } = props
-   return <ButtonWrapper {...props}>{children}</ButtonWrapper>
+   const { children, onClick } = props
+   return (
+      <ButtonWrapper onClick={onClick} {...props}>
+         {children}
+      </ButtonWrapper>
+   )
 }
 
 const ButtonWrapper = styled(Button)`
