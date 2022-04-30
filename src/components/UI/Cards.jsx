@@ -5,9 +5,9 @@ import { Title } from './Title'
 import { ReactComponent as OptionsIcon } from '../../assets/icons/option.svg'
 import { MeetBalls } from './MeetBalls'
 
-export const Cards = ({ image, title, duration, description }) => {
+export const Cards = ({ image, title, duration, description, onCardClick }) => {
    return (
-      <Card>
+      <Card onClick={onCardClick}>
          <WrapperImg>{image}</WrapperImg>
          <WrapperGroupTitle>
             <Title
