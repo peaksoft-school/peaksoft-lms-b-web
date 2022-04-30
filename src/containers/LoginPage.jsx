@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
@@ -9,6 +11,7 @@ export const LoginPage = () => {
    const onClickButton = () => {
       console.log(process.env)
    }
+
    return (
       <StyledLoginPage>
          <StyledLeftSection>
