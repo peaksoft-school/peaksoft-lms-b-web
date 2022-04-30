@@ -11,19 +11,19 @@ const StyledNotification = styled.div`
    justify-content: center;
    border-radius: 10px;
    padding: 15px;
-   .title {
-      margin: 0;
-      color: white;
-      margin-right: 10px;
-      font-size: 16px;
-      font-family: var(--base-font);
-   }
+`
+const StyledTitle = styled.h3`
+   margin: 0;
+   color: white;
+   margin-right: 10px;
+   font-size: 16px;
+   font-family: var(--base-font);
 `
 
 export const Notification = ({ title, backColor, icon }) => {
    return (
       <StyledNotification backColor={backColor}>
-         <h3 className="title">{title}</h3>
+         <StyledTitle className="title">{title}</StyledTitle>
          {icon}
       </StyledNotification>
    )
