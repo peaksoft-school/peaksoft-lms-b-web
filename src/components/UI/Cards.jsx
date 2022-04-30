@@ -3,7 +3,16 @@ import styled from 'styled-components'
 import { Title } from './Title'
 import { MeetBalls } from './MeetBalls'
 
-export const Cards = ({ image, title, duration, description, onCardClick }) => {
+export const Cards = ({
+   image,
+   title,
+   duration,
+   description,
+   onCardClick,
+   deleteFunciton,
+   fixFunction,
+   editFunction,
+}) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -13,12 +22,15 @@ export const Cards = ({ image, title, duration, description, onCardClick }) => {
       setAnchorEl(null)
    }
    const deleteHandler = () => {
+      deleteFunciton()
       handleClose()
    }
    const fixHandler = () => {
+      fixFunction()
       handleClose()
    }
    const editHandler = () => {
+      editFunction()
       handleClose()
    }
    return (
