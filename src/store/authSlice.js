@@ -18,6 +18,8 @@ const initState = {
    email: null,
    token: null,
    error: null,
+   role: null,
+   isLoading: false,
 }
 
 export const authSlice = createSlice({

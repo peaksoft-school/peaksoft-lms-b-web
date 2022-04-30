@@ -59,7 +59,7 @@ const ButtonWrapper = styled(Button)`
          &:disabled {
             background-color: var(--disabled-background) !important;
             color: var(--disabled-font-color) !important;
-            opacity: 0.5 !important;
+            opacity: 0.9 !important;
          }
       `}
 `
