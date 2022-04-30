@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import IconButton from '@mui/material/IconButton'
 import { Title } from './Title'
-import { ReactComponent as OptionsIcon } from '../../assets/icons/option.svg'
 import { MeetBalls } from './MeetBalls'
 
 export const Cards = ({ image, title, duration, description, onCardClick }) => {
+   const [anchorEl, setAnchorEl] = useState(null)
+   const open = Boolean(anchorEl)
+   const handleClick = (event) => {
+      setAnchorEl(event.currentTarget)
+   }
+   const handleClose = () => {
+      setAnchorEl(null)
+   }
+   const deleteHandler = () => {
+      handleClose()
+   }
+   const fixHandler = () => {
+      handleClose()
+   }
+   const editHandler = () => {
+      handleClose()
+   }
    return (
       <Card onClick={onCardClick}>
          <WrapperImg>{image}</WrapperImg>
@@ -38,7 +53,15 @@ export const Cards = ({ image, title, duration, description, onCardClick }) => {
             </InfoGroup>
          </WrapperInfoGroup>
          <WrapperOptionsIcon>
-            <MeetBalls />
+            <MeetBalls
+               open={open}
+               handleClick={handleClick}
+               handleClose={handleClose}
+               anchorEl={anchorEl}
+               deleteHandler={deleteHandler}
+               fixHandler={fixHandler}
+               editHandler={editHandler}
+            />
          </WrapperOptionsIcon>
       </Card>
    )

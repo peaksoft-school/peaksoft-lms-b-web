@@ -52,15 +52,15 @@ const StyledMenu = styled((props) => (
    },
 }))
 
-export const MeetBalls = ({ selectedItem, setSelect }) => {
-   const open = Boolean(selectedItem)
-   const handleClick = (event) => {
-      setSelect(event.currentTarget)
-   }
-   const handleClose = () => {
-      setSelect(null)
-   }
-
+export const MeetBalls = ({
+   open,
+   handleClick,
+   handleClose,
+   anchorEl,
+   editHandler,
+   deleteHandler,
+   fixHandler,
+}) => {
    return (
       <div>
          <IconButton
@@ -83,20 +83,20 @@ export const MeetBalls = ({ selectedItem, setSelect }) => {
             MenuListProps={{
                'aria-labelledby': 'demo-customized-button',
             }}
-            anchorEl={selectedItem}
+            anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
          >
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem onClick={fixHandler} disableRipple>
                <FixIcon style={{ marginRight: '20px' }} />
                Назначить учителя
             </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem onClick={editHandler} disableRipple>
                <EditIcon style={{ marginRight: '20px' }} />
                Редактировать
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem onClick={deleteHandler} disableRipple>
                <Trash style={{ marginRight: '20px' }} />
                Удалить
             </MenuItem>

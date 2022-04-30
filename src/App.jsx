@@ -6,7 +6,6 @@ function App() {
       <div>
          <Cards />
          <Cards />
-         <Cards />
       </div>
    )
 }
