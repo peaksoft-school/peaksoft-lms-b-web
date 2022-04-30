@@ -7,6 +7,7 @@ import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
+import { addUser } from '../store/authSlice'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
@@ -15,7 +16,7 @@ export const LoginPage = () => {
    )
 
    const submitHandler = (values) => {
-      console.log(values)
+      dispatch(addUser(values))
    }
 
    const validationsSchema = yup.object().shape({
