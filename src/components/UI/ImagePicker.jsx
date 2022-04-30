@@ -9,12 +9,6 @@ const StyledImagePicker = styled.div`
    flex-direction: column;
    align-items: center;
    justify-content: center;
-
-   p {
-      text-align: center;
-      width: 240px;
-      font-family: var(--base-font-2);
-   }
 `
 
 const DropZoneWrapper = styled.div`
