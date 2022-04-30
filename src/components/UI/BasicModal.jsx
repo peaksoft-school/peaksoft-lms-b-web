@@ -18,7 +18,7 @@ const style = {
 }
 
 const StyledModal = styled(Modal)`
-   .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+   .MuiBackdrop-root {
       background-color: #ffff;
    }
 `
@@ -60,6 +60,9 @@ export const BasicModal = ({
    addHandler,
    title,
    children,
+   isActiveFooter = true,
+   cancelTitle,
+   successTitle,
 }) => {
    return (
       <StyledModal
@@ -73,28 +76,30 @@ export const BasicModal = ({
                <StyledHeaderTitle>{title}</StyledHeaderTitle>
             </StyledHeader>
             <StyledContentContainer>{children}</StyledContentContainer>
-            <StyledFooter>
-               <div>
-                  <Buttons
-                     width="100px"
-                     fontcolor="#3772ff"
-                     background="#fff"
-                     border="1px solid #3772ff"
-                     hoverBack="none"
-                     onClick={modalCloseHanlder}
-                  >
-                     Cancel
-                  </Buttons>
-                  <Buttons
-                     width="100px"
-                     fontcolor="#fff"
-                     background="#3772ff"
-                     onClick={addHandler}
-                  >
-                     Add
-                  </Buttons>
-               </div>
-            </StyledFooter>
+            {isActiveFooter && (
+               <StyledFooter>
+                  <div>
+                     <Buttons
+                        width="100px"
+                        fontcolor="#3772ff"
+                        background="#fff"
+                        border="1px solid #3772ff"
+                        hoverBack="none"
+                        onClick={modalCloseHanlder}
+                     >
+                        {cancelTitle}
+                     </Buttons>
+                     <Buttons
+                        width="100px"
+                        fontcolor="#fff"
+                        background="#3772ff"
+                        onClick={addHandler}
+                     >
+                        {successTitle}
+                     </Buttons>
+                  </div>
+               </StyledFooter>
+            )}
          </Box>
       </StyledModal>
    )

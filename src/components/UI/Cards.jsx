@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import { Title } from './Title'
 import { ReactComponent as OptionsIcon } from '../../assets/icons/option.svg'
+import { MeetBalls } from './MeetBalls'
 
 export const Cards = ({ image, title, duration, description }) => {
    return (
@@ -37,14 +38,7 @@ export const Cards = ({ image, title, duration, description }) => {
             </InfoGroup>
          </WrapperInfoGroup>
          <WrapperOptionsIcon>
-            <IconButton
-               size="medium"
-               color="primary"
-               aria-label="upload picture"
-               component="span"
-            >
-               <OptionsIcon fontSize={40} />
-            </IconButton>
+            <MeetBalls />
          </WrapperOptionsIcon>
       </Card>
    )
