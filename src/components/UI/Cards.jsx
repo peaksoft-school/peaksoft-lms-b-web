@@ -9,29 +9,29 @@ export const Cards = ({
    duration,
    description,
    onCardClick,
-   deleteFunciton,
-   fixFunction,
-   editFunction,
+   onEdit,
+   onDelete,
+   onFix,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
-   const handleClick = (event) => {
+   const clickHandler = (event) => {
       setAnchorEl(event.currentTarget)
    }
-   const handleClose = () => {
+   const closeHandler = () => {
       setAnchorEl(null)
    }
    const deleteHandler = () => {
-      deleteFunciton()
-      handleClose()
+      onDelete()
+      closeHandler()
    }
    const fixHandler = () => {
-      fixFunction()
-      handleClose()
+      onFix()
+      closeHandler()
    }
    const editHandler = () => {
-      editFunction()
-      handleClose()
+      onEdit()
+      closeHandler()
    }
    return (
       <Card onClick={onCardClick}>
@@ -67,8 +67,8 @@ export const Cards = ({
          <WrapperOptionsIcon>
             <MeetBalls
                open={open}
-               handleClick={handleClick}
-               handleClose={handleClose}
+               handleClick={clickHandler}
+               handleClose={closeHandler}
                anchorEl={anchorEl}
                deleteHandler={deleteHandler}
                fixHandler={fixHandler}
