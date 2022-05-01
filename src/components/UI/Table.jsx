@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Buttons from '@mui/material/IconButton/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/EyesForTable.svg'
 import { ReactComponent as EditIcon } from '../../assets/icons/EditIconForTable.svg'
 import { ReactComponent as TrashBinIcon } from '../../assets/icons/TrashBinForTable.svg'
@@ -62,11 +63,10 @@ const Tbody = styled.tbody`
       width: 20%;
       overflow-wrap: break-word;
       padding: 0.5rem;
-      padding: 20px 30px 14px 20px;
+      padding: 10px 30px 10px 20px;
    }
 `
-
-export function Table({ userData, onEdit, onDelete, onVeiwPassword }) {
+export function Table({ userData, onVeiwPassword, onEdit, onDelete }) {
    const onVeiwPasswordHandler = () => {
       onVeiwPassword()
    }
@@ -80,9 +80,18 @@ export function Table({ userData, onEdit, onDelete, onVeiwPassword }) {
       ...newKey,
       Действия: (
          <WrapperIcons>
-            <EyeIcon onClick={onVeiwPasswordHandler} />
-            <EditIcon onClick={onEditHandler} />
-            <TrashBinIcon onClick={onDeleteHdandler} />
+            <Buttons
+               onClick={onVeiwPasswordHandler}
+               style={{ background: 'none' }}
+            >
+               <EyeIcon />
+            </Buttons>
+            <Buttons onClick={onEditHandler} style={{ background: 'none' }}>
+               <EditIcon />
+            </Buttons>
+            <Buttons onClick={onDeleteHdandler} style={{ background: 'none' }}>
+               <TrashBinIcon />
+            </Buttons>
          </WrapperIcons>
       ),
    }))
