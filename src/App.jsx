@@ -1,21 +1,7 @@
-import React, { useState } from 'react'
-import { RadioButton } from './components/UI/RadioButton'
-import { Switcher } from './components/UI/Switcher'
+import React from 'react'
 
 function App() {
-   const [click, setClick] = useState(false)
-
-   const toggleHandler = () => {
-      setClick((prev) => !prev)
-   }
-   console.log(click)
-
-   return (
-      <div>
-         <RadioButton checked={click} onChange={toggleHandler} />
-         <Switcher />
-      </div>
-   )
+   return <div>app</div>
 }
 
 export default App

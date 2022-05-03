@@ -18,15 +18,13 @@ const BreadCrumb = () => {
             {crumbs.map((el, index) => {
                const lastItem = crumbs.at(-1)
                const routeTo = `/${crumbs.slice(0, index + 1).join('/')}`
-               if (el === lastItem) {
-                  return (
-                     <StyledNavlink color="black" key={el} to={routeTo}>
-                        {el}
-                     </StyledNavlink>
-                  )
-               }
+
                return (
-                  <StyledNavlink key={el} to={routeTo}>
+                  <StyledNavlink
+                     color={el === lastItem && 'black'}
+                     key={el}
+                     to={routeTo}
+                  >
                      {el}
                   </StyledNavlink>
                )

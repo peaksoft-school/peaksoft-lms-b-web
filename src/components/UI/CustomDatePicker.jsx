@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -8,19 +8,18 @@ import DatePicker from '@mui/lab/DatePicker'
 const StyledDatePicker = styled(DatePicker)``
 
 const StyledTextField = styled(TextField)`
-   .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+   .MuiInputBase-root-MuiOutlinedInput-root {
       border-radius: 15px;
    }
 `
 
-export const CustomDatePicker = () => {
-   const [value, setValue] = useState(null)
+export const CustomDatePicker = ({ value, setDate }) => {
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={value}
             onChange={(newValue) => {
-               setValue(newValue)
+               setDate(newValue)
             }}
             renderInput={(params) => (
                <StyledTextField
