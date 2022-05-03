@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&display=swap');
 * {
    box-sizing: border-box;
    margin: 0;
@@ -6,6 +7,7 @@
 }
 :root {
    --base-font: 'Open Sans', sans-serif;
+   --base-font-2: 'Nunito', sans-serif;
    --base-color: #3772ff;
    --background-color: #eff0f4;
    --error-color: #c91e1e;
@@ -13,4 +15,10 @@
    --font-color: #000000;
    --placheholder-color: #8d949e;
    --checked-content-background-color: rgba(26, 35, 126, 0.07);
+   --grey-border-color: #d4d4d4;
+   --blue-border-color: #1f6ed4;
+   --white-color: #ffffff;
+   --hover-blue-color: #1d60ff;
+   --disabled-background: #1c1b1f1f;
+   --disabled-font-color: #1c1b1f;
 }

@@ -16,30 +16,46 @@ const ButtonWrapper = styled(Button)`
          padding,
          margin,
          background,
-         color,
+         fontcolor,
          border,
          borderRadius,
          hoverBack,
          boxShodow,
+         fontFamily,
+         fontStyle,
+         fontWeight,
+         fontSize,
+         lineHeight,
+         letterSpacing,
       } = props
    ) =>
       css`
-         width: ${width || ''};
-         height: ${height || ''};
-         padding: ${padding || ''} !important;
+         width: ${width || '177'}px !important;
+         height: ${height || '40'}px;
+         padding: ${padding || '10px 24px'} !important;
          margin: ${margin || ''} !important ;
-         background-color: ${background || ''} !important;
-         color: ${color || 'white'};
-         border: ${border || ''}!important;
-         border-radius: ${borderRadius || ''} !important;
+         background-color: ${background || 'var(--base-color)'} !important;
+         border: ${border || 'none'}!important;
+         border-radius: ${borderRadius || '8'}px !important;
+         font-family: ${fontFamily || 'var(--base-font)'} !important;
+         font-style: ${fontStyle || 'normal'} !important;
+         color: ${fontcolor || 'var(--white-color)'} !important;
+         font-weight: ${fontWeight || '600'} !important;
+         font-size: ${fontSize || '14'}px !important;
+         line-height: ${lineHeight || '20'}px !important;
+         letter-spacing: ${letterSpacing || '0.001'}em !important;
+         text-transform: none !important;
          &:hover {
-            background-color: ${hoverBack || ''} !important;
-         }
-         &:focus {
-            color: ${({ hoverColor }) => hoverColor || 'white'};
+            background-color: ${hoverBack ||
+            'var(--hover-blue-color)'} !important;
          }
          &:after {
             box-shadow: ${boxShodow || ''};
+         }
+         &:disabled {
+            background-color: var(--disabled-background) !important;
+            color: var(--disabled-font-color) !important;
+            opacity: 0.5 !important;
          }
       `}
 `
