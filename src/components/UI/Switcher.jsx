@@ -2,9 +2,7 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 
-const IOSSwitch = styled((props) => (
-   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
+export const Switcher = styled((props) => <Switch {...props} />)(() => ({
    width: 42,
    height: 26,
    padding: 0,
@@ -17,9 +15,7 @@ const IOSSwitch = styled((props) => (
          transform: 'translateX(16px)',
          color: '#36AC0C',
          '& + .MuiSwitch-track': {
-            backgroundColor: '#E9E9EA',
-            opacity: 1,
-            border: 0,
+            backgroundColor: '#FFFFFF',
          },
       },
    },
@@ -29,15 +25,7 @@ const IOSSwitch = styled((props) => (
       height: 22,
    },
    '& .MuiSwitch-track': {
-      borderRadius: 26 / 2,
-      backgroundColor: theme.palette.mode === '#fffff' ? '#E9E9EA' : '#E9E9EA',
-      opacity: 1,
-      transition: theme.transitions.create(['background-color'], {
-         duration: 500,
-      }),
+      borderRadius: 26 / 1,
+      backgroundColor: '#FFFFFF',
    },
 }))
-
-export const Switches = () => {
-   return <IOSSwitch sx={{ m: 5 }} defaultChecked />
-}
