@@ -1,15 +1,8 @@
 import React from 'react'
-import { BasicModal } from './components/UI/BasicModal'
-import { MultiSelect } from './components/UI/MultiSelect'
+import { MainRouter } from './routes/MainRouter'
 
 function App() {
-   return (
-      <div>
-         <BasicModal isActiveFooter={false} isActive>
-            <MultiSelect />
-         </BasicModal>
-      </div>
-   )
+   return <MainRouter />
 }
 
 export default App
