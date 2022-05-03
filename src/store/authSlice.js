@@ -1,55 +1,68 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { baseFetch } from '../api/baseFetch'
 import { AUTH } from '../utils/constants/constants'
-import { getFromLocalStorage } from '../utils/helpers/helpers'
+import {
+   getFromLocalStorage,
+   setLocalStorage,
+   removeLocalStorage,
+} from '../utils/helpers/helpers'
 
-export const addUser = createAsyncThunk(
-   'authentification/checkIsAuth',
+export const login = createAsyncThunk(
+   'authentification/login',
    async (userInformation) => {
       try {
-         return await baseFetch({
+         const response = await baseFetch({
             path: 'api/authentication/login',
             method: 'POST',
             body: userInformation,
          })
+         setLocalStorage(AUTH, response)
+         return response
       } catch (error) {
          return error.message
       }
    }
 )
-export const getUser = createAsyncThunk(
-   'authentification/checkIsAuth',
-   async () => {}
-)
-export const removeUser = createAsyncThunk(
-   'authentification/checkIsAuth',
-   async () => {}
-)
+
+export const logout = createAsyncThunk('authentification/logout', async () => {
+   removeLocalStorage(AUTH)
+})
 
 const initState = {
+   user: {
+      role: null,
+      token: null,
+      email: null,
+   },
    error: null,
-   role: null,
-   token: null,
-   email: null,
    isLoading: false,
 }
 
 export const authSlice = createSlice({
    name: 'auth',
-   initialState: getFromLocalStorage(AUTH) || initState,
+   // initialState: { ...initState, user: getFromLocalStorage(AUTH) } || initState,
+   initialState: initState,
    reducers: {},
    extraReducers: {
-      [addUser.pending]: (state) => {
+      [login.pending]: (state) => {
          state.isLoading = true
       },
-      [addUser.fulfilled]: (state, actions) => {
+      [login.fulfilled]: (state, actions) => {
          const { role, token, email } = actions.payload
-         state.email = email
-         state.token = token
-         state.role = role
+         const newUser = {
+            token,
+            role,
+            email,
+         }
+         state.user = newUser
       },
-      [addUser.rejected]: (state, payload) => {
+      [login.rejected]: (state, payload) => {
          state.error = payload
+      },
+      [logout.fulfilled]: (state) => {
+         state.user.email = null
+         state.user.token = null
+         state.user.role = null
       },
    },
 })

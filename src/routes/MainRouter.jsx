@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
-import { LoginPage } from '../layout/LoginPage'
+import { LoginPage } from '../pages/LoginPage'
 import { Instructor } from '../layout/Instructor'
-import { AdminPage } from '../layout/AdminPage'
-import { StudentPage } from '../layout/StudentPage'
+import { Admin } from '../layout/Admin'
 import PrivateRoute from './PrivateRoute'
+import { StudentPage } from '../pages/StudentPage'
 
 export const MainRouter = () => {
    return (
@@ -12,14 +12,20 @@ export const MainRouter = () => {
          <Route path="/" element={<LoginPage />} />
          <Route
             path="/admin"
-            element={<PrivateRoute roles="ADMIN" Component={<AdminPage />} />}
+            element={<PrivateRoute roles="ADMIN" Component={<Admin />} />}
          />
          <Route
             path="/instructor"
-            roles="INSTRUCTOR"
-            Component={<Instructor />}
+            element={
+               <PrivateRoute roles="INSTRUCTOR" Component={<Instructor />} />
+            }
          />
-         <Route path="/student" roles="STUDENT" Component={<StudentPage />} />
+         <Route
+            path="/student"
+            element={
+               <PrivateRoute roles="STUDENT" Component={<StudentPage />} />
+            }
+         />
       </Routes>
    )
 }

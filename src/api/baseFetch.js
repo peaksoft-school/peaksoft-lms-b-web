@@ -11,9 +11,6 @@ export const baseFetch = async (options) => {
          requestOptions.body = JSON.stringify(body || {})
       }
       if (params) {
-         // params  = {limit = 5 , page: 1, name: 't-shirt'}
-         // [limit=5, page:1]
-         // products?limit=5&page=1&name=t-shirt
          const queryParamsStringValue = Object.keys(params)
             .map((paramKey) => `${paramKey}=${params[paramKey]}`)
             .join('&')

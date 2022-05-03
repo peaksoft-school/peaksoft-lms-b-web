@@ -8,13 +8,14 @@ import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
-import { addUser } from '../store/authSlice'
+import { login } from '../store/authSlice'
 import { useAuth } from '../hooks/useAuth'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { role } = useAuth()
+   const { role } = useSelector((state) => state.auth.user)
+   console.log(role)
    useEffect(() => {
       if (role === 'ADMIN') navigate('/admin')
       if (role === 'INSTRUCTOR') navigate('/instructor')
@@ -22,7 +23,7 @@ export const LoginPage = () => {
    }, [role])
 
    const submitHandler = (values) => {
-      dispatch(addUser(values))
+      dispatch(login(values))
    }
 
    const validationsSchema = yup.object().shape({
