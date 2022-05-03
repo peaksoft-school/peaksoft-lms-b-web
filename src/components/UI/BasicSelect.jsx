@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { InputLabel } from '@mui/material'
 
 export function BasicSelect({ data, placeholder, onChoose }) {
-   const [value, setValue] = React.useState('')
+   const [value, setValue] = useState('')
    const handleChange = (event) => {
       setValue(event.target.value)
 
@@ -16,9 +16,7 @@ export function BasicSelect({ data, placeholder, onChoose }) {
    }
    return (
       <FormControlForSelect>
-         <InputLabel sx={{ top: '-5px' }} id="demo-simple-select-label">
-            {placeholder}
-         </InputLabel>
+         <InputLabel id="demo-simple-select-label">{placeholder}</InputLabel>
          <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -41,5 +39,8 @@ const FormControlForSelect = styled(FormControl)`
       border-radius: 10px;
       width: 491px;
       height: 42px;
+   }
+   .MuiInputLabel-root {
+      top: -5px;
    }
 `
