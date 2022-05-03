@@ -15,7 +15,7 @@ export function BasicSelect({ data, placeholder }) {
       <Box>
          <FormControlForSelect>
             <InputLabel id="demo-simple-select-label">{placeholder}</InputLabel>
-            <WrapperSelect
+            <Select
                labelId="demo-simple-select-label"
                id="demo-simple-select"
                value={value}
@@ -24,11 +24,11 @@ export function BasicSelect({ data, placeholder }) {
                InputLabelProps={{ shrink: false }}
             >
                {data.map((el) => (
-                  <SelectUi key={el.id} value={el.title}>
+                  <MenuItem key={el.id} value={el.title}>
                      {el.title}
-                  </SelectUi>
+                  </MenuItem>
                ))}
-            </WrapperSelect>
+            </Select>
          </FormControlForSelect>
       </Box>
    )
@@ -40,5 +40,3 @@ const FormControlForSelect = styled(FormControl)`
       width: 491px;
    }
 `
-const WrapperSelect = styled(Select)``
-const SelectUi = styled(MenuItem)``
