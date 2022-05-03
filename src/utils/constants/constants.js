@@ -1,1 +1,1 @@
-export const AUTH = 'AUTH'
+export const AUTH = 'PEAKSOFT_LMS_B_USER'
