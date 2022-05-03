@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useFormik, Formik } from 'formik'
+import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 import { addUser } from '../store/authSlice'
+import { useAuth } from '../hooks/useAuth'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { isLoading, error, email, token, role } = useSelector(
       (state) => state.auth
    )
+   useEffect(() => {
+      if (role === 'ROLE_ADMIN') navigate('/admin')
+   }, [email, role, token])
 
    const submitHandler = (values) => {
       dispatch(addUser(values))
@@ -25,11 +31,10 @@ export const LoginPage = () => {
          .email('Не валидный электронный адресс')
          .max(255)
          .required('Требуется электронный адресс'),
-      password: yup
-         .string()
-         .required('Требуется пароль')
-         .min(6, 'Введите не менее 6 цифр')
-         .matches(/[a-zA-Z]/, 'Пароль должен содержать только латинские буквы'),
+      password: yup.string(),
+      // .required('Требуется пароль')
+      // .min(6, 'Введите не менее 6 цифр')
+      // .matches(/[a-zA-Z]/, 'Пароль должен содержать только латинские буквы'),
    })
 
    return (

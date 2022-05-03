@@ -1,8 +1,8 @@
 import React from 'react'
-import { LoginPage } from './containers/LoginPage'
+import { MainRouter } from './routes/MainRouter'
 
 function App() {
-   return <LoginPage />
+   return <MainRouter />
 }
 
 export default App
