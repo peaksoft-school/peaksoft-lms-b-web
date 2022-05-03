@@ -48,13 +48,8 @@ export const authSlice = createSlice({
          state.isLoading = true
       },
       [login.fulfilled]: (state, actions) => {
-         const { role, token, email } = actions.payload
-         const newUser = {
-            token,
-            role,
-            email,
-         }
-         state.user = newUser
+         const response = actions.payload
+         state.user = response
       },
       [login.rejected]: (state, payload) => {
          state.error = payload
