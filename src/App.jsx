@@ -1,12 +1,7 @@
 import React from 'react'
-import { CustomDatePicker } from './components/UI/CustomDatePicker'
 
 function App() {
-   return (
-      <div>
-         <CustomDatePicker />
-      </div>
-   )
+   return <div>app</div>
 }
 
 export default App

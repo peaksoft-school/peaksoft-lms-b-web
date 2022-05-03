@@ -14,7 +14,7 @@ export const Inputs = forwardRef((props, ref) => {
       id,
       className,
       pattern,
-      lung,
+      lang,
       onChange,
       href,
       placeholder,
@@ -34,7 +34,7 @@ export const Inputs = forwardRef((props, ref) => {
          id={id}
          className={className}
          pattern={pattern}
-         lang={lung}
+         lang={lang}
          onChange={onChange}
          href={href}
          placeholder={placeholder}
