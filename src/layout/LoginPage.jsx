@@ -14,12 +14,12 @@ import { useAuth } from '../hooks/useAuth'
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { isLoading, error, email, token, role } = useSelector(
-      (state) => state.auth
-   )
+   const { role } = useAuth()
    useEffect(() => {
-      if (role === 'ROLE_ADMIN') navigate('/admin')
-   }, [email, role, token])
+      if (role === 'ADMIN') navigate('/admin')
+      if (role === 'INSTRUCTOR') navigate('/instructor')
+      if (role === 'STUDENT') navigate('/student')
+   }, [role])
 
    const submitHandler = (values) => {
       dispatch(addUser(values))

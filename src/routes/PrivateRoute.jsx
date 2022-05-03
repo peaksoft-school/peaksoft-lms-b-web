@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 
 export default function PrivateRoute({ Component, roles }) {
    const auth = useAuth()
-   const isUserHasRole = auth && roles.includes(auth.role)
+   const isUserHasRole = auth.isAuth && roles.includes(auth.role)
    if (!isUserHasRole) return <Navigate to="/" replace />
    return Component
 }
