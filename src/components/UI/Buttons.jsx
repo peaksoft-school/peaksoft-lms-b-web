@@ -3,8 +3,12 @@ import Button from '@mui/material/Button'
 import styled, { css } from 'styled-components'
 
 export function Buttons(props) {
-   const { children } = props
-   return <ButtonWrapper {...props}>{children}</ButtonWrapper>
+   const { children, onClick } = props
+   return (
+      <ButtonWrapper onClick={onClick} {...props}>
+         {children}
+      </ButtonWrapper>
+   )
 }
 
 const ButtonWrapper = styled(Button)`
@@ -55,7 +59,7 @@ const ButtonWrapper = styled(Button)`
          &:disabled {
             background-color: var(--disabled-background) !important;
             color: var(--disabled-font-color) !important;
-            opacity: 0.5 !important;
+            opacity: 0.9 !important;
          }
       `}
 `
