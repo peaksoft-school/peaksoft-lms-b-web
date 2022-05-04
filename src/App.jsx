@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
 import styled from 'styled-components'
 import Buttons from '@mui/material/IconButton/IconButton'
@@ -228,14 +227,16 @@ function App() {
          format: 'Онлайн',
          mobile_phone: '0777114676	',
          email: 'John@gmail.com',
-         remove: (
-            <Buttons
-               onClick={() => alert('Remove')}
-               style={{ background: 'none' }}
-            >
-               <TrashBinIcon />
-            </Buttons>
-         ),
+         remove: (item) => {
+            return (
+               <Buttons
+                  onClick={() => alert(item.id)}
+                  style={{ background: 'none' }}
+               >
+                  <TrashBinIcon />
+               </Buttons>
+            )
+         },
       },
    ]
    return <Table data={DATA} headers={DATA_COLLUMN} />
