@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
 import styled from 'styled-components'
 import Buttons from '@mui/material/IconButton/IconButton'
@@ -19,116 +20,225 @@ const WrapperIcons = styled.div`
    }
 `
 function App() {
+   // ADMIN_PANEL
+   const DATA_COLLUMN = [
+      {
+         title: 'ID',
+         accessKey: 'id',
+      },
+      {
+         title: 'Имя Фамилия',
+         accessKey: 'name',
+      },
+      {
+         title: 'Формат обучения',
+         accessKey: 'format',
+      },
+      {
+         title: 'Номер телефона',
+         accessKey: 'mobile_phone',
+      },
+      {
+         title: 'E-Mail',
+         accessKey: 'email',
+      },
+      {
+         title: 'Действие',
+         accessKey: '',
+         action: (item) => {
+            return (
+               <WrapperIcons key={item.id}>
+                  <Buttons
+                     onClick={() => {
+                        alert(item.id)
+                     }}
+                     style={{ background: 'none' }}
+                  >
+                     <EyeIcon />
+                  </Buttons>
+                  <Buttons style={{ background: 'none' }}>
+                     <EditIcon />
+                  </Buttons>
+                  <Buttons style={{ background: 'none' }}>
+                     <TrashBinIcon />
+                  </Buttons>
+               </WrapperIcons>
+            )
+         },
+      },
+   ]
    const DATA = [
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Специализация: 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
-         Пароль: 'tr56177ytu',
+         id: 1,
+         name: 'Anna Karimova ',
+         format: 'Онлайн',
+         mobile_phone: '0777114676	',
+         email: 'John@gmail.com',
       },
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Специализация: 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
-         Пароль: 'tr56177ytu',
+         id: 2,
+         name: 'Anna Karimova ',
+         format: 'Онлайн',
+         mobile_phone: '0777114676	',
+         email: 'John@gmail.com',
+      },
+      {
+         id: 3,
+         name: 'Anna Karimova ',
+         format: 'Онлайн',
+         mobile_phone: '0777114676	',
+         email: 'John@gmail.com',
       },
    ]
-   const APPOINT_TEACHER = [
+   // APPOINT_TEACHER
+   const COLUMN_GROUP_INNER_PAGE_STUDENTS = [
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Специализация: 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
+         title: 'ID',
+         accessKey: 'id',
       },
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Специализация: 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
-      },
-   ]
-   const STUDENTS = [
-      {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova',
-         Группа: 'JS-15-22',
-         Формат: 'Онлайн',
-         'Номер телефона': '0777114676',
-         'E-mail': 'John@gmail.com',
+         title: 'Имя Фамилия',
+         accessKey: 'name',
       },
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova',
-         Группа: 'JS-15-22',
-         Формат: 'Онлайн',
-         'Номер телефона': '0777114676',
-         'E-mail': 'John@gmail.com',
+         title: 'Группа',
+         accessKey: 'group',
+      },
+      {
+         title: 'Формат обучения',
+         accessKey: 'format',
+      },
+      {
+         title: 'Номер телефона',
+         accessKey: 'mobile_phone',
+      },
+      {
+         title: 'E-Mail',
+         accessKey: 'email',
       },
    ]
-   const INSTRUKTOR_CREATE_STUDEN = [
+   const GROUP_INNER_PAGE_STUDENTS = [
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Группа: 'JS-15-22',
-         'Формат обучения': 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
-         Пароль: 'tr56177ytu',
+         id: 1,
+         name: 'Anna Karimova ',
+         group: 'JS-15-22',
+         format: 'Онлайн',
+         mobile_phone: '0777114676  ',
+         email: 'John@gmail.com',
       },
       {
-         ID: 1,
-         'Имя Фамилия': 'Anna Karimova ',
-         Группа: 'JS-15-22',
-         'Формат обучения': 'Онлайн',
-         'Номер телефона': '0777114676	',
-         'E-mail': 'John@gmail.com',
-         Пароль: 'tr56177ytu',
+         id: 1,
+         name: 'Anna Karimova ',
+         group: 'JS-15-22',
+         format: 'Онлайн',
+         mobile_phone: '0777114676  ',
+         email: 'John@gmail.com',
+      },
+      {
+         id: 1,
+         name: 'Anna Karimova ',
+         group: 'JS-15-22',
+         format: 'Онлайн',
+         mobile_phone: '0777114676  ',
+         email: 'John@gmail.com',
       },
    ]
-   const data = DATA.map((newKey) => ({
-      ...newKey,
-      Действия: (
-         <WrapperIcons>
+   // TEACHER DATA
+   const COLUMN_COURSE_INNER_PAGE_TEACHER = [
+      {
+         title: 'ID',
+         accessKey: 'id',
+      },
+      {
+         title: 'Имя Фамилия',
+         accessKey: 'name',
+      },
+      {
+         title: 'Формат обучения',
+         accessKey: 'format',
+      },
+      {
+         title: 'Номер телефона',
+         accessKey: 'mobile_phone',
+      },
+      {
+         title: 'E-Mail',
+         accessKey: 'email',
+      },
+   ]
+   const COURES_INNER_PAGE_TEACHER = [
+      {
+         ID: 1,
+         name: 'Anna Karimova',
+         format: 'Онлайн',
+         mobile_phone: '0777114676',
+         email: 'John@gmail.com',
+      },
+      {
+         ID: 1,
+         name: 'Anna Karimova',
+         format: 'Онлайн',
+         mobile_phone: '0777114676',
+         email: 'John@gmail.com',
+      },
+      {
+         ID: 1,
+         name: 'Anna Karimova',
+         format: 'Онлайн',
+         mobile_phone: '0777114676',
+         email: 'John@gmail.com',
+      },
+   ]
+   // INSTRUCTOR PANEL
+   const COLUMN_INSTUCTOR_COURS = [
+      {
+         title: 'ID',
+         accessKey: 'id',
+      },
+      {
+         title: 'Имя Фамилия',
+         accessKey: 'name',
+      },
+      {
+         title: 'Группа',
+         accessKey: 'group',
+      },
+      {
+         title: 'Формат обучения',
+         accessKey: 'format',
+      },
+      {
+         title: 'Номер телефона',
+         accessKey: 'mobile_phone',
+      },
+      {
+         title: 'E-Mail',
+         accessKey: 'email',
+      },
+      {
+         title: 'Удалить',
+         accessKey: 'remove',
+      },
+   ]
+   const DATA_FOR_INSTRUCTOR = [
+      {
+         id: 1,
+         name: 'Anna Karimova ',
+         group: 'JS-15-22',
+         format: 'Онлайн',
+         mobile_phone: '0777114676	',
+         email: 'John@gmail.com',
+         remove: (
             <Buttons
-               onClick={() => alert('Eye')}
-               style={{ background: 'none' }}
-            >
-               <EyeIcon />
-            </Buttons>
-            <Buttons
-               onClick={() => alert('Edit')}
-               style={{ background: 'none' }}
-            >
-               <EditIcon />
-            </Buttons>
-            <Buttons
-               onClick={() => alert('Trash')}
+               onClick={() => alert('Remove')}
                style={{ background: 'none' }}
             >
                <TrashBinIcon />
             </Buttons>
-         </WrapperIcons>
-      ),
-   }))
-   const instructorCreateStudens = INSTRUKTOR_CREATE_STUDEN.map((newkey) => ({
-      ...newkey,
-      Удалить: (
-         <Buttons
-            onClick={() => alert('Remove')}
-            style={{ background: 'none' }}
-         >
-            <TrashBinIcon />
-         </Buttons>
-      ),
-   }))
-
-   return <Table data={data} />
+         ),
+      },
+   ]
+   return <Table data={DATA} headers={DATA_COLLUMN} />
 }
 
 export default App

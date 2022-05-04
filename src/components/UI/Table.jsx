@@ -1,14 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export function Table({ data }) {
-   const columns = data[0] && Object.keys(data[0])
-   const headerOfTable = data[0] && columns.map((heading) => <th>{heading}</th>)
+export function Table({ data, headers }) {
+   const headerOfTable = headers.map((header) => (
+      <th key={header.title}>{header.title}</th>
+   ))
    const bodyOfTable = data.map((row) => (
-      <tr>
-         {columns.map((column) => (
-            <td>{row[column]}</td>
-         ))}
+      <tr key={row.id}>
+         {headers.map((column) => {
+            if (column.action) {
+               return column.action(row)
+            }
+            return <td key={column.accessKey}>{row[column.accessKey]}</td>
+         })}
       </tr>
    ))
    return (
@@ -59,10 +63,11 @@ const Tbody = styled.tbody`
    tbody,
    tr:nth-child(odd) {
       background-color: white;
+      &:hover {
+         transition: 0.3s;
+         background: #d7dbf0;
+      }
    }
-
-   .tbody,
-   tr,
    td {
       white-space: nowrap;
       width: 20%;
