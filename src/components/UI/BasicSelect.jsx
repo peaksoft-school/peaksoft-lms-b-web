@@ -35,9 +35,9 @@ export function BasicSelect({ data, placeholder, onChoose }) {
    )
 }
 const FormControlForSelect = styled(FormControl)`
+   width: 100%;
    .MuiInputBase-root {
       border-radius: 10px;
-      width: 491px;
       height: 42px;
    }
    .MuiInputLabel-root {
