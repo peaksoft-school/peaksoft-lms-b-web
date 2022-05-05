@@ -14,7 +14,6 @@ export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { role } = useSelector((state) => state.auth.user)
-
    useEffect(() => {
       if (role === 'ADMIN') navigate('/admin')
       if (role === 'INSTRUCTOR') navigate('/instructor')
