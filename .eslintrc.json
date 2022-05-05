@@ -52,6 +52,7 @@
          "error",
          { "props": true, "ignorePropertyModificationsFor": ["state"] }
       ],
-      "no-unused-vars": "warn"
+      "no-unused-vars": "warn",
+      "react/no-unstable-nested-components": ["off", { "allowAsProps": true }]
    }
 }
