@@ -9,13 +9,11 @@ import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 import { login } from '../store/authSlice'
-import { useAuth } from '../hooks/useAuth'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { role } = useSelector((state) => state.auth.user)
-   // console.log(role)
    useEffect(() => {
       if (role === 'ADMIN') navigate('/admin')
       if (role === 'INSTRUCTOR') navigate('/instructor')

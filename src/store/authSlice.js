@@ -17,6 +17,7 @@ export const login = createAsyncThunk(
             body: userInformation,
          })
          setLocalStorage(AUTH, response)
+
          return response
       } catch (error) {
          return error.message
@@ -40,7 +41,9 @@ const initState = {
 
 export const authSlice = createSlice({
    name: 'auth',
-   initialState: { ...initState, user: getFromLocalStorage(AUTH) } || initState,
+   initialState: getFromLocalStorage(AUTH)
+      ? { ...initState, user: getFromLocalStorage(AUTH) }
+      : initState,
    reducers: {},
    extraReducers: {
       [login.pending]: (state) => {
