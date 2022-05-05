@@ -1,8 +1,7 @@
 import React from 'react'
-import { MainRouter } from './routes/MainRouter'
 
-function App() {
-   return <MainRouter />
+const App = () => {
+   return <div>App</div>
 }
 
 export default App
