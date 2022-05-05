@@ -5,26 +5,30 @@ import Select from '@mui/material/Select'
 import styled from 'styled-components'
 import { InputLabel } from '@mui/material'
 
-export function BasicSelect({ data, placeholder, onChoose, value, setValue }) {
-   const handleChange = (event) => {
-      setValue(event.target.value)
-      onChoose({
-         ...event.target.value,
-      })
-   }
+export function BasicSelect({
+   data,
+   placeholder,
+   onChange,
+   value,
+   selectOption,
+}) {
    return (
       <FormControlForSelect>
          <InputLabel id="demo-simple-select-label">{placeholder}</InputLabel>
          <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={value}
             label={placeholder}
-            onChange={handleChange}
+            onChange={onChange}
+            value={value}
          >
-            {data.map((el) => (
-               <MenuItem key={el.id} value={el}>
-                  {el.title}
+            {data.map((item) => (
+               <MenuItem
+                  key={item.id}
+                  value={item.title}
+                  onClick={() => selectOption(item.title)}
+               >
+                  {item.title}
                </MenuItem>
             ))}
          </Select>
