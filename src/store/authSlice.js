@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { baseFetch } from '../api/baseFetch'
 import { AUTH } from '../utils/constants/constants'
-import {
-   getFromLocalStorage,
-   setLocalStorage,
-   removeLocalStorage,
-} from '../utils/helpers/helpers'
+import { setLocalStorage, removeLocalStorage } from '../utils/helpers/helpers'
 
 export const login = createAsyncThunk(
    'authentification/login',
