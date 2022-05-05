@@ -5,6 +5,8 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import styled from 'styled-components'
 import { Box } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
+import ListItemText from '@mui/material/ListItemText'
 import { Title } from './Title'
 import { SelectedItem } from './SelectedItem'
 
@@ -37,16 +39,18 @@ export const MultiSelect = () => {
       const {
          target: { value },
       } = event
-      setPersonName(typeof value === 'string' ? value.split(',') : value)
+      setPersonName(value)
    }
 
    const addHandler = () => {
-      setSelectedUsers((prev) => [...prev, ...personName])
+      setSelectedUsers((prev) => Array.from(new Set([...prev, ...personName])))
       setPersonName([])
    }
 
    const deleteHandler = (id) => {
-      setSelectedUsers((prev) => prev.filter((teacher) => teacher.id !== id))
+      setSelectedUsers(
+         selectedUsers.filter((selectedUser) => selectedUser.id !== id)
+      )
    }
 
    return (
@@ -55,8 +59,8 @@ export const MultiSelect = () => {
             {selectedUsers.map((user) => {
                return (
                   <SelectedItem
-                     userInfo={user.name}
                      onDelete={() => deleteHandler(user.id)}
+                     userInfo={user}
                   />
                )
             })}
@@ -73,7 +77,7 @@ export const MultiSelect = () => {
                   if (selected.length === 0) {
                      return <Title>Multi select</Title>
                   }
-                  return selected.join(', ')
+                  return selected.map((el) => el.name).join(',')
                }}
                inputProps={{ 'aria-label': 'Without label' }}
             >
@@ -81,12 +85,12 @@ export const MultiSelect = () => {
                   <Title>Группа</Title>
                </MenuItem>
                {names.map((user) => (
-                  <MenuItem key={user.id} value={user.name}>
-                     {user.name}
+                  <MenuItem key={user.id} value={user}>
+                     <ListItemText primary={user.name} />
+                     <Checkbox checked={personName.indexOf(user.name) > -1} />
                   </MenuItem>
                ))}
             </StyledSelect>
-            {/* <Title color="red">asdasdsd</Title> */}
          </FormControl>
       </Box>
    )

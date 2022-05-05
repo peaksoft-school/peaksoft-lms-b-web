@@ -40,8 +40,8 @@ const initState = {
 
 export const authSlice = createSlice({
    name: 'auth',
-   // initialState: { ...initState, user: getFromLocalStorage(AUTH) } || initState,
-   initialState: initState,
+   initialState: { ...initState, user: getFromLocalStorage(AUTH) } || initState,
+   // initialState: initState,
    reducers: {},
    extraReducers: {
       [login.pending]: (state) => {
