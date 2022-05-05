@@ -8,10 +8,12 @@ export function Table({ data, headers }) {
    const bodyOfTable = data.map((row) => (
       <tr key={row.id}>
          {headers.map((column) => {
-            if (column.action) {
-               return column.action(row)
-            }
-            return <td key={column.accessKey}>{row[column.accessKey]}</td>
+            return (
+               <td key={column.accessKey}>
+                  {row[column.accessKey]}
+                  {column.action ? column.action(row) : ''}
+               </td>
+            )
          })}
       </tr>
    ))

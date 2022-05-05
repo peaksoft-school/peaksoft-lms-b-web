@@ -19,7 +19,6 @@ const WrapperIcons = styled.div`
    }
 `
 function App() {
-   // ADMIN_PANEL
    const DATA_COLLUMN = [
       {
          title: 'ID',
@@ -49,7 +48,7 @@ function App() {
                <WrapperIcons key={item.id}>
                   <Buttons
                      onClick={() => {
-                        alert(item.id)
+                        console.log(item.id)
                      }}
                      style={{ background: 'none' }}
                   >
@@ -89,7 +88,6 @@ function App() {
          email: 'John@gmail.com',
       },
    ]
-   // APPOINT_TEACHER
    const COLUMN_GROUP_INNER_PAGE_STUDENTS = [
       {
          title: 'ID',
@@ -142,7 +140,6 @@ function App() {
          email: 'John@gmail.com',
       },
    ]
-   // TEACHER DATA
    const COLUMN_COURSE_INNER_PAGE_TEACHER = [
       {
          title: 'ID',
@@ -188,7 +185,6 @@ function App() {
          email: 'John@gmail.com',
       },
    ]
-   // INSTRUCTOR PANEL
    const COLUMN_INSTUCTOR_COURS = [
       {
          title: 'ID',
