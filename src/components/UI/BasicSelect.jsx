@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import styled from 'styled-components'
 import { InputLabel } from '@mui/material'
 
-export function BasicSelect({ data, placeholder, onChoose }) {
-   const [value, setValue] = useState('')
+export function BasicSelect({ data, placeholder, onChoose, value, setValue }) {
    const handleChange = (event) => {
       setValue(event.target.value)
-
       onChoose({
          ...event.target.value,
       })
@@ -23,7 +21,6 @@ export function BasicSelect({ data, placeholder, onChoose }) {
             value={value}
             label={placeholder}
             onChange={handleChange}
-            // InputLabelProps={{ shrink: false }}
          >
             {data.map((el) => (
                <MenuItem key={el.id} value={el}>
