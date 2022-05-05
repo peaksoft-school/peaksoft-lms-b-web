@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { Box } from '@mui/material'
 import { Buttons } from '../components/UI/Buttons'
+import { SideBar } from '../components/UI/SideBar'
 import { logout } from '../store/authSlice'
 
 export const Admin = () => {
@@ -9,9 +11,9 @@ export const Admin = () => {
       dispatch(logout())
    }
    return (
-      <div>
-         AdimPage
+      <Box dispaly="flex">
+         <SideBar />
          <Buttons onClick={logutHandler}>logout</Buttons>
-      </div>
+      </Box>
    )
 }
