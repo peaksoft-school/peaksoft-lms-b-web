@@ -10,41 +10,32 @@ import ListItemText from '@mui/material/ListItemText'
 import { Title } from './Title'
 import { SelectedItem } from './SelectedItem'
 
-const StyledSelect = styled(Select)`
-   select {
-      border: 1px solid green;
+const StyledFormControl = styled(FormControl)`
+   .MuiInputBase-root {
+      border-radius: 10px;
+      height: 42px;
+      width: 491px;
    }
 `
 
-const names = [
-   {
-      name: 'Oliver Hansen',
-      id: Math.random().toString(),
-   },
-   {
-      name: 'Jetigen',
-      id: Math.random().toString(),
-   },
-   {
-      name: 'Beybars',
-      id: Math.random().toString(),
-   },
-]
-
-export const MultiSelect = () => {
-   const [personName, setPersonName] = React.useState([])
-   const [selectedUsers, setSelectedUsers] = React.useState([])
+export const MultiSelect = ({
+   data = [],
+   listTitle,
+   selectedUsers = [],
+   setSelectedUsers,
+}) => {
+   const [person, setPerson] = React.useState([])
 
    const handleChange = (event) => {
       const {
          target: { value },
       } = event
-      setPersonName(value)
+      setPerson(value)
    }
 
    const addHandler = () => {
-      setSelectedUsers((prev) => Array.from(new Set([...prev, ...personName])))
-      setPersonName([])
+      setSelectedUsers((prev) => Array.from(new Set([...prev, ...person])))
+      setPerson([])
    }
 
    const deleteHandler = (id) => {
@@ -65,33 +56,33 @@ export const MultiSelect = () => {
                )
             })}
          </Box>
-         <FormControl fullWidth>
-            <StyledSelect
+         <StyledFormControl fullWidth>
+            <Select
                multiple
                displayEmpty
-               value={personName}
+               value={person}
                onChange={handleChange}
                onClose={addHandler}
                input={<OutlinedInput />}
                renderValue={(selected) => {
                   if (selected.length === 0) {
-                     return <Title>Multi select</Title>
+                     return <Title>Сlick to select a teacher </Title>
                   }
                   return selected.map((el) => el.name).join(',')
                }}
                inputProps={{ 'aria-label': 'Without label' }}
             >
                <MenuItem disabled value="">
-                  <Title>Группа</Title>
+                  <Title>{listTitle}</Title>
                </MenuItem>
-               {names.map((user) => (
+               {data.map((user) => (
                   <MenuItem key={user.id} value={user}>
                      <ListItemText primary={user.name} />
-                     <Checkbox checked={personName.indexOf(user.name) > -1} />
+                     <Checkbox checked={person.indexOf(user) > -1} />
                   </MenuItem>
                ))}
-            </StyledSelect>
-         </FormControl>
+            </Select>
+         </StyledFormControl>
       </Box>
    )
 }

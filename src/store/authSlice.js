@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { baseFetch } from '../api/baseFetch'
 import { AUTH } from '../utils/constants/constants'
-import { setLocalStorage, removeLocalStorage } from '../utils/helpers/helpers'
+import {
+   setLocalStorage,
+   removeLocalStorage,
+   getFromLocalStorage,
+} from '../utils/helpers/helpers'
 
 export const login = createAsyncThunk(
    'authentification/login',
@@ -13,6 +17,7 @@ export const login = createAsyncThunk(
             body: userInformation,
          })
          setLocalStorage(AUTH, response)
+
          return response
       } catch (error) {
          return error.message
@@ -36,8 +41,9 @@ const initState = {
 
 export const authSlice = createSlice({
    name: 'auth',
-   initialState: { ...initState, user: getFromLocalStorage(AUTH) } || initState,
-   // initialState: initState,
+   initialState: getFromLocalStorage(AUTH)
+      ? { ...initState, user: getFromLocalStorage(AUTH) }
+      : initState,
    reducers: {},
    extraReducers: {
       [login.pending]: (state) => {
