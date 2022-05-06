@@ -9,6 +9,7 @@ import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 import { login } from '../store/authSlice'
+import { mainRoutes } from '../utils/constants/routes'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
@@ -16,9 +17,10 @@ export const LoginPage = () => {
    const { role } = useSelector((state) => state.auth.user)
 
    useEffect(() => {
-      if (role === 'ADMIN') navigate('/admin')
-      if (role === 'INSTRUCTOR') navigate('/instructor')
-      if (role === 'STUDENT') navigate('/student')
+      if (role === mainRoutes.ADMIN.role) navigate(mainRoutes.ADMIN.path)
+      if (role === mainRoutes.INSTRUCTOR.role)
+         navigate(mainRoutes.INSTRUCTOR.path)
+      if (role === mainRoutes.STUDENT.role) navigate(mainRoutes.STUDENT.path)
    }, [role])
 
    const submitHandler = (values) => {
