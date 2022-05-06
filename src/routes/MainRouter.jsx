@@ -11,17 +11,17 @@ export const MainRouter = () => {
       <Routes>
          <Route path="/" element={<LoginPage />} />
          <Route
-            path="/admin"
+            path="/admin/*"
             element={<PrivateRoute roles="ADMIN" Component={<Admin />} />}
          />
          <Route
-            path="/instructor"
+            path="/instructor/*"
             element={
-               <PrivateRoute roles="INSTRUCTOR" Component={<Instructor />} />
+               <PrivateRoute roles="TEACHER" Component={<Instructor />} />
             }
          />
          <Route
-            path="/student"
+            path="/student/*"
             element={
                <PrivateRoute roles="STUDENT" Component={<StudentPage />} />
             }

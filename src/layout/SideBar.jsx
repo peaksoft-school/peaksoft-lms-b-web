@@ -7,30 +7,48 @@ import { ReactComponent as CourseIcon } from '../assets/icons/CourseIcon.svg'
 import { ReactComponent as TeachersIcon } from '../assets/icons/TeachersIcon.svg'
 import { ReactComponent as StudentIcon } from '../assets/icons/StudentIcon.svg'
 import { ReactComponent as GroupsIcon } from '../assets/icons/GroupsIcon.svg'
+import { ReactComponent as TvIcon } from '../assets/icons/TV.svg'
 
-const ADMIN_SIDEBAR = [
-   {
-      title: 'Группы',
-      path: 'groups',
-      icon: <GroupsIcon />,
+const sideBar = {
+   ADMIN: {
+      sidebar: [
+         {
+            title: 'Группы',
+            path: 'groups',
+            icon: <GroupsIcon />,
+         },
+         { title: 'Курсы', path: 'courses', icon: <CourseIcon /> },
+         { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
+         { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
+      ],
    },
-   { title: 'Курсы', path: 'courses', icon: <CourseIcon /> },
-   { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
-   { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
-]
+   INSTRUCTOR: {
+      sidebar: [
+         {
+            title: 'Мои курсы',
+            path: 'mycourses',
+            icon: <TvIcon />,
+         },
+      ],
+   },
+   STUDENT: {
+      sidebar: [
+         {
+            title: 'Мои курсы',
+            path: 'mycourses',
+            icon: <TvIcon />,
+         },
+      ],
+   },
+}
 
-export const SideBar = () => {
+export const SideBar = ({ roles }) => {
    return (
       <StyledBox>
          <SidebarList>
             <StyledLogo />
-            {ADMIN_SIDEBAR.map((item) => (
-               <StyledNavLink
-                  end
-                  to={item.path}
-                  key={item.title}
-                  className={(state) => console.log(state)}
-               >
+            {sideBar[roles].sidebar.map((item) => (
+               <StyledNavLink end to={item.path} key={item.title}>
                   <ListItem button key={item} sx={{ p: 1.5, pl: 4 }}>
                      <div className="selectedLink" />
                      <ListItemIcon>{item.icon}</ListItemIcon>
@@ -58,7 +76,7 @@ const StyledBox = styled(Box)`
 const SidebarList = styled(List)(() => ({
    '& .MuiListItem-root': {
       width: '93%',
-      marginLeft: '1vh',
+      paddingLeft: '7vh',
       borderRadius: '0 10px 10px 0',
       color: '#292929',
       '& .MuiTypography-root': {

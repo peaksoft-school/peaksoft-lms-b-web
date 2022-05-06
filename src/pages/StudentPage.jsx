@@ -1,5 +1,11 @@
 import React from 'react'
+import { Layout } from '../layout/Layout'
+import { StudentRoutes } from '../routes/StudentRoutes'
 
 export const StudentPage = () => {
-   return <div>StudentPage</div>
+   return (
+      <Layout roles="STUDENT">
+         <StudentRoutes />
+      </Layout>
+   )
 }

@@ -28,9 +28,9 @@ export const mainRoutes = {
       role: 'ADMIN',
    },
    INSTRUCTOR: {
-      path: '/instrucor',
+      path: '/instructor',
       label: 'loginPage',
-      role: 'INSTRUCTOR',
+      role: 'TEACHER',
    },
    STUDENT: {
       path: '/student',
