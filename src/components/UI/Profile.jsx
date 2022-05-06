@@ -29,7 +29,7 @@ export const Profile = ({ roles, onLogout }) => {
          <Title fontWeight="400" fontSize="16px">
             {roles}
          </Title>
-         <Arrow onClick={handleClick} />
+         <Arrow cursor="pointer" onClick={handleClick} />
          <Menu
             id="demo-positioned-menu"
             aria-labelledby="demo-positioned-button"
