@@ -5,6 +5,9 @@
    margin: 0;
    padding: 0;
 }
+body {
+   background-color: var(--background-color);
+}
 :root {
    --base-font: 'Open Sans', sans-serif;
    --base-font-2: 'Nunito', sans-serif;
