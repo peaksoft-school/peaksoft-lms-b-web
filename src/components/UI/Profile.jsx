@@ -1,6 +1,9 @@
 import * as React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { Box, Menu } from '@mui/material'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import { BiUser, BiLogOut } from 'react-icons/bi'
 import { ReactComponent as Avatar } from '../../assets/icons/Profile.svg'
 import { Title } from './Title'
 import { ReactComponent as Arrow } from '../../assets/icons/ArrowDown.svg'
@@ -26,7 +29,7 @@ export const Profile = ({ roles, onLogout }) => {
          justifyContent="space-between"
       >
          <Avatar />
-         <Title fontWeight="400" fontSize="16px">
+         <Title cursor="pointer" fontWeight="400" fontSize="16px">
             {roles}
          </Title>
          <Arrow cursor="pointer" onClick={handleClick} />
@@ -45,8 +48,18 @@ export const Profile = ({ roles, onLogout }) => {
                horizontal: 'left',
             }}
          >
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+               <ListItemIcon>
+                  <BiUser />
+               </ListItemIcon>
+               <ListItemText>My account</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={logoutHandler}>
+               <ListItemIcon>
+                  <BiLogOut />
+               </ListItemIcon>
+               <ListItemText>Logout</ListItemText>
+            </MenuItem>
          </Menu>
       </Box>
    )
