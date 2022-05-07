@@ -26,7 +26,7 @@ const sideBar = {
       sidebar: [
          {
             title: 'Мои курсы',
-            path: 'mycourses',
+            path: 'courses',
             icon: <TvIcon />,
          },
       ],
@@ -35,7 +35,7 @@ const sideBar = {
       sidebar: [
          {
             title: 'Мои курсы',
-            path: 'mycourses',
+            path: 'courses',
             icon: <TvIcon />,
          },
       ],

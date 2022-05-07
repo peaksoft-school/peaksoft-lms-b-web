@@ -2,8 +2,7 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const StyledTabs = styled((props) => (
    <Tabs
@@ -67,29 +66,24 @@ export const TabsTitle = ({ tabs }) => {
       setValue(newValue)
    }
 
+   const params = useParams()
+   // console.log(params) here you can get id params
+
    return (
-      <>
-         <StyledTabs
-            value={value}
-            onChange={handleChange}
-            aria-label="styled tabs example"
-         >
-            {tabs.map((label) => (
-               <StyledTab
-                  key={label.path}
-                  onClick={() => {
-                     navigate(label.path)
-                  }}
-                  label={label.label}
-               />
-            ))}
-         </StyledTabs>
-         <Box sx={{ p: 3 }} />
-         {tabs.map(({ Component }, i) => (
-            <TabPanel value={value} index={i}>
-               {Component}
-            </TabPanel>
+      <StyledTabs
+         value={value}
+         onChange={handleChange}
+         aria-label="styled tabs example"
+      >
+         {tabs.map((label) => (
+            <StyledTab
+               key={label.path}
+               onClick={() => {
+                  navigate(label.path)
+               }}
+               label={label.label}
+            />
          ))}
-      </>
+      </StyledTabs>
    )
 }

@@ -5,7 +5,7 @@ import { Header } from './Header'
 
 export const Layout = ({ roles, children }) => {
    return (
-      <Box display="grid" gridTemplateColumns="0.5fr 3fr">
+      <Box display="grid" gridTemplateColumns="0.6fr 3fr">
          <SideBar roles={roles} />
          <Box padding="14px 40px 74px 20px">
             <Header roles={roles} />
