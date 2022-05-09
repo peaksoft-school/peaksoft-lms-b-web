@@ -8,7 +8,7 @@ import { ReactComponent as Avatar } from '../../assets/icons/Profile.svg'
 import { Title } from './Title'
 import { ReactComponent as Arrow } from '../../assets/icons/ArrowDown.svg'
 
-export const Profile = ({ roles, onLogout }) => {
+export const Profile = ({ title, onLogout }) => {
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -30,7 +30,7 @@ export const Profile = ({ roles, onLogout }) => {
       >
          <Avatar />
          <Title cursor="pointer" fontWeight="400" fontSize="16px">
-            {roles}
+            {title}
          </Title>
          <Arrow cursor="pointer" onClick={handleClick} />
          <Menu

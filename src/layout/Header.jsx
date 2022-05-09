@@ -65,7 +65,7 @@ export const Header = ({ roles }) => {
                   element={<TabsTitle tabs={userRole[roles].tabs} />}
                />
             </Routes>
-            <Profile onLogout={logoutHandler} roles={userRole[roles].role} />
+            <Profile onLogout={logoutHandler} title={userRole[roles].role} />
          </Box>
       </StyledHeader>
    )

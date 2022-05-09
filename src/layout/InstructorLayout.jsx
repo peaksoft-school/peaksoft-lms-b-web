@@ -1,8 +1,8 @@
 import React from 'react'
-import { Layout } from '../layout/Layout'
+import { Layout } from './Layout'
 import { TeacherRoutes } from '../routes/TeacherRoutes'
 
-export const Instructor = () => {
+export const InstructorLayout = () => {
    return (
       <Layout roles="INSTRUCTOR">
          <TeacherRoutes />

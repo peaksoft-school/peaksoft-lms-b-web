@@ -10,50 +10,46 @@ import { ReactComponent as GroupsIcon } from '../assets/icons/GroupsIcon.svg'
 import { ReactComponent as TvIcon } from '../assets/icons/TV.svg'
 
 const sideBar = {
-   ADMIN: {
-      sidebar: [
-         {
-            title: 'Группы',
-            path: 'groups',
-            icon: <GroupsIcon />,
-         },
-         { title: 'Курсы', path: 'courses', icon: <CourseIcon /> },
-         { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
-         { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
-      ],
-   },
-   INSTRUCTOR: {
-      sidebar: [
-         {
-            title: 'Мои курсы',
-            path: 'courses',
-            icon: <TvIcon />,
-         },
-      ],
-   },
-   STUDENT: {
-      sidebar: [
-         {
-            title: 'Мои курсы',
-            path: 'courses',
-            icon: <TvIcon />,
-         },
-      ],
-   },
+   ADMIN: [
+      {
+         title: 'Группы',
+         path: 'groups',
+         icon: <GroupsIcon />,
+      },
+      { title: 'Курсы', path: 'courses', icon: <CourseIcon /> },
+      { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
+      { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
+   ],
+
+   INSTRUCTOR: [
+      {
+         title: 'Мои курсы',
+         path: 'courses',
+         icon: <TvIcon />,
+      },
+   ],
+
+   STUDENT: [
+      {
+         title: 'Мои курсы',
+         path: 'courses',
+         icon: <TvIcon />,
+      },
+   ],
 }
 
 export const SideBar = ({ roles }) => {
    return (
-      <StyledBox>
+      <StyledBox width="290px">
          <SidebarList>
             <StyledLogo />
-            {sideBar[roles].sidebar.map((item) => (
+            {sideBar[roles].map((item) => (
                <StyledNavLink end to={item.path} key={item.title}>
-                  <ListItem button key={item} sx={{ p: 1.5, pl: 4 }}>
+                  <StyledListItem button key={item.title}>
                      <div className="selectedLink" />
                      <ListItemIcon>{item.icon}</ListItemIcon>
                      <ListItemText primary={item.title} />
-                  </ListItem>
+                  </StyledListItem>
                </StyledNavLink>
             ))}
          </SidebarList>
@@ -65,6 +61,10 @@ const StyledNavLink = styled(NavLink)``
 
 const StyledLogo = styled(Logo)`
    margin: 38px 0 66px 0;
+`
+const StyledListItem = styled(ListItem)`
+   padding: 1.5px;
+   padding-left: 4px;
 `
 
 const StyledBox = styled(Box)`
