@@ -44,20 +44,6 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
    })
 )
 
-function TabPanel(props) {
-   const { value, index, ...other } = props
-
-   return (
-      <div
-         role="tabpanel"
-         hidden={value !== index}
-         id={`simple-tabpanel-${index}`}
-         aria-labelledby={`simple-tab-${index}`}
-         {...other}
-      />
-   )
-}
-
 export const TabsTitle = ({ tabs }) => {
    const navigate = useNavigate()
    const [value, setValue] = React.useState(0)

@@ -46,7 +46,7 @@ export const SideBar = ({ roles }) => {
             {sideBar[roles].map((item) => (
                <StyledNavLink end to={item.path} key={item.title}>
                   <StyledListItem button key={item.title}>
-                     <div className="selectedLink" />
+                     <SelectedLink />
                      <ListItemIcon>{item.icon}</ListItemIcon>
                      <ListItemText primary={item.title} />
                   </StyledListItem>
@@ -58,6 +58,15 @@ export const SideBar = ({ roles }) => {
 }
 
 const StyledNavLink = styled(NavLink)``
+
+const SelectedLink = styled.span`
+   display: none;
+   position: absolute;
+   background: #1f6ed4;
+   left: 0;
+   width: 8px;
+   height: 100%; ;
+`
 
 const StyledLogo = styled(Logo)`
    margin: 38px 0 66px 0;
@@ -93,21 +102,12 @@ const SidebarList = styled(List)(() => ({
       textDecoration: 'none',
    },
 
-   '.selectedLink': {
-      display: 'none',
-      position: 'absolute',
-      background: '#1F6ED4',
-      left: 0,
-      width: '8px',
-      height: '100%',
-   },
-
    '& .active': {
       '& .MuiListItem-root': {
          fill: '#1F6ED4',
          background: 'rgb(221,233,249)',
       },
-      '& .selectedLink': {
+      '& span': {
          display: 'block',
       },
       '& path': {
