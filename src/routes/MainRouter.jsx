@@ -1,29 +1,32 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import { LoginPage } from '../pages/LoginPage'
-import { Instructor } from '../layout/Instructor'
-import { Admin } from '../layout/Admin'
+import { StudentLayout } from '../layout/StudentLayout'
+import { AdminLayout } from '../layout/AdminLayout'
 import PrivateRoute from './PrivateRoute'
-import { StudentPage } from '../pages/StudentPage'
+import { InstructorLayout } from '../layout/InstructorLayout'
 
 export const MainRouter = () => {
    return (
       <Routes>
          <Route path="/" element={<LoginPage />} />
          <Route
-            path="/admin"
-            element={<PrivateRoute roles="ADMIN" Component={<Admin />} />}
+            path="/admin/*"
+            element={<PrivateRoute roles="ADMIN" Component={<AdminLayout />} />}
          />
          <Route
-            path="/instructor"
+            path="/instructor/*"
             element={
-               <PrivateRoute roles="INSTRUCTOR" Component={<Instructor />} />
+               <PrivateRoute
+                  roles="INSTRUCTOR"
+                  Component={<InstructorLayout />}
+               />
             }
          />
          <Route
-            path="/student"
+            path="/student/*"
             element={
-               <PrivateRoute roles="STUDENT" Component={<StudentPage />} />
+               <PrivateRoute roles="STUDENT" Component={<StudentLayout />} />
             }
          />
       </Routes>

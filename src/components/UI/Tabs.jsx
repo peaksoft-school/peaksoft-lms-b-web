@@ -2,8 +2,7 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const StyledTabs = styled((props) => (
    <Tabs
@@ -45,20 +44,6 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
    })
 )
 
-function TabPanel(props) {
-   const { value, index, ...other } = props
-
-   return (
-      <div
-         role="tabpanel"
-         hidden={value !== index}
-         id={`simple-tabpanel-${index}`}
-         aria-labelledby={`simple-tab-${index}`}
-         {...other}
-      />
-   )
-}
-
 export const TabsTitle = ({ tabs }) => {
    const navigate = useNavigate()
    const [value, setValue] = React.useState(0)
@@ -67,29 +52,24 @@ export const TabsTitle = ({ tabs }) => {
       setValue(newValue)
    }
 
+   const params = useParams()
+   // console.log(params) here you can get id params
+
    return (
-      <>
-         <StyledTabs
-            value={value}
-            onChange={handleChange}
-            aria-label="styled tabs example"
-         >
-            {tabs.map((label) => (
-               <StyledTab
-                  key={label.path}
-                  onClick={() => {
-                     navigate(label.path)
-                  }}
-                  label={label.label}
-               />
-            ))}
-         </StyledTabs>
-         <Box sx={{ p: 3 }} />
-         {tabs.map(({ Component }, i) => (
-            <TabPanel value={value} index={i}>
-               {Component}
-            </TabPanel>
+      <StyledTabs
+         value={value}
+         onChange={handleChange}
+         aria-label="styled tabs example"
+      >
+         {tabs.map((label) => (
+            <StyledTab
+               key={label.path}
+               onClick={() => {
+                  navigate(label.path)
+               }}
+               label={label.label}
+            />
          ))}
-      </>
+      </StyledTabs>
    )
 }
