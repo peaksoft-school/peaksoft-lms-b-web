@@ -2,12 +2,8 @@ import * as React from 'react'
 import { styled, alpha } from '@mui/material/styles'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import { ReactComponent as MeetBallIcon } from '../../assets/icons/option.svg'
-import { ReactComponent as FixIcon } from '../../assets/icons/FixIcon.svg'
-import { ReactComponent as EditIcon } from '../../assets/icons/EditIcon.svg'
-import { ReactComponent as Trash } from '../../assets/icons/TrashBin.svg'
 
 const StyledMenu = styled((props) => (
    <Menu
@@ -57,9 +53,8 @@ export const MeetBalls = ({
    handleClick,
    handleClose,
    anchorEl,
-   editHandler,
-   deleteHandler,
-   fixHandler,
+   option,
+   peace,
 }) => {
    return (
       <div>
@@ -69,7 +64,6 @@ export const MeetBalls = ({
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             variant="contained"
-            disableElevation
             onClick={handleClick}
             color="primary"
             aria-label="upload picture"
@@ -87,19 +81,17 @@ export const MeetBalls = ({
             open={open}
             onClose={handleClose}
          >
-            <MenuItem onClick={fixHandler} disableRipple>
-               <FixIcon style={{ marginRight: '20px' }} />
-               Назначить учителя
-            </MenuItem>
-            <MenuItem onClick={editHandler} disableRipple>
-               <EditIcon style={{ marginRight: '20px' }} />
-               Редактировать
-            </MenuItem>
-            <Divider sx={{ my: 0.5 }} />
-            <MenuItem onClick={deleteHandler} disableRipple>
-               <Trash style={{ marginRight: '20px' }} />
-               Удалить
-            </MenuItem>
+            {option[peace].map((item) => {
+               return (
+                  <MenuItem
+                     key={item.id}
+                     onClick={() => handleClose(item.actio)}
+                     disableRipple
+                  >
+                     {item.content}
+                  </MenuItem>
+               )
+            })}
          </StyledMenu>
       </div>
    )

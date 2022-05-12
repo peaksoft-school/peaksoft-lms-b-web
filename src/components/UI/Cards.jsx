@@ -2,6 +2,79 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Title } from './Title'
 import { MeetBalls } from './MeetBalls'
+import { ReactComponent as FixIcon } from '../../assets/icons/FixIcon.svg'
+import { ReactComponent as EditIcon } from '../../assets/icons/EditIcon.svg'
+import { ReactComponent as Trash } from '../../assets/icons/TrashBin.svg'
+import DefaultCardImage from '../../assets/images/DefaultCardImage.png'
+
+const option = {
+   COURSES: [
+      {
+         id: Math.random().toString(),
+         action: (obj) => {
+            alert(obj)
+         },
+         content: (
+            <>
+               <FixIcon style={{ marginRight: '20px' }} />
+               Назначить учителя
+            </>
+         ),
+      },
+      {
+         id: Math.random().toString(),
+         action: (obj) => {
+            alert(obj)
+         },
+         content: (
+            <>
+               {' '}
+               <EditIcon style={{ marginRight: '20px' }} />
+               Редактировать
+            </>
+         ),
+      },
+      {
+         id: Math.random().toString(),
+         action: (obj) => {
+            alert(obj)
+         },
+         content: (
+            <>
+               <Trash style={{ marginRight: '20px' }} />
+               Удалить
+            </>
+         ),
+      },
+   ],
+   GROUPS: [
+      {
+         id: Math.random().toString(),
+         action: (obj) => {
+            alert(obj)
+         },
+         content: (
+            <>
+               {' '}
+               <EditIcon style={{ marginRight: '20px' }} />
+               Редактировать
+            </>
+         ),
+      },
+      {
+         id: Math.random().toString(),
+         action: (obj) => {
+            alert(obj)
+         },
+         content: (
+            <>
+               <Trash style={{ marginRight: '20px' }} />
+               Удалить
+            </>
+         ),
+      },
+   ],
+}
 
 export const Cards = ({
    image,
@@ -9,33 +82,27 @@ export const Cards = ({
    duration,
    description,
    onCardClick,
-   onEdit,
-   onDelete,
-   onFix,
+   peace,
+   cardId,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
    const clickHandler = (event) => {
       setAnchorEl(event.currentTarget)
    }
-   const closeHandler = () => {
+   const closeHandler = (action) => {
       setAnchorEl(null)
+      action({ id: cardId })
    }
-   const deleteHandler = () => {
-      onDelete()
-      closeHandler()
-   }
-   const fixHandler = () => {
-      onFix()
-      closeHandler()
-   }
-   const editHandler = () => {
-      onEdit()
-      closeHandler()
-   }
+
    return (
       <Card onClick={onCardClick}>
-         <WrapperImg>{image}</WrapperImg>
+         {image ? (
+            <WrapperImg src={image} alt="foto" />
+         ) : (
+            <WrapperImg src={DefaultCardImage} alt="foto" />
+         )}
+
          <WrapperGroupTitle>
             <Title
                lineHeight="25px"
@@ -70,17 +137,16 @@ export const Cards = ({
                handleClick={clickHandler}
                handleClose={closeHandler}
                anchorEl={anchorEl}
-               deleteHandler={deleteHandler}
-               fixHandler={fixHandler}
-               editHandler={editHandler}
+               option={option}
+               peace={peace}
             />
          </WrapperOptionsIcon>
       </Card>
    )
 }
 const Card = styled.div`
-   max-width: 260px;
    min-width: 200px;
+   max-width: 260px;
    height: 311px;
    display: flex;
    flex-direction: column;
@@ -89,10 +155,9 @@ const Card = styled.div`
    box-sizing: border-box;
    border-radius: 10px;
 `
-const WrapperImg = styled.div`
+const WrapperImg = styled.img`
    width: 100%;
    height: 171px;
-   background: red;
    border-top-left-radius: 10px;
    border-top-right-radius: 10px;
 `
