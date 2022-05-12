@@ -40,7 +40,7 @@ const sideBar = {
 
 export const SideBar = ({ roles }) => {
    return (
-      <StyledBox width="290px">
+      <StyledBox position="fixed" width="240px">
          <SidebarList>
             <StyledLogo />
             {sideBar[roles].map((item) => (
@@ -85,7 +85,7 @@ const StyledBox = styled(Box)`
 const SidebarList = styled(List)(() => ({
    '& .MuiListItem-root': {
       width: '93%',
-      paddingLeft: '7vh',
+      paddingLeft: '4vh',
       borderRadius: '0 10px 10px 0',
       color: '#292929',
       '& .MuiTypography-root': {
