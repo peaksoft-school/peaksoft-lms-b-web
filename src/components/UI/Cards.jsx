@@ -79,8 +79,8 @@ export const Cards = ({
    )
 }
 const Card = styled.div`
-   min-width: 270px;
-   max-width: 340px;
+   max-width: 260px;
+   min-width: 200px;
    height: 311px;
    display: flex;
    flex-direction: column;
