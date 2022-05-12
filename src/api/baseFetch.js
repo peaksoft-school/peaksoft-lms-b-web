@@ -1,22 +1,34 @@
 import { BASE_URL } from '../utils/constants/general'
+import { getFromLocalStorage } from '../utils/helpers/helpers'
+import { AUTH } from '../utils/constants/constants'
 
 export const baseFetch = async (options) => {
+   const user = getFromLocalStorage(AUTH)
    try {
       const { path, body, method, params } = options
+      let path2 = path
+
       const requestOptions = {
          method: method || 'GET',
          headers: { 'Content-Type': 'application/json' },
       }
+
       if (method !== 'GET') {
          requestOptions.body = JSON.stringify(body || {})
       }
+      if (user) {
+         requestOptions.headers.Authorization = `Bearer ${user.token}`
+      }
+
       if (params) {
          const queryParamsStringValue = Object.keys(params)
             .map((paramKey) => `${paramKey}=${params[paramKey]}`)
             .join('&')
-         const path = `${path}?${queryParamsStringValue}`
+
+         path2 = `${path}?${queryParamsStringValue}`
       }
-      const response = await fetch(`${BASE_URL}/${path}`, requestOptions)
+
+      const response = await fetch(`${BASE_URL}/${path2}`, requestOptions)
       if (!response.ok) {
          throw new Error('Some thing went wrong')
       }

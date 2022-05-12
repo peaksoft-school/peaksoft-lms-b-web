@@ -53,8 +53,8 @@ export const authSlice = createSlice({
          const response = actions.payload
          state.user = response
       },
-      [login.rejected]: (state, payload) => {
-         state.error = payload
+      [login.rejected]: (state, actions) => {
+         state.error = actions
          // console.log(payload)
       },
       [logout.fulfilled]: (state) => {
