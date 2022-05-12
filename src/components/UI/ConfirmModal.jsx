@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import styled from 'styled-components'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Buttons } from './Buttons'
 
 const style = {
@@ -18,12 +20,6 @@ const style = {
    border: 'none',
    outline: 'none',
 }
-
-const StyledModal = styled(Modal)`
-   .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
-      background-color: #ffff;
-   }
-`
 
 const StyledHeaderTitle = styled.h1`
    color: '#1F1C1C';
@@ -58,42 +54,53 @@ export const ConfirmModal = ({ isActive, toggleModal, deleteHandler }) => {
       deleteHandler()
    }
    return (
-      <StyledModal
-         open={isActive}
-         onClose={handleDelete}
-         aria-labelledby="modal-modal-title"
-         aria-describedby="modal-modal-description"
-      >
-         <Box sx={style}>
-            <StyledHeaderTitle>
-               Вы уверены, что хотите удалить группу...?
-            </StyledHeaderTitle>
-            <StyledFooter>
-               <div>
-                  <Buttons
-                     width="108px"
-                     background="#fffff"
-                     fontcolor="#3772FF"
-                     border="1px solid #3772FF"
-                     type="button"
-                     onClick={handleClose}
-                     sx={button}
-                     hoverBack="none"
-                  >
-                     Отмена
-                  </Buttons>
-                  <Buttons
-                     width="108px"
-                     background="#C91E1E"
-                     type="button"
-                     onClick={handleDelete}
-                     hoverBack="none"
-                  >
-                     Удалить
-                  </Buttons>
-               </div>
-            </StyledFooter>
-         </Box>
-      </StyledModal>
+      <>
+         <Backdrop
+            sx={{
+               zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
+            open={isActive}
+            onClick={handleClose}
+         >
+            <CircularProgress color="inherit" />
+         </Backdrop>
+         <Modal
+            open={isActive}
+            onClose={handleDelete}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            <Box sx={style}>
+               <StyledHeaderTitle>
+                  Вы уверены, что хотите удалить группу...?
+               </StyledHeaderTitle>
+               <StyledFooter>
+                  <div>
+                     <Buttons
+                        width="108px"
+                        background="#fffff"
+                        fontcolor="#3772FF"
+                        border="1px solid #3772FF"
+                        type="button"
+                        onClick={handleClose}
+                        sx={button}
+                        hoverBack="none"
+                     >
+                        Отмена
+                     </Buttons>
+                     <Buttons
+                        width="108px"
+                        background="#C91E1E"
+                        type="button"
+                        onClick={handleDelete}
+                        hoverBack="none"
+                     >
+                        Удалить
+                     </Buttons>
+                  </div>
+               </StyledFooter>
+            </Box>
+         </Modal>
+      </>
    )
 }

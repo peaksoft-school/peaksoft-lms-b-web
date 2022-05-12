@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import { useState } from 'react'
 import styled from 'styled-components'
 import { Buttons } from './Buttons'
 
@@ -17,8 +16,9 @@ const style = {
    border: 'none',
    outline: 'none',
 }
+
 const StyledModal = styled(Modal)`
-   .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+   .MuiBackdrop-root {
       background-color: #ffff;
    }
 `
@@ -54,18 +54,20 @@ const StyledFooter = styled.footer`
       justify-content: space-around;
    }
 `
-export const BasicModal = ({ title, children }) => {
-   const [open, setOpen] = useState(true)
-   const handleClose = () => {
-      setOpen(false)
-   }
-   const handleToggle = () => {
-      setOpen(true)
-   }
+export const BasicModal = ({
+   isActive,
+   modalCloseHanlder,
+   addHandler,
+   title,
+   children,
+   isActiveFooter = true,
+   cancelTitle,
+   successTitle,
+}) => {
    return (
       <StyledModal
-         open={open}
-         onClose={handleToggle}
+         open={isActive}
+         onClose={modalCloseHanlder}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
       >
@@ -74,28 +76,30 @@ export const BasicModal = ({ title, children }) => {
                <StyledHeaderTitle>{title}</StyledHeaderTitle>
             </StyledHeader>
             <StyledContentContainer>{children}</StyledContentContainer>
-            <StyledFooter>
-               <div>
-                  <Buttons
-                     width="100px"
-                     background="none"
-                     border="1px solid #3772ff"
-                     fontcolor="#3772ff"
-                     hoverBack="none"
-                     onClick={handleClose}
-                  >
-                     Cancel
-                  </Buttons>
-                  <Buttons
-                     width="100px"
-                     fontcolor="#fff"
-                     background="#3772ff"
-                     onClick={handleToggle}
-                  >
-                     Add
-                  </Buttons>
-               </div>
-            </StyledFooter>
+            {isActiveFooter && (
+               <StyledFooter>
+                  <div>
+                     <Buttons
+                        width="100px"
+                        fontcolor="#3772ff"
+                        background="#fff"
+                        border="1px solid #3772ff"
+                        hoverBack="none"
+                        onClick={modalCloseHanlder}
+                     >
+                        {cancelTitle}
+                     </Buttons>
+                     <Buttons
+                        width="100px"
+                        fontcolor="#fff"
+                        background="#3772ff"
+                        onClick={addHandler}
+                     >
+                        {successTitle}
+                     </Buttons>
+                  </div>
+               </StyledFooter>
+            )}
          </Box>
       </StyledModal>
    )
