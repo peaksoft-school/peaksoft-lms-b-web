@@ -3,6 +3,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { Buttons } from '../../UI/Buttons'
 import { Cards } from '../../UI/Cards'
+import { FlexCards } from '../../UI/FlexCards'
 
 export const CoursePanel = () => {
    return (
@@ -12,7 +13,7 @@ export const CoursePanel = () => {
                <AiOutlinePlus fontSize="18px" /> Создать курс
             </Buttons>
          </Flex>
-         <WrapperForCards>
+         <FlexCards>
             <Cards />
             <Cards />
             <Cards />
@@ -23,11 +24,10 @@ export const CoursePanel = () => {
             <Cards />
             <Cards />
             <Cards />
-         </WrapperForCards>
+         </FlexCards>
       </Wrapper>
    )
 }
-
 const Wrapper = styled.div`
    padding-top: 24px;
    height: 100%;
@@ -38,10 +38,4 @@ const Wrapper = styled.div`
 const Flex = styled.div`
    display: flex;
    justify-content: end;
-`
-const WrapperForCards = styled.div`
-   padding-top: 24px;
-   display: flex;
-   flex-wrap: wrap;
-   gap: 20px;
 `

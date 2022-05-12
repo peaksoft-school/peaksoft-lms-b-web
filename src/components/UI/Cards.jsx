@@ -97,7 +97,7 @@ const WrapperImg = styled.div`
    border-top-right-radius: 10px;
 `
 const WrapperGroupTitle = styled.div`
-   min-width: 270px;
+   min-width: 100%;
    display: flex;
    justify-content: space-between;
    align-items: center;
