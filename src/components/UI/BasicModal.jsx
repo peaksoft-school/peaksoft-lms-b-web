@@ -17,11 +17,6 @@ const style = {
    outline: 'none',
 }
 
-const StyledModal = styled(Modal)`
-   .MuiBackdrop-root {
-      background-color: #ffff;
-   }
-`
 const StyledHeader = styled.header`
    width: 100%;
    height: 68px;
@@ -65,7 +60,7 @@ export const BasicModal = ({
    successTitle,
 }) => {
    return (
-      <StyledModal
+      <Modal
          open={isActive}
          onClose={modalCloseHanlder}
          aria-labelledby="modal-modal-title"
@@ -101,6 +96,6 @@ export const BasicModal = ({
                </StyledFooter>
             )}
          </Box>
-      </StyledModal>
+      </Modal>
    )
 }
