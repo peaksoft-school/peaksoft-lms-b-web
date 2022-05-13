@@ -14,3 +14,13 @@ export const removeLocalStorage = (key) => {
 export const clearLocalStorage = () => {
    localStorage.clear()
 }
+
+export const search = (a, b) => {
+   const result = []
+   for (let i = 0; i < a.length; i += 1) {
+      if (b.indexOf(a[i]) === -1) {
+         result.push(a[i])
+      }
+   }
+   return result
+}
