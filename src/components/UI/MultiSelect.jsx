@@ -22,8 +22,8 @@ const StyledFormControl = styled(FormControl)`
 export const UserMultiSelect = ({
    data = [],
    listTitle,
-   selectedUsers = [],
-   setSelectedUsers,
+   value = [],
+   setValue,
 }) => {
    const [person, setPerson] = React.useState([])
 
@@ -35,20 +35,18 @@ export const UserMultiSelect = ({
    }
 
    const addHandler = () => {
-      setSelectedUsers((prev) => Array.from(new Set([...prev, ...person])))
+      setValue((prev) => Array.from(new Set([...prev, ...person])))
       setPerson([])
    }
 
    const deleteHandler = (id) => {
-      setSelectedUsers(
-         selectedUsers.filter((selectedUser) => selectedUser.id !== id)
-      )
+      setValue(value.filter((selected) => selected.id !== id))
    }
 
    return (
       <Box>
          <Box>
-            {selectedUsers.map((user) => {
+            {value.map((user) => {
                return (
                   <SelectedItem
                      onDelete={() => deleteHandler(user.id)}
@@ -76,12 +74,12 @@ export const UserMultiSelect = ({
                <MenuItem disabled value="">
                   <Title>{listTitle}</Title>
                </MenuItem>
-               {search(data, selectedUsers).length === 0 ? (
+               {search(data, value).length === 0 ? (
                   <MenuItem>
                      <ListItemText primary="EMPTY" />
                   </MenuItem>
                ) : (
-                  search(data, selectedUsers).map((user) => (
+                  search(data, value).map((user) => (
                      <MenuItem key={user.id} value={user}>
                         <ListItemText primary={user.name} />
                         <Checkbox checked={person.indexOf(user) > -1} />
