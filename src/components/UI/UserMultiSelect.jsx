@@ -9,6 +9,7 @@ import Checkbox from '@mui/material/Checkbox'
 import ListItemText from '@mui/material/ListItemText'
 import { Title } from './Title'
 import { SelectedItem } from './SelectedItem'
+import { search } from '../../utils/helpers/helpers'
 
 const StyledFormControl = styled(FormControl)`
    .MuiInputBase-root {
@@ -18,7 +19,7 @@ const StyledFormControl = styled(FormControl)`
    }
 `
 
-export const MultiSelect = ({
+export const UserMultiSelect = ({
    data = [],
    listTitle,
    selectedUsers = [],
@@ -75,12 +76,18 @@ export const MultiSelect = ({
                <MenuItem disabled value="">
                   <Title>{listTitle}</Title>
                </MenuItem>
-               {data.map((user) => (
-                  <MenuItem key={user.id} value={user}>
-                     <ListItemText primary={user.name} />
-                     <Checkbox checked={person.indexOf(user) > -1} />
+               {search(data, selectedUsers).length === 0 ? (
+                  <MenuItem>
+                     <ListItemText primary="EMPTY" />
                   </MenuItem>
-               ))}
+               ) : (
+                  search(data, selectedUsers).map((user) => (
+                     <MenuItem key={user.id} value={user}>
+                        <ListItemText primary={user.name} />
+                        <Checkbox checked={person.indexOf(user) > -1} />
+                     </MenuItem>
+                  ))
+               )}
             </Select>
          </StyledFormControl>
       </Box>
