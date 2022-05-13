@@ -18,7 +18,6 @@ const StyledFormControl = styled(FormControl)`
       width: 491px;
    }
 `
-
 export const UserMultiSelect = ({
    data = [],
    listTitle,
