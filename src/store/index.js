@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { adminGroupSlice } from './adminSlice'
 import { authSlice } from './authSlice'
+import { adminGroupSlice } from './adminGroupSlice'
 
 export const store = configureStore({
    reducer: {
       auth: authSlice.reducer,
-      adminGroup: adminGroupSlice.reducer,
+      groupSlice: adminGroupSlice.reducer,
    },
 })

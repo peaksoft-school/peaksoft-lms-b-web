@@ -30,7 +30,7 @@ export const mainRoutes = {
    INSTRUCTOR: {
       path: '/instructor',
       label: 'loginPage',
-      role: 'TEACHER',
+      role: 'INSTRUCTOR',
    },
    STUDENT: {
       path: '/student',

@@ -39,13 +39,12 @@ export const adminGroupSlice = createSlice({
       },
       [getGroupsList.fulfilled]: (state, actions) => {
          const { pages, groups, currentPage } = actions.payload
-         state.groups.pages = pages
-         state.groups.groups = groups
-         state.groups.currentPage = currentPage
+         state.pages = pages
+         state.groups = groups
+         state.currentPage = currentPage
       },
       [getGroupsList.rejected]: (state, actions) => {
-         const { errorMessage } = actions.payload
-         state.groups.error = errorMessage
+         state.error = actions.payload
       },
    },
 })
