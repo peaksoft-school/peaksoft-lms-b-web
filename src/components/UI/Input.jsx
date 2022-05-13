@@ -2,32 +2,10 @@ import React, { forwardRef } from 'react'
 import styled, { css } from 'styled-components'
 
 export const Inputs = forwardRef((props, ref) => {
-   const {
-      type,
-      maxLength,
-      name,
-      value,
-      autoFocus,
-      id,
-      className,
-      pattern,
-      onChange,
-      placeholder,
-   } = props
    return (
       <Input
          {...props}
          ref={ref}
-         type={type}
-         maxLength={maxLength}
-         name={name}
-         value={value}
-         autoFocus={autoFocus}
-         id={id}
-         className={className}
-         pattern={pattern}
-         onChange={onChange}
-         placeholder={placeholder}
       />
    )
 })

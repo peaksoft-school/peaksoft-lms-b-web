@@ -29,7 +29,7 @@ const StyledHeader = styled.header`
 `
 const StyledHeaderTitle = styled.h1`
    color: #ffff;
-   font-size: 26px;
+   font-size: 20px;
    font-style: normal;
    line-height: 27px;
    font-weight: 400;
@@ -37,12 +37,12 @@ const StyledHeaderTitle = styled.h1`
    font-family: var(--base-font);
 `
 const StyledContentContainer = styled.div`
-   padding: 25px;
+   padding: 16px 25px 20px 25px;
 `
 const StyledFooter = styled.footer`
    display: flex;
    justify-content: flex-end;
-   padding: 25px;
+   padding: 0 20px 25px;
    div {
       width: 250px;
       display: flex;
@@ -79,7 +79,6 @@ export const BasicModal = ({
                         fontcolor="#3772ff"
                         background="#fff"
                         border="1px solid #3772ff"
-                        hoverBack="none"
                         onClick={modalCloseHanlder}
                      >
                         {cancelTitle}
