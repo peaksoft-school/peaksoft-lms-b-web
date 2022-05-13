@@ -1,12 +1,10 @@
 import { BASE_URL } from '../utils/constants/general'
 import { getFromLocalStorage } from '../utils/helpers/helpers'
 import { AUTH } from '../utils/constants/constants'
-// eslint-disable-next-line import/no-cycle
-import { store } from '../store'
 
 export const baseFetch = async (options) => {
    const user = getFromLocalStorage(AUTH)
-   console.log(store)
+
    try {
       const { path, body, method, params } = options
       let url = path

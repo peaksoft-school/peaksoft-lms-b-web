@@ -2,78 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Title } from './Title'
 import { MeetBalls } from './MeetBalls'
-// import { ReactComponent as FixIcon } from '../../assets/icons/FixIcon.svg'
-// import { ReactComponent as EditIcon } from '../../assets/icons/EditIcon.svg'
-// import { ReactComponent as Trash } from '../../assets/icons/TrashBin.svg'
 import DefaultCardImage from '../../assets/images/DefaultCardImage.png'
-
-// const option = {
-//    COURSES: [
-//       {
-//          id: Math.random().toString(),
-//          action: (obj) => {
-//             alert(obj)
-//          },
-//          content: (
-//             <>
-//                <FixIcon style={{ marginRight: '20px' }} />
-//                Назначить учителя
-//             </>
-//          ),
-//       },
-//       {
-//          id: Math.random().toString(),
-//          action: (obj) => {
-//             alert(obj)
-//          },
-//          content: (
-//             <>
-//                <EditIcon style={{ marginRight: '20px' }} />
-//                Редактировать
-//             </>
-//          ),
-//       },
-//       {
-//          id: Math.random().toString(),
-//          action: (obj) => {
-//             alert(obj)
-//          },
-//          content: (
-//             <>
-//                <Trash style={{ marginRight: '20px' }} />
-//                Удалить
-//             </>
-//          ),
-//       },
-//    ],
-//    GROUPS: [
-//       {
-//          id: Math.random().toString(),
-//          action: (obj) => {
-//             alert(obj)
-//          },
-//          content: (
-//             <>
-//                {' '}
-//                <EditIcon style={{ marginRight: '20px' }} />
-//                Редактировать
-//             </>
-//          ),
-//       },
-//       {
-//          id: Math.random().toString(),
-//          action: (obj) => {
-//             alert(obj)
-//          },
-//          content: (
-//             <>
-//                <Trash style={{ marginRight: '20px' }} />
-//                Удалить
-//             </>
-//          ),
-//       },
-//    ],
-// }
 
 export const Cards = ({
    image,
@@ -93,10 +22,9 @@ export const Cards = ({
       setAnchorEl(null)
    }
    const actionHandler = (action) => {
-      closeHandler()
       action({ id: cardId })
+      closeHandler()
    }
-
    return (
       <Card onClick={onCardClick}>
          {image ? (
@@ -138,8 +66,8 @@ export const Cards = ({
                handleClick={clickHandler}
                handleClose={closeHandler}
                anchorEl={anchorEl}
-               option={option}
                onAction={actionHandler}
+               option={option}
             />
          </WrapperOptionsIcon>
       </Card>
