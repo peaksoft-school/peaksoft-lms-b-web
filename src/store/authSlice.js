@@ -55,6 +55,7 @@ export const authSlice = createSlice({
       },
       [login.rejected]: (state, payload) => {
          state.error = payload
+         // console.log(payload)
       },
       [logout.fulfilled]: (state) => {
          state.user.email = null
