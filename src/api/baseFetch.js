@@ -1,12 +1,15 @@
 import { BASE_URL } from '../utils/constants/general'
 import { getFromLocalStorage } from '../utils/helpers/helpers'
 import { AUTH } from '../utils/constants/constants'
+// eslint-disable-next-line import/no-cycle
+import { store } from '../store'
 
 export const baseFetch = async (options) => {
    const user = getFromLocalStorage(AUTH)
+   console.log(store)
    try {
       const { path, body, method, params } = options
-      let path2 = path
+      let url = path
 
       const requestOptions = {
          method: method || 'GET',
@@ -25,10 +28,10 @@ export const baseFetch = async (options) => {
             .map((paramKey) => `${paramKey}=${params[paramKey]}`)
             .join('&')
 
-         path2 = `${path}?${queryParamsStringValue}`
+         url = `${path}?${queryParamsStringValue}`
       }
 
-      const response = await fetch(`${BASE_URL}/${path2}`, requestOptions)
+      const response = await fetch(`${BASE_URL}/${url}`, requestOptions)
       if (!response.ok) {
          throw new Error('Some thing went wrong')
       }
