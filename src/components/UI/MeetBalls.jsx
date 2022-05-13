@@ -85,7 +85,7 @@ export const MeetBalls = ({
                return (
                   <MenuItem
                      key={item.id}
-                     onClick={() => handleClose(item.actio)}
+                     onClick={() => handleClose(item.action)}
                      disableRipple
                   >
                      {item.content}
