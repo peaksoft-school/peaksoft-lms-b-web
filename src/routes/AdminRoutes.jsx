@@ -1,7 +1,9 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { Box } from '@mui/material'
 import { BasicModal } from '../components/UI/BasicModal'
 import { CustomDatePicker } from '../components/UI/CustomDatePicker'
+import { Inputs } from '../components/UI/Input'
 
 export const AdminRoutes = () => {
    return (
@@ -12,7 +14,14 @@ export const AdminRoutes = () => {
             element={
                <div>
                   <BasicModal isActive>
-                     <CustomDatePicker />
+                     <Box display="flex" justifyContent="space-between">
+                        <div>
+                           <CustomDatePicker />
+                        </div>
+                        <div>
+                           <Inputs width="100px" />
+                        </div>
+                     </Box>
                   </BasicModal>
                </div>
             }

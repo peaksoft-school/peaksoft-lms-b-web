@@ -9,21 +9,43 @@ import ruLocale from 'date-fns/locale/ru'
 const StyledDatePicker = styled(DatePicker)``
 
 const StyledTextField = styled(TextField)`
-   .MuiInputBase-root-MuiOutlinedInput-root {
+   .MuiInputBase-root {
       border-radius: 15px;
+      width: ${({ width }) => width || '250px'};
+      height: 42px;
+      color: gray;
+      position: absolute;
+      outline: none;
    }
 `
 
-export const CustomDatePicker = ({ value, setDate }) => {
+export const CustomDatePicker = ({ value, setDate, width }) => {
    return (
       <LocalizationProvider locale={ruLocale} dateAdapter={AdapterDateFns}>
          <StyledDatePicker
+            readOnly
             value={value}
             onChange={(newValue) => {
                setDate(newValue)
             }}
             renderInput={(params) => (
-               <StyledTextField border="none" {...params} />
+               <StyledTextField
+                  sx={{
+                     '& .MuiOutlinedInput-root.Mui-focused': {
+                        '& > fieldset': {
+                           border: '1px solid #1d60ff',
+                        },
+                     },
+                  }}
+                  width={width}
+                  border="none"
+                  {...params}
+                  inputProps={{
+                     ...params.inputProps,
+                     readOnly: true,
+                     placeholder: 'дд.мм.гг',
+                  }}
+               />
             )}
          />
       </LocalizationProvider>
