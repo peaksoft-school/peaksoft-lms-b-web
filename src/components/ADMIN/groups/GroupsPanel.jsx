@@ -14,6 +14,7 @@ import { ConfirmModal } from '../../UI/ConfirmModal'
 import { getGroupsList } from '../../../store/adminGroupSlice'
 import { BasicPagination } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
+import { CustomDatePicker } from '../../UI/CustomDatePicker'
 
 export const GroupsPanel = () => {
    const [isActive, setIsActive] = useState(null)
@@ -84,12 +85,7 @@ export const GroupsPanel = () => {
                   // value={values.courseName}
                   name="courseName"
                />
-               <Inputs
-                  // value={values.date}
-                  // name="date"
-                  type="date"
-                  width="149"
-               />
+               <CustomDatePicker width="149px" />
             </FlexInput>
             <Textarea placeholder="Описание курса" />
          </BasicModal>
@@ -107,7 +103,7 @@ export const GroupsPanel = () => {
             <ImagePicker />
             <FlexInput>
                <Inputs width="327" placeholder="Название курса" />
-               <Inputs type="date" width="149" />
+               <CustomDatePicker width="149px" />
             </FlexInput>
             <Textarea placeholder="Описание курса" />
          </BasicModal>
