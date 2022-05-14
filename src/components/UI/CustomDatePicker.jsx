@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import DatePicker from '@mui/lab/DatePicker'
+import ruLocale from 'date-fns/locale/ru'
 
 const StyledDatePicker = styled(DatePicker)``
 
@@ -15,24 +16,14 @@ const StyledTextField = styled(TextField)`
 
 export const CustomDatePicker = ({ value, setDate }) => {
    return (
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider locale={ruLocale} dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={value}
             onChange={(newValue) => {
                setDate(newValue)
             }}
             renderInput={(params) => (
-               <StyledTextField
-                  sx={{
-                     '& .MuiOutlinedInput-root.Mui-focused': {
-                        '& > fieldset': {
-                           borderColor: 'black',
-                        },
-                     },
-                  }}
-                  border="none"
-                  {...params}
-               />
+               <StyledTextField border="none" {...params} />
             )}
          />
       </LocalizationProvider>
