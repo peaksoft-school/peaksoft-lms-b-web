@@ -32,7 +32,6 @@ export const Cards = ({
          ) : (
             <WrapperImg src={DefaultCardImage} alt="foto" />
          )}
-
          <WrapperGroupTitle>
             <Title
                lineHeight="25px"
