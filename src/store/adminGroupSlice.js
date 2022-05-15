@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { baseFetch } from '../api/baseFetch'
+import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
    error: null,
@@ -29,6 +30,22 @@ export const getGroupsList = createAsyncThunk(
    }
 )
 
+export const sendPhoto = createAsyncThunk(
+   'admin/slice/sendPhoto',
+   async (file) => {
+      console.log(file)
+      try {
+         const response = await fileFetchApi({
+            path: 'api/files/upload',
+            file,
+         })
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
@@ -45,6 +62,12 @@ export const adminGroupSlice = createSlice({
       },
       [getGroupsList.rejected]: (state, actions) => {
          state.error = actions.payload
+      },
+      [sendPhoto.fulfilled]: (state, actions) => {
+         console.log(actions)
+      },
+      [sendPhoto.rejected]: (state, actions) => {
+         console.log(actions)
       },
    },
 })

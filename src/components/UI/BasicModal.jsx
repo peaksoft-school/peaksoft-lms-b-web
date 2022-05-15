@@ -76,6 +76,7 @@ export const BasicModal = ({
                   <div>
                      <Buttons
                         width="100px"
+                        hoverback="null"
                         fontcolor="#3772ff"
                         background="#fff"
                         border="1px solid #3772ff"

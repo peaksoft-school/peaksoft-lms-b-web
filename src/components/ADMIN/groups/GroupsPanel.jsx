@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import { Formik, useFormik } from 'formik'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
@@ -11,21 +12,38 @@ import { BasicModal } from '../../UI/BasicModal'
 import { ImagePicker } from '../../UI/ImagePicker'
 import { Inputs } from '../../UI/Input'
 import { ConfirmModal } from '../../UI/ConfirmModal'
-import { getGroupsList } from '../../../store/adminGroupSlice'
+import { getGroupsList, sendPhoto } from '../../../store/adminGroupSlice'
 import { BasicPagination } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { CustomDatePicker } from '../../UI/CustomDatePicker'
 
 export const GroupsPanel = () => {
-   const [isActive, setIsActive] = useState(null)
-   const dispatch = useDispatch()
-
    useEffect(() => {
       dispatch(getGroupsList())
    }, [])
    const { currentPage, error, groups, isLoading, pages } = useSelector(
       (store) => store.groupSlice
    )
+   const [isActive, setIsActive] = useState(null)
+   const [images, setImages] = useState({
+      newGroupImage: null,
+      newGroupImagePath: '',
+      editImage: null,
+      editimagePath: '',
+   })
+   const [dates, setDates] = useState({
+      newGroupDate: '',
+      editDate: '',
+   })
+
+   const dispatch = useDispatch()
+   const formik = useFormik({
+      initialValues: {
+         courseName: '',
+         description: '',
+      },
+      onSubmit: (values) => {},
+   })
 
    const modalHandler = (item) => {
       setIsActive(item)
@@ -33,12 +51,20 @@ export const GroupsPanel = () => {
    const closeModalHandler = () => {
       setIsActive(false)
    }
-   const getPhotoHandler = (foto) => {
-      console.log(foto)
+   const getPhotoHandler = (photo) => {
+      setImages((prev) => {
+         return {
+            ...prev,
+            newGroupImage: photo,
+            newGroupImagePath: URL.createObjectURL(photo),
+         }
+      })
+      dispatch(sendPhoto(photo))
    }
    const createNewGroupHandler = (groupData) => {
       console.log(groupData)
    }
+
    const option = [
       {
          id: Math.random().toString(),
@@ -76,18 +102,30 @@ export const GroupsPanel = () => {
             successTitle="Добавить"
             isActiveFooter="true"
             modalCloseHanlder={closeModalHandler}
+            addHandler={formik.handleSubmit}
          >
-            <ImagePicker getPhoto={getPhotoHandler} />
-            <FlexInput>
-               <Inputs
-                  width="327"
-                  placeholder="Название курса"
-                  // value={values.courseName}
-                  name="courseName"
+            <ImagePicker
+               image={images.newGroupImagePath}
+               getPhoto={getPhotoHandler}
+            />
+            <form onSubmit={formik.handleSubmit}>
+               <FlexInput>
+                  <Inputs
+                     width="327"
+                     placeholder="Название курса"
+                     value={formik.values.courseName}
+                     name="courseName"
+                     onChange={formik.handleChange}
+                  />
+                  <CustomDatePicker width="149px" />
+               </FlexInput>
+               <Textarea
+                  name="description"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  placeholder="Описание курса"
                />
-               <CustomDatePicker width="149px" />
-            </FlexInput>
-            <Textarea placeholder="Описание курса" />
+            </form>
          </BasicModal>
       )
    } else if (isActive === 'edit') {
@@ -101,11 +139,13 @@ export const GroupsPanel = () => {
             modalCloseHanlder={closeModalHandler}
          >
             <ImagePicker />
-            <FlexInput>
-               <Inputs width="327" placeholder="Название курса" />
-               <CustomDatePicker width="149px" />
-            </FlexInput>
-            <Textarea placeholder="Описание курса" />
+            <form>
+               <FlexInput>
+                  <Inputs width="327" placeholder="Название курса" />
+                  <CustomDatePicker width="149px" />
+               </FlexInput>
+               <Textarea placeholder="Описание курса" />
+            </form>
          </BasicModal>
       )
    } else if (isActive === 'delete') {
