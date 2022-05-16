@@ -23,6 +23,7 @@ export const getGroupsList = createAsyncThunk(
                size: 8,
             },
          })
+
          return response
       } catch (error) {
          return error.message
@@ -33,7 +34,6 @@ export const getGroupsList = createAsyncThunk(
 export const sendPhoto = createAsyncThunk(
    'admin/slice/sendPhoto',
    async (file) => {
-      console.log(file)
       try {
          const response = await fileFetchApi({
             path: 'api/files/upload',
@@ -46,28 +46,97 @@ export const sendPhoto = createAsyncThunk(
    }
 )
 
+export const createGroup = createAsyncThunk(
+   'admin/slice/createGroup',
+   async (groupInfo) => {
+      try {
+         const response = await baseFetch({
+            path: 'api/groups',
+            method: 'POST',
+            body: groupInfo,
+         })
+
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const deleteGroup = createAsyncThunk(
+   'admin/slice/deleteGroup',
+   async (id) => {
+      try {
+         const response = await baseFetch({
+            path: `api/groups/${id}`,
+            method: 'DELETE',
+         })
+
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const editGroup = createAsyncThunk(
+   'admin/slice/editGrouop',
+   async ({ groupInfo, id }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/groups/${id}`,
+            method: 'PUT',
+            body: groupInfo,
+         })
+
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const getStudentsByGroupId = createAsyncThunk(
+   'admin/slice/getStudentsByGroupId',
+   async (id) => {
+      try {
+         const response = await baseFetch({
+            path: `api/groups/students/${id}`,
+            method: 'GET',
+         })
+
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
    reducers: {},
    extraReducers: {
-      [getGroupsList.pending]: (state) => {
-         state.groups.isLoading = true
-      },
       [getGroupsList.fulfilled]: (state, actions) => {
-         const { pages, groups, currentPage } = actions.payload
+         const { pages, currentPage, groups } = actions.payload
          state.pages = pages
          state.groups = groups
          state.currentPage = currentPage
       },
-      [getGroupsList.rejected]: (state, actions) => {
-         state.error = actions.payload
-      },
       [sendPhoto.fulfilled]: (state, actions) => {
          console.log(actions)
       },
-      [sendPhoto.rejected]: (state, actions) => {
-         console.log(actions)
+      [createGroup.fulfilled]: (state, actions) => {
+         const newGroup = actions.payload
+         state.groups = [...state.groups, newGroup]
+      },
+      [deleteGroup.fulfilled]: (state, actions) => {
+         console.log(actions.payload)
+         // state.groups = state.groups.filter((item) => item.id !== id)
+      },
+      [getStudentsByGroupId.fulfilled]: (state, actions) => {
+         const table = actions.payload
+         state.table = table
       },
    },
 })

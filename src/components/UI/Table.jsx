@@ -32,13 +32,15 @@ const WraperForTable = styled.div`
    min-height: 86.3vh;
    min-height: 94.5vh;
    background-color: #fff;
-   border-radius: 10px;
+   border-radius: 20px;
+   border: 1px solid black;
 `
 const StyledTable = styled.table`
    background-color: #eff0f6;
    font-family: var(--base-font);
    font-style: normal;
-   width: 170vh;
+   border-radius: 20px;
+   width: 100%;
    color: #1d293f;
    hr {
       border-top: 0.2px solid #e7e9eb;
@@ -48,7 +50,14 @@ const Thead = styled.thead`
    font-weight: 400;
    font-size: 14px;
    line-height: 19px;
-   width: 170vh;
+   width: 100%;
+
+   th:first-of-type {
+      border-top-left-radius: 10px;
+   }
+   th:last-of-type {
+      border-top-right-radius: 10px;
+   }
 
    th {
       white-space: nowrap;

@@ -2,74 +2,51 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { Formik, useFormik } from 'formik'
+import { useNavigate } from 'react-router'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
-import { BasicModal } from '../../UI/BasicModal'
-import { ImagePicker } from '../../UI/ImagePicker'
-import { Inputs } from '../../UI/Input'
-import { ConfirmModal } from '../../UI/ConfirmModal'
-import { getGroupsList, sendPhoto } from '../../../store/adminGroupSlice'
+import { getGroupsList } from '../../../store/adminGroupSlice'
 import { BasicPagination } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
-import { CustomDatePicker } from '../../UI/CustomDatePicker'
+import { GroupModal } from './GroupModal'
 
 export const GroupsPanel = () => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
    useEffect(() => {
       dispatch(getGroupsList())
    }, [])
-   const { currentPage, error, groups, isLoading, pages } = useSelector(
-      (store) => store.groupSlice
-   )
-   const [isActive, setIsActive] = useState(null)
-   const [images, setImages] = useState({
-      newGroupImage: null,
-      newGroupImagePath: '',
-      editImage: null,
-      editimagePath: '',
-   })
-   const [dates, setDates] = useState({
-      newGroupDate: '',
-      editDate: '',
-   })
+   const { groups, pages } = useSelector((store) => store.groupSlice)
 
-   const dispatch = useDispatch()
-   const formik = useFormik({
-      initialValues: {
-         courseName: '',
-         description: '',
-      },
-      onSubmit: (values) => {},
+   const [isActive, setIsActive] = useState({
+      action: null,
    })
 
    const modalHandler = (item) => {
       setIsActive(item)
    }
+
    const closeModalHandler = () => {
-      setIsActive(false)
-   }
-   const getPhotoHandler = (photo) => {
-      setImages((prev) => {
-         return {
-            ...prev,
-            newGroupImage: photo,
-            newGroupImagePath: URL.createObjectURL(photo),
-         }
+      setIsActive({
+         action: null,
       })
-      dispatch(sendPhoto(photo))
    }
-   const createNewGroupHandler = (groupData) => {
-      console.log(groupData)
+
+   const openInnerPage = (id) => {
+      navigate(`${id}`)
    }
 
    const option = [
       {
          id: Math.random().toString(),
-         action: () => {
-            modalHandler('edit')
+         action: (groupInformation) => {
+            modalHandler({
+               action: 'edit',
+               groupInformation,
+            })
          },
          content: (
             <>
@@ -80,8 +57,11 @@ export const GroupsPanel = () => {
       },
       {
          id: Math.random().toString(),
-         action: () => {
-            modalHandler('delete')
+         action: (groupInformation) => {
+            modalHandler({
+               action: 'delete',
+               id: groupInformation.id,
+            })
          },
          content: (
             <>
@@ -92,89 +72,32 @@ export const GroupsPanel = () => {
       },
    ]
 
-   let Modal
-   if (isActive === 'addCourse') {
-      Modal = (
-         <BasicModal
-            title="Создать  курс"
-            isActive={!!isActive}
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModalHandler}
-            addHandler={formik.handleSubmit}
-         >
-            <ImagePicker
-               image={images.newGroupImagePath}
-               getPhoto={getPhotoHandler}
-            />
-            <form onSubmit={formik.handleSubmit}>
-               <FlexInput>
-                  <Inputs
-                     width="327"
-                     placeholder="Название курса"
-                     value={formik.values.courseName}
-                     name="courseName"
-                     onChange={formik.handleChange}
-                  />
-                  <CustomDatePicker width="149px" />
-               </FlexInput>
-               <Textarea
-                  name="description"
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  placeholder="Описание курса"
-               />
-            </form>
-         </BasicModal>
-      )
-   } else if (isActive === 'edit') {
-      Modal = (
-         <BasicModal
-            title="Pедактировать"
-            isActive={!!isActive}
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModalHandler}
-         >
-            <ImagePicker />
-            <form>
-               <FlexInput>
-                  <Inputs width="327" placeholder="Название курса" />
-                  <CustomDatePicker width="149px" />
-               </FlexInput>
-               <Textarea placeholder="Описание курса" />
-            </form>
-         </BasicModal>
-      )
-   } else if (isActive === 'delete') {
-      Modal = (
-         <ConfirmModal isActive={!!isActive} toggleModal={closeModalHandler} />
-      )
-   }
-
    return (
       <Wrapper>
          <Flex>
             <Buttons
                onClick={() => {
-                  modalHandler('addCourse')
+                  modalHandler({
+                     action: 'addCourse',
+                  })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс
             </Buttons>
          </Flex>
+
          <FlexCards>
             {groups.map((el) => (
                <Cards
+                  onCardClick={() => openInnerPage(el.id)}
                   key={el.id}
-                  title={el.title}
+                  title={el.groupName}
                   image={el.image}
                   description={el.description}
-                  duration={el.date}
+                  duration={el.duration}
                   cardId={el.id}
                   option={option}
+                  allInformation={el}
                />
             ))}
          </FlexCards>
@@ -183,7 +106,14 @@ export const GroupsPanel = () => {
                <BasicPagination pages={pages} />
             </StyledFooter>
          </ConditionalRender>
-         {Modal}
+         <GroupModal
+            isActive={isActive}
+            onCloseModal={closeModalHandler}
+            // editPhoto={editGroupModalImage}
+            // sendPhoto={createGroupModalImage}
+            // onCreatePhoto={createPhotoHandler}
+            // onEditPhoto={editPhotoHandler}
+         />
       </Wrapper>
    )
 }
@@ -202,31 +132,4 @@ const Wrapper = styled.div`
 const Flex = styled.div`
    display: flex;
    justify-content: end;
-`
-const FlexInput = styled.div`
-   display: flex;
-   justify-content: space-between;
-   margin-top: 25px;
-`
-const Textarea = styled.textarea`
-   width: 491px;
-   height: 123px;
-   resize: none;
-   margin-top: 12px;
-   border-radius: 10px;
-   outline: none;
-   padding: 10px 18px;
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 22px;
-   color: var(--base-font);
-   border: 1px solid #d4d4d4;
-   ::placeholder {
-      color: #8d949e;
-   }
-   :focus {
-      border: 1px solid #3772ff;
-   }
 `

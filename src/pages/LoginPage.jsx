@@ -10,6 +10,7 @@ import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 import { login } from '../store/authSlice'
 import { mainRoutes } from '../utils/constants/routes'
+import { getGroupsList } from '../store/adminGroupSlice'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
