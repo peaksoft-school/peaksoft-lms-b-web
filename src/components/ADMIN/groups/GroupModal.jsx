@@ -11,7 +11,7 @@ import { CustomDatePicker } from '../../UI/CustomDatePicker'
 import {
    deleteGroup,
    createGroup,
-   editGroup,
+   updateGroup,
    sendPhoto,
 } from '../../../store/adminGroupSlice'
 import { useInput } from '../../../hooks/useInput'
