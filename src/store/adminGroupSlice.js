@@ -79,7 +79,7 @@ export const deleteGroup = createAsyncThunk(
    }
 )
 
-export const editGroup = createAsyncThunk(
+export const updateGroup = createAsyncThunk(
    'admin/slice/editGrouop',
    async ({ groupInfo, id }) => {
       try {
@@ -105,6 +105,21 @@ export const getStudentsByGroupId = createAsyncThunk(
             method: 'GET',
          })
 
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const getGroupById = createAsyncThunk(
+   'admin/slice/getGroupById',
+   async (id) => {
+      try {
+         const response = await baseFetch({
+            path: `api/groups/${id}`,
+            method: 'GET',
+         })
          return response
       } catch (error) {
          return error.message
@@ -141,6 +156,16 @@ export const adminGroupSlice = createSlice({
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
          const table = actions.payload
          state.table = table
+      },
+      [updateGroup.fulfilled]: (state, action) => {
+         const newGroup = action.payload
+         const currentIndex = state.groups.findIndex(
+            (group) => group.id === newGroup.id
+         )
+         state.groups.splice(currentIndex, 1, newGroup)
+      },
+      [getGroupById.fulfilled]: (state, actions) => {
+         console.log(actions.payload)
       },
    },
 })

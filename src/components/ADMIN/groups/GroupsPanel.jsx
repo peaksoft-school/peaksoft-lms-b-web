@@ -3,6 +3,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
@@ -16,6 +17,7 @@ import { GroupModal } from './GroupModal'
 export const GroupsPanel = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const [searchParams, setSearchParams] = useSearchParams()
    useEffect(() => {
       dispatch(getGroupsList())
    }, [])
@@ -23,17 +25,8 @@ export const GroupsPanel = () => {
 
    const [isActive, setIsActive] = useState({
       action: null,
+      groupInformation: {},
    })
-
-   const modalHandler = (item) => {
-      setIsActive(item)
-   }
-
-   const closeModalHandler = () => {
-      setIsActive({
-         action: null,
-      })
-   }
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -43,10 +36,8 @@ export const GroupsPanel = () => {
       {
          id: Math.random().toString(),
          action: (groupInformation) => {
-            console.log(groupInformation)
-            modalHandler({
-               action: 'edit',
-            })
+            const { id: groupId } = groupInformation
+            setSearchParams({ modal: 'updateGroup', groupId })
          },
          content: (
             <>
@@ -58,10 +49,8 @@ export const GroupsPanel = () => {
       {
          id: Math.random().toString(),
          action: (groupInformation) => {
-            modalHandler({
-               action: 'delete',
-               id: groupInformation.id,
-            })
+            const { id: groupId } = groupInformation
+            setSearchParams({ modal: 'deleteGroup', groupId })
          },
          content: (
             <>
@@ -77,15 +66,12 @@ export const GroupsPanel = () => {
          <Flex>
             <Buttons
                onClick={() => {
-                  modalHandler({
-                     action: 'addCourse',
-                  })
+                  setSearchParams({ modal: 'addGroup' })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс
             </Buttons>
          </Flex>
-
          <FlexCards>
             {groups.map((el) => (
                <Cards
@@ -106,14 +92,7 @@ export const GroupsPanel = () => {
                <BasicPagination pages={pages} />
             </StyledFooter>
          </ConditionalRender>
-         <GroupModal
-            isActive={isActive}
-            onCloseModal={closeModalHandler}
-            // editPhoto={editGroupModalImage}
-            // sendPhoto={createGroupModalImage}
-            // onCreatePhoto={createPhotoHandler}
-            // onEditPhoto={editPhotoHandler}
-         />
+         <GroupModal />
       </Wrapper>
    )
 }
