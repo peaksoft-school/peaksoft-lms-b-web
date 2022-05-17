@@ -8,9 +8,9 @@ import { Inputs } from '../../UI/Input'
 import { CustomDatePicker } from '../../UI/CustomDatePicker'
 import {
    deleteGroup,
-   getGroupsList,
    createGroup,
    editGroup,
+   sendPhoto,
 } from '../../../store/adminGroupSlice'
 import { useInput } from '../../../hooks/useInput'
 import { convertDate } from '../../../utils/helpers/helpers'
@@ -24,17 +24,18 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
    })
    const [createGroupModalDate, setCreateGroupModalDate] = useState()
    const [createGroupModalData, onChangeCreateGroupModalData] = useInput({
-      group_name: '',
+      groupName: '',
       description: '',
    })
    const [editGroupModalImage, setEditGroupModalImage] = useState({})
    const [editGroupModalDate, setEditGroupModalDate] = useState()
    const [editGroupModalData, onChangeEditGroupModalData] = useInput({
-      group_name: '',
+      groupName: '',
       description: '',
    })
 
    const createPhotoHandler = (photo) => {
+      console.log(photo)
       setCreateGroupModalImage({
          frontImage: URL.createObjectURL(photo),
          backImage: photo,
@@ -57,7 +58,7 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
          editGroup({
             groupInfo: {
                ...editGroupModalData,
-               date_of_finish: convertDate(editGroupModalDate),
+               dateOfFinish: convertDate(editGroupModalDate),
                image: 'https://images.unsplash.com/photo-1652643375706-3259c3287bb3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1229&q=80',
             },
             id,
@@ -65,20 +66,30 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
       )
    }
 
-   const createHandler = () => {
+   const createHandler = async () => {
+      const { URL } = await dispatch(
+         sendPhoto(createGroupModalImage.backImage)
+      ).unwrap()
       dispatch(
          createGroup({
             ...createGroupModalData,
-            date_of_finish: convertDate(createGroupModalDate),
-            image: 'https://images.unsplash.com/photo-1652636373308-31e97c10f6ac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80',
+            dateOfFinish: convertDate(createGroupModalDate),
+            image: URL,
          })
       )
+
       onCloseModal()
    }
 
    if (isActive.action === 'addCourse') {
       return (
          <BasicModal
+            isDisabled={
+               createGroupModalImage.frontImage &&
+               createGroupModalDate &&
+               createGroupModalData.description &&
+               createGroupModalData.groupName
+            }
             title="Создать  курс"
             isActive={!!isActive}
             cancelTitle="Отмена"
@@ -94,9 +105,9 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
 
             <FlexInput>
                <Inputs
-                  value={createGroupModalData.title}
+                  value={createGroupModalData.groupName}
                   onChange={(e) => onChangeCreateGroupModalData(e)}
-                  name="group_name"
+                  name="groupName"
                   width="327"
                   placeholder="Название курса"
                />
@@ -116,8 +127,15 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
       )
    }
    if (isActive.action === 'edit') {
+      console.log(isActive)
       return (
          <BasicModal
+            isDisabled={
+               editGroupModalImage.frontImage &&
+               editGroupModalData.groupName &&
+               editGroupModalData.description &&
+               editGroupModalDate
+            }
             title="Pедактировать"
             isActive={!!isActive}
             cancelTitle="Отмена"
@@ -133,14 +151,19 @@ export const GroupModal = ({ isActive, onCloseModal }) => {
 
             <FlexInput>
                <Inputs
-                  name="group_name"
-                  value={editGroupModalData.title}
+                  name="groupName"
+                  value={
+                     editGroupModalData.groupName ||
+                     isActive.groupInformation.groupName
+                  }
                   onChange={(e) => onChangeEditGroupModalData(e)}
                   width="327"
                   placeholder="Название курса"
                />
                <CustomDatePicker
-                  value={editGroupModalDate}
+                  value={
+                     editGroupModalDate || isActive.groupInformation.groupName
+                  }
                   setDate={setEditGroupModalDate}
                   width="149px"
                />

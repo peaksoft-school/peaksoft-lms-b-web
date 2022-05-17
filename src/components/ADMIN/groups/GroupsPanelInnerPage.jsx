@@ -5,14 +5,13 @@ import styled from 'styled-components'
 import Buttons from '@mui/material/IconButton/IconButton'
 import { getStudentsByGroupId } from '../../../store/adminGroupSlice'
 import { Table } from '../../UI/Table'
-import { ReactComponent as EyeIcon } from '../../../assets/icons/EyesForTable.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIconForTable.svg'
 import { ReactComponent as TrashBinIcon } from '../../../assets/icons/TrashBinForTable.svg'
 
 const WrapperIcons = styled.div`
    width: 20vh;
    display: flex;
-   justify-content: space-between;
+   justify-content: center;
    align-items: center;
    & > * {
       &:hover {
@@ -71,17 +70,9 @@ export const GroupsPanelInnerPage = () => {
       {
          title: 'Действие',
          accessKey: '',
-         action: (item) => {
+         action: () => {
             return (
                <WrapperIcons>
-                  <Buttons
-                     onClick={() => {
-                        console.log(item.id)
-                     }}
-                     style={{ background: 'none' }}
-                  >
-                     <EyeIcon />
-                  </Buttons>
                   <Buttons style={{ background: 'none' }}>
                      <EditIcon />
                   </Buttons>

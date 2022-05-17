@@ -32,38 +32,29 @@ const WraperForTable = styled.div`
    min-height: 86.3vh;
    min-height: 94.5vh;
    background-color: #fff;
-   border-radius: 20px;
-   border: 1px solid black;
+   border-radius: 10px;
+   border: 1px solid silver;
+   padding-top: 8px;
+   margin-top: 50px;
+   width: 100%;
 `
 const StyledTable = styled.table`
    background-color: #eff0f6;
    font-family: var(--base-font);
    font-style: normal;
-   border-radius: 20px;
-   width: 100%;
    color: #1d293f;
-   hr {
-      border-top: 0.2px solid #e7e9eb;
-   }
 `
 const Thead = styled.thead`
    font-weight: 400;
    font-size: 14px;
    line-height: 19px;
    width: 100%;
-
-   th:first-of-type {
-      border-top-left-radius: 10px;
-   }
-   th:last-of-type {
-      border-top-right-radius: 10px;
-   }
-
    th {
       white-space: nowrap;
-      padding: 1rem;
+      padding: 0.8rem 1rem;
       text-align: left;
       background-color: #ffffff;
+      outline: none;
       border-bottom: 1px solid silver;
    }
 `
@@ -74,10 +65,6 @@ const Tbody = styled.tbody`
    tbody,
    tr:nth-child(odd) {
       background-color: white;
-      &:hover {
-         transition: 0.3s;
-         background: #d7dbf0;
-      }
    }
    td {
       white-space: nowrap;

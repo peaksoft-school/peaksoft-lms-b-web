@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
+import { isDisabled } from '@testing-library/user-event/dist/utils'
 import styled from 'styled-components'
 import { Buttons } from './Buttons'
 
@@ -58,6 +59,7 @@ export const BasicModal = ({
    isActiveFooter = true,
    cancelTitle,
    successTitle,
+   isDisabled,
 }) => {
    return (
       <Modal
@@ -85,6 +87,7 @@ export const BasicModal = ({
                         {cancelTitle}
                      </Buttons>
                      <Buttons
+                        disabled={!isDisabled}
                         width="100px"
                         fontcolor="#fff"
                         background="#3772ff"

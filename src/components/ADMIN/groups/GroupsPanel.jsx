@@ -43,9 +43,9 @@ export const GroupsPanel = () => {
       {
          id: Math.random().toString(),
          action: (groupInformation) => {
+            console.log(groupInformation)
             modalHandler({
                action: 'edit',
-               groupInformation,
             })
          },
          content: (

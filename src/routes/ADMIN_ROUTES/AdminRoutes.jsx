@@ -1,7 +1,6 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-// import { GroupsPanel } from '../components/ADMIN/groups/GroupsPanel'
-import { GroupsRoute } from '../components/ADMIN/groups/GroupsRoute'
+import { GroupsRoute } from './GroupsRoute'
 
 export const AdminRoutes = () => {
    return (

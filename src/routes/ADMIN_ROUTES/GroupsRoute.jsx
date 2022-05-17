@@ -1,7 +1,7 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { GroupsPanel } from './GroupsPanel'
-import { GroupsPanelInnerPage } from './GroupsPanelInnerPage'
+import { Routes, Route } from 'react-router-dom'
+import { GroupsPanel } from '../../components/ADMIN/groups/GroupsPanel'
+import { GroupsPanelInnerPage } from '../../components/ADMIN/groups/GroupsPanelInnerPage'
 
 export const GroupsRoute = () => {
    return (

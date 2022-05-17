@@ -115,7 +115,11 @@ export const getStudentsByGroupId = createAsyncThunk(
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
-   reducers: {},
+   reducers: {
+      deleteGroup: (state, actions) => {
+         console.log(actions)
+      },
+   },
    extraReducers: {
       [getGroupsList.fulfilled]: (state, actions) => {
          const { pages, currentPage, groups } = actions.payload
@@ -131,8 +135,8 @@ export const adminGroupSlice = createSlice({
          state.groups = [...state.groups, newGroup]
       },
       [deleteGroup.fulfilled]: (state, actions) => {
-         console.log(actions.payload)
-         // state.groups = state.groups.filter((item) => item.id !== id)
+         const { id } = actions.payload
+         state.groups = state.groups.filter((item) => item.id !== id)
       },
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
          const table = actions.payload
