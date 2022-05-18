@@ -43,6 +43,7 @@ export const MultiSelect = ({ data = [], listTitle, value = [], setValue }) => {
             {value.map((user) => {
                return (
                   <SelectedItem
+                     key={user.id}
                      onDelete={() => deleteHandler(user.id)}
                      userInfo={user}
                   />
@@ -66,20 +67,15 @@ export const MultiSelect = ({ data = [], listTitle, value = [], setValue }) => {
                inputProps={{ 'aria-label': 'Without label' }}
             >
                <MenuItem disabled value="">
-                  <Title>{listTitle}</Title>
+                  <Title>{value.length > 0 ? listTitle : 'empty'}</Title>
                </MenuItem>
-               {search(data, value).length === 0 ? (
-                  <MenuItem>
-                     <ListItemText primary="EMPTY" />
+               {search(data, value).map((user) => (
+                  <MenuItem key={user.id} value={user}>
+                     <ListItemText primary={user.teacherName} />
+                     <ListItemText primary={user.lastName} />
+                     <Checkbox checked={person.indexOf(user) > -1} />
                   </MenuItem>
-               ) : (
-                  search(data, value).map((user) => (
-                     <MenuItem key={user.id} value={user}>
-                        <ListItemText primary={user.name} />
-                        <Checkbox checked={person.indexOf(user) > -1} />
-                     </MenuItem>
-                  ))
-               )}
+               ))}
             </Select>
          </StyledFormControl>
       </Box>
