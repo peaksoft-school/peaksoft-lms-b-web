@@ -35,7 +35,7 @@ export const AppointTeacherModal = ({ onCloseModal, courseId }) => {
          addHandler={appointTeacherToCourse}
       >
          <MultiSelect
-            listTitle="hello world"
+            listTitle="all teachers list"
             data={teachers}
             value={teachersId}
             setValue={setTeachersId}

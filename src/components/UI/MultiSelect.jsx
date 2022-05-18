@@ -67,7 +67,7 @@ export const MultiSelect = ({ data = [], listTitle, value = [], setValue }) => {
                inputProps={{ 'aria-label': 'Without label' }}
             >
                <MenuItem disabled value="">
-                  <Title>{value.length > 0 ? listTitle : 'empty'}</Title>
+                  <Title>{listTitle}</Title>
                </MenuItem>
                {search(data, value).map((user) => (
                   <MenuItem key={user.id} value={user}>
