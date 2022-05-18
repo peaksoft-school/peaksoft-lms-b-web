@@ -29,6 +29,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
             groupName,
             description,
          })
+
+         setUpdateGroupModalDate(new Date(dateOfFinish))
       }
 
       fetch()

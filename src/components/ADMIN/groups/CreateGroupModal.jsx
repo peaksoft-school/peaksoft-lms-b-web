@@ -9,7 +9,7 @@ import { CustomDatePicker } from '../../UI/CustomDatePicker'
 import { ImagePicker } from '../../UI/ImagePicker'
 import { Inputs } from '../../UI/Input'
 
-export const CreateGroupModal = ({ onCloseModal, groupId }) => {
+export const CreateGroupModal = ({ onCloseModal }) => {
    const dispatch = useDispatch()
    const [createGroupModalImage, setCreateGroupModalImage] = useState({
       frontImage: '',

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
@@ -10,23 +10,20 @@ import { Cards } from '../../UI/Cards'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
 import { getGroupsList } from '../../../store/adminGroupSlice'
-import { BasicPagination } from '../../UI/BasicPagination'
+import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { GroupModal } from './GroupModal'
 
 export const GroupsPanel = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
+   const page = searchParams.get('page')
    useEffect(() => {
-      dispatch(getGroupsList())
-   }, [])
+      dispatch(getGroupsList(page || 0))
+   }, [page])
    const { groups, pages } = useSelector((store) => store.groupSlice)
-
-   const [isActive, setIsActive] = useState({
-      action: null,
-      groupInformation: {},
-   })
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -87,9 +84,9 @@ export const GroupsPanel = () => {
                />
             ))}
          </FlexCards>
-         <ConditionalRender pages={pages}>
+         <ConditionalRender isActive={pages !== 1}>
             <StyledFooter>
-               <BasicPagination pages={pages} />
+               <PaginationLink path={pathname} count={pages} />
             </StyledFooter>
          </ConditionalRender>
          <GroupModal />
@@ -98,7 +95,8 @@ export const GroupsPanel = () => {
 }
 
 const StyledFooter = styled.footer`
-   margin-left: 50vh;
+   display: flex;
+   justify-content: center;
    margin-top: 30px;
 `
 const Wrapper = styled.div`

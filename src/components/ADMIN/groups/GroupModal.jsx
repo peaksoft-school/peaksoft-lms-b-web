@@ -1,21 +1,8 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { useParams } from 'react-router'
-import { BasicModal } from '../../UI/BasicModal'
 import { ConfirmModal } from '../../UI/ConfirmModal'
-import { ImagePicker } from '../../UI/ImagePicker'
-import { Inputs } from '../../UI/Input'
-import { CustomDatePicker } from '../../UI/CustomDatePicker'
-import {
-   deleteGroup,
-   createGroup,
-   updateGroup,
-   sendPhoto,
-} from '../../../store/adminGroupSlice'
-import { useInput } from '../../../hooks/useInput'
-import { convertDate } from '../../../utils/helpers/helpers'
+import { deleteGroup } from '../../../store/adminGroupSlice'
 import { UpdateGroupModal } from './UpdateGroupModal'
 import { CreateGroupModal } from './CreateGroupModal'
 

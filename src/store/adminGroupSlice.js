@@ -13,13 +13,13 @@ const initState = {
 
 export const getGroupsList = createAsyncThunk(
    'admin/slice/getGroupsList',
-   async () => {
+   async (page) => {
       try {
          const response = await baseFetch({
             path: 'api/groups',
             method: 'GET',
             params: {
-               page: 0,
+               page,
                size: 8,
             },
          })
@@ -130,11 +130,7 @@ export const getGroupById = createAsyncThunk(
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
-   reducers: {
-      deleteGroup: (state, actions) => {
-         console.log(actions)
-      },
-   },
+   reducers: {},
    extraReducers: {
       [getGroupsList.fulfilled]: (state, actions) => {
          const { pages, currentPage, groups } = actions.payload
@@ -147,7 +143,9 @@ export const adminGroupSlice = createSlice({
       },
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
-         state.groups = [...state.groups, newGroup]
+         if (state.groups.length > 7) {
+            state.groups = [...state.groups, newGroup]
+         }
       },
       [deleteGroup.fulfilled]: (state, actions) => {
          const { id } = actions.payload
