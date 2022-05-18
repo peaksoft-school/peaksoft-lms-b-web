@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'

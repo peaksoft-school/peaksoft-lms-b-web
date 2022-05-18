@@ -4,8 +4,7 @@ import { useParams } from 'react-router'
 import styled from 'styled-components'
 import Buttons from '@mui/material/IconButton/IconButton'
 import { getStudentsByGroupId } from '../../../store/adminGroupSlice'
-import { Table } from '../../UI/Table'
-import { ReactComponent as EditIcon } from '../../../assets/icons/EditIconForTable.svg'
+import { AppTable } from '../../UI/Table'
 import { ReactComponent as TrashBinIcon } from '../../../assets/icons/TrashBinForTable.svg'
 
 const WrapperIcons = styled.div`
@@ -67,22 +66,6 @@ export const GroupsPanelInnerPage = () => {
          title: 'E-Mail',
          accessKey: 'email',
       },
-      {
-         title: 'Действие',
-         accessKey: '',
-         action: () => {
-            return (
-               <WrapperIcons>
-                  <Buttons style={{ background: 'none' }}>
-                     <EditIcon />
-                  </Buttons>
-                  <Buttons style={{ background: 'none' }}>
-                     <TrashBinIcon />
-                  </Buttons>
-               </WrapperIcons>
-            )
-         },
-      },
    ]
    const dispatch = useDispatch()
    const { groupId } = useParams()
@@ -92,7 +75,7 @@ export const GroupsPanelInnerPage = () => {
    const { table } = useSelector((state) => state.groupSlice)
    return (
       <div style={{ marginTop: '30px' }}>
-         <Table headers={DATA_COLLUMN} data={[]} />
+         <AppTable columns={DATA_COLLUMN} data={table} />
       </div>
    )
 }
