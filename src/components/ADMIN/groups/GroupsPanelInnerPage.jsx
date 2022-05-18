@@ -20,30 +20,6 @@ const WrapperIcons = styled.div`
    }
 `
 
-const DATA = [
-   {
-      id: 1,
-      name: 'Anna Karimova ',
-      format: 'Онлайн',
-      mobile_phone: '0777114676  ',
-      email: 'John@gmail.com',
-   },
-   {
-      id: 2,
-      name: 'Anna Karimova ',
-      format: 'Онлайн',
-      mobile_phone: '0777114676  ',
-      email: 'John@gmail.com',
-   },
-   {
-      id: 3,
-      name: 'Anna Karimova ',
-      format: 'Онлайн',
-      mobile_phone: '0777114676  ',
-      email: 'John@gmail.com',
-   },
-]
-
 export const GroupsPanelInnerPage = () => {
    const DATA_COLLUMN = [
       {
