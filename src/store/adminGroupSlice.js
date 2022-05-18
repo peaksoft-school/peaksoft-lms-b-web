@@ -138,9 +138,7 @@ export const adminGroupSlice = createSlice({
          state.groups = groups
          state.currentPage = currentPage
       },
-      [sendPhoto.fulfilled]: (state, actions) => {
-         console.log(actions)
-      },
+      [sendPhoto.fulfilled]: (state, actions) => {},
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
          if (state.groups.length < 8) {
@@ -162,9 +160,7 @@ export const adminGroupSlice = createSlice({
          )
          state.groups.splice(currentIndex, 1, newGroup)
       },
-      [getGroupById.fulfilled]: (state, actions) => {
-         console.log(actions.payload)
-      },
+      [getGroupById.fulfilled]: (state, actions) => {},
    },
 })
 

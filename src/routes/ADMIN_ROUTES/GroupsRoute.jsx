@@ -6,7 +6,7 @@ import { GroupsPanelInnerPage } from '../../components/ADMIN/groups/GroupsPanelI
 export const GroupsRoute = () => {
    const [searchParams, setSearchParams] = useSearchParams()
    useEffect(() => {
-      setSearchParams({ page: 0 })
+      setSearchParams({ page: 1 })
    }, [])
    return (
       <Routes>

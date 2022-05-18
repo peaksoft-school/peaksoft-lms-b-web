@@ -84,7 +84,7 @@ export const GroupsPanel = () => {
                />
             ))}
          </FlexCards>
-         <ConditionalRender isActive={pages !== 1}>
+         <ConditionalRender isActive={pages > 1}>
             <StyledFooter>
                <PaginationLink path={pathname} count={pages} />
             </StyledFooter>
