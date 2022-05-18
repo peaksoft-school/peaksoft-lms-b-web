@@ -15,7 +15,7 @@ const BasicPagination = ({ path, count }) => {
          renderItem={(item) => (
             <PaginationItem
                component={Link}
-               to={`${path}${item.page === 1 ? '' : `?page=${item.page}`}`}
+               to={`${path}${`?page=${item.page}`}`}
                {...item}
             />
          )}
