@@ -2,7 +2,7 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const StyledTabs = styled((props) => (
    <Tabs
@@ -51,9 +51,6 @@ export const TabsTitle = ({ tabs }) => {
    const handleChange = (event, newValue) => {
       setValue(newValue)
    }
-
-   const params = useParams()
-   // console.log(params) here you can get id params
 
    return (
       <StyledTabs

@@ -4,10 +4,10 @@ import { GroupsPanel } from '../../components/ADMIN/groups/GroupsPanel'
 import { GroupsPanelInnerPage } from '../../components/ADMIN/groups/GroupsPanelInnerPage'
 
 export const GroupsRoute = () => {
-   const [searchParams, setSearchParams] = useSearchParams()
-   useEffect(() => {
-      setSearchParams({ page: 1 })
-   }, [])
+   // const [searchParams, setSearchParams] = useSearchParams()
+   // useEffect(() => {
+   //    setSearchParams({ page: 0 })
+   // }, [])
    return (
       <Routes>
          <Route path="/" element={<GroupsPanel />} />

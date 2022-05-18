@@ -1,12 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
-import Buttons from '@mui/material/IconButton/IconButton'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useParams, Routes, Route, Navigate } from 'react-router'
+import { getAllTeachers } from '../../../store/courseSlice'
 import { AppTable } from '../../UI/Table'
-import { ReactComponent as EyeIcon } from '../../../assets/icons/EyesForTable.svg'
-import { ReactComponent as EditIcon } from '../../../assets/icons/EditIconForTable.svg'
-import { ReactComponent as TrashBinIcon } from '../../../assets/icons/TrashBinForTable.svg'
 
 export const CourseInnerPage = () => {
+   const dispatch = useDispatch()
+   const params = useParams()
+   // const { teachers } = useSelector((store) => store.courseSlice)
+
+   // useEffect(() => {
+   //    dispatch(getAllTeachers())
+   // }, [])
    const DATA_COLLUMN = [
       {
          title: 'ID',
@@ -27,30 +32,6 @@ export const CourseInnerPage = () => {
       {
          title: 'E-Mail',
          accessKey: 'email',
-      },
-      {
-         title: 'Действие',
-         accessKey: '',
-         action: (item) => {
-            return (
-               <WrapperIcons>
-                  <Buttons
-                     onClick={() => {
-                        console.log(item.id)
-                     }}
-                     style={{ background: 'none' }}
-                  >
-                     <EyeIcon />
-                  </Buttons>
-                  <Buttons style={{ background: 'none' }}>
-                     <EditIcon />
-                  </Buttons>
-                  <Buttons style={{ background: 'none' }}>
-                     <TrashBinIcon />
-                  </Buttons>
-               </WrapperIcons>
-            )
-         },
       },
    ]
    const DATA = [
@@ -76,17 +57,17 @@ export const CourseInnerPage = () => {
          email: 'John@gmail.com',
       },
    ]
-   return <AppTable headers={DATA_COLLUMN} data={DATA} />
+   return (
+      <Routes>
+         <Route path="*" element={<Navigate to="teachers" />} />
+         <Route
+            path="teachers"
+            element={<AppTable columns={DATA_COLLUMN} data={DATA} />}
+         />
+         <Route
+            path="students/*"
+            element={<AppTable columns={DATA_COLLUMN} data={[]} />}
+         />
+      </Routes>
+   )
 }
-const WrapperIcons = styled.div`
-   width: 20vh;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   & > * {
-      &:hover {
-         cursor: pointer;
-         color: blue;
-      }
-   }
-`

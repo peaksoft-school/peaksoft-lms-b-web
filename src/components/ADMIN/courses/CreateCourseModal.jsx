@@ -43,6 +43,11 @@ export const CreateCourseModal = ({ onCloseModal }) => {
       <BasicModal
          title="Создать  курс"
          isActive
+         isDisabled={
+            createCourseModalData.courseName &&
+            createCourseModalData.description &&
+            createCourseModalDate
+         }
          cancelTitle="Отмена"
          successTitle="Добавить"
          isActiveFooter="true"
