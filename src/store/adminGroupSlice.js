@@ -81,10 +81,10 @@ export const deleteGroup = createAsyncThunk(
 
 export const updateGroup = createAsyncThunk(
    'admin/slice/editGrouop',
-   async ({ groupInfo, id }) => {
+   async ({ groupInfo, groupId }) => {
       try {
          const response = await baseFetch({
-            path: `api/groups/${id}`,
+            path: `api/groups/${groupId}`,
             method: 'PUT',
             body: groupInfo,
          })
@@ -143,7 +143,7 @@ export const adminGroupSlice = createSlice({
       },
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
-         if (state.groups.length > 7) {
+         if (state.groups.length < 8) {
             state.groups = [...state.groups, newGroup]
          }
       },

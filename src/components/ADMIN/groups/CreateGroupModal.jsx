@@ -27,16 +27,27 @@ export const CreateGroupModal = ({ onCloseModal }) => {
       })
    }
    const createGroupHandler = async () => {
-      const { URL } = await dispatch(
-         sendPhoto(createGroupModalImage.backImage)
-      ).unwrap()
-      dispatch(
-         createGroup({
-            ...createGroupModalData,
-            dateOfFinish: convertDate(createGroupModalDate),
-            image: URL || '',
-         })
-      )
+      if (createGroupModalImage.backImage) {
+         const { URL } = await dispatch(
+            sendPhoto(createGroupModalImage.backImage)
+         ).unwrap()
+         dispatch(
+            createGroup({
+               ...createGroupModalData,
+               dateOfFinish: convertDate(createGroupModalDate),
+               image: URL,
+            })
+         )
+      } else {
+         dispatch(
+            createGroup({
+               ...createGroupModalData,
+               dateOfFinish: convertDate(createGroupModalDate),
+               image: ' ',
+            })
+         )
+      }
+
       onCloseModal()
    }
 

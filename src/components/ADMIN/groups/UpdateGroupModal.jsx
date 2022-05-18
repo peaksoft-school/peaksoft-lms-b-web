@@ -62,17 +62,32 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       })
    }
    const updateGroupHandler = async () => {
-      const { URL } = await dispatch(sendPhoto()).unwrap()
-      dispatch(
-         updateGroup({
-            groupInfo: {
-               ...updateGroupModalData,
-               dateOfFinish: convertDate(updateGroupModalDate),
-               image: URL || '',
-            },
-            groupId,
-         })
-      )
+      if (updateGroupModalImage.backImage) {
+         const { URL } = await dispatch(
+            sendPhoto(updateGroupModalImage.backImage)
+         ).unwrap()
+         dispatch(
+            updateGroup({
+               groupInfo: {
+                  ...updateGroupModalData,
+                  dateOfFinish: convertDate(updateGroupModalDate),
+                  image: URL || '',
+               },
+               groupId,
+            })
+         )
+      } else {
+         dispatch(
+            updateGroup({
+               groupInfo: {
+                  ...updateGroupModalData,
+                  dateOfFinish: convertDate(updateGroupModalDate),
+                  image: '',
+               },
+               groupId,
+            })
+         )
+      }
       onCloseModal()
    }
    return (

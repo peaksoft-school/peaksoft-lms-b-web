@@ -92,7 +92,7 @@ export const GroupsPanelInnerPage = () => {
    const { table } = useSelector((state) => state.groupSlice)
    return (
       <div style={{ marginTop: '30px' }}>
-         <Table headers={DATA_COLLUMN} data={DATA} />
+         <Table headers={DATA_COLLUMN} data={[]} />
       </div>
    )
 }
