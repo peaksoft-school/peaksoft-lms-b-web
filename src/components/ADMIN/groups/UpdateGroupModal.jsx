@@ -16,7 +16,7 @@ import { Inputs } from '../../UI/Input'
 export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    const dispatch = useDispatch()
    useEffect(() => {
-      const fetch = async () => {
+      const getInitEditModalData = async () => {
          const { groupName, description, image, dateOfFinish } = await dispatch(
             getGroupById(groupId)
          ).unwrap()
@@ -33,7 +33,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          setUpdateGroupModalDate(new Date(dateOfFinish))
       }
 
-      fetch()
+      getInitEditModalData()
    }, [])
 
    const [updateGroupModalImage, setUpdateGroupModalImage] = useState({
@@ -71,7 +71,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...updateGroupModalData,
                   dateOfFinish: convertDate(updateGroupModalDate),
-                  image: URL || '',
+                  image: URL || ' ',
                },
                groupId,
             })
@@ -82,7 +82,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...updateGroupModalData,
                   dateOfFinish: convertDate(updateGroupModalDate),
-                  image: '',
+                  image: ' ',
                },
                groupId,
             })

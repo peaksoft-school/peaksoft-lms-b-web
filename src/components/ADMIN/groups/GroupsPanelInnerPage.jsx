@@ -20,29 +20,30 @@ const WrapperIcons = styled.div`
    }
 `
 
+const DATA_COLLUMN = [
+   {
+      title: 'ID',
+      accessKey: 'id',
+   },
+   {
+      title: 'Имя Фамилия',
+      accessKey: 'name',
+   },
+   {
+      title: 'Формат обучения',
+      accessKey: 'format',
+   },
+   {
+      title: 'Номер телефона',
+      accessKey: 'mobile_phone',
+   },
+   {
+      title: 'E-Mail',
+      accessKey: 'email',
+   },
+]
+
 export const GroupsPanelInnerPage = () => {
-   const DATA_COLLUMN = [
-      {
-         title: 'ID',
-         accessKey: 'id',
-      },
-      {
-         title: 'Имя Фамилия',
-         accessKey: 'name',
-      },
-      {
-         title: 'Формат обучения',
-         accessKey: 'format',
-      },
-      {
-         title: 'Номер телефона',
-         accessKey: 'mobile_phone',
-      },
-      {
-         title: 'E-Mail',
-         accessKey: 'email',
-      },
-   ]
    const dispatch = useDispatch()
    const { groupId } = useParams()
    useEffect(() => {
