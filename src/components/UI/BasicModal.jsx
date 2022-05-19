@@ -29,7 +29,7 @@ const StyledHeader = styled.header`
 `
 const StyledHeaderTitle = styled.h1`
    color: #ffff;
-   font-size: 26px;
+   font-size: 20px;
    font-style: normal;
    line-height: 27px;
    font-weight: 400;
