@@ -86,7 +86,36 @@ export const getAllTeachers = createAsyncThunk(
    async () => {
       try {
          const response = await baseFetch({
-            path: 'api/teachers',
+            path: `api/teachers`,
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+
+export const getTeachersByCourseId = createAsyncThunk(
+   'admin/slice/getTeachersByCourseId',
+   async (courseId) => {
+      try {
+         const response = await baseFetch({
+            path: `api/courses/teachers/${courseId}`,
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return error.message
+      }
+   }
+)
+export const getStudentsByCourseId = createAsyncThunk(
+   'admin/slice/getStudentsByCourseId',
+   async (courseId) => {
+      try {
+         const response = await baseFetch({
+            path: `api/courses/students/${courseId}`,
             method: 'GET',
          })
          return response
@@ -154,6 +183,14 @@ export const courseSlice = createSlice({
          state.teachers = teachers
       },
       [assignTeacherToCourse.fulfilled]: () => {},
+      [getTeachersByCourseId.fulfilled]: (state, actions) => {
+         const teachers = actions.payload
+         state.table = teachers
+      },
+      [getStudentsByCourseId.fulfilled]: (state, actions) => {
+         const students = actions.payload
+         state.table = students
+      },
    },
 })
 
