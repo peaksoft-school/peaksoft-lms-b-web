@@ -21,9 +21,9 @@ export const CoursePanel = () => {
    const [searchParams, setSearchParams] = useSearchParams()
    const { pathname } = useLocation()
    const page = searchParams.get('page')
-   // useEffect(() => {
-   //    dispatch(getCourseList(page || 0))
-   // }, [page])
+   useEffect(() => {
+      dispatch(getCourseList(page))
+   }, [page])
    const { courses, pages } = useSelector((store) => store.courseSlice)
 
    const openInnerPage = (id) => {
