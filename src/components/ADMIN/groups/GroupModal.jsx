@@ -9,10 +9,10 @@ import { CreateGroupModal } from './CreateGroupModal'
 export const GroupModal = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { modal, groupId } = Object.fromEntries([...searchParams])
+   const { modal, groupId, page } = Object.fromEntries([...searchParams])
 
    const closeModal = () => {
-      setSearchParams({})
+      setSearchParams({ page })
    }
 
    const deleteGroupHandler = () => {

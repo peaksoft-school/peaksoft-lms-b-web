@@ -34,7 +34,7 @@ export const GroupsPanel = () => {
          id: Math.random().toString(),
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'updateGroup', groupId })
+            setSearchParams({ modal: 'updateGroup', groupId, page })
          },
          content: (
             <>
@@ -47,7 +47,7 @@ export const GroupsPanel = () => {
          id: Math.random().toString(),
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'deleteGroup', groupId })
+            setSearchParams({ modal: 'deleteGroup', groupId, page })
          },
          content: (
             <>
@@ -63,7 +63,7 @@ export const GroupsPanel = () => {
          <Flex>
             <Buttons
                onClick={() => {
-                  setSearchParams({ modal: 'addGroup' })
+                  setSearchParams({ modal: 'addGroup', page })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс

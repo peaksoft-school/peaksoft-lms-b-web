@@ -20,7 +20,7 @@ export const getGroupsList = createAsyncThunk(
             method: 'GET',
             params: {
                page,
-               size: 8,
+               size: 12,
             },
          })
 
