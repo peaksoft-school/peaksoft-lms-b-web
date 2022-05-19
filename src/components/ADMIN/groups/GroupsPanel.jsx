@@ -20,9 +20,9 @@ export const GroupsPanel = () => {
    const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
    const page = searchParams.get('page')
-   // useEffect(() => {
-   //    dispatch(getGroupsList(page || 0))
-   // }, [page])
+   useEffect(() => {
+      dispatch(getGroupsList(page || 1))
+   }, [page])
    const { groups, pages } = useSelector((store) => store.groupSlice)
 
    const openInnerPage = (id) => {

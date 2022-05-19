@@ -20,7 +20,7 @@ export const getGroupsList = createAsyncThunk(
             method: 'GET',
             params: {
                page,
-               size: 8,
+               size: 12,
             },
          })
 
@@ -141,7 +141,7 @@ export const adminGroupSlice = createSlice({
       [sendPhoto.fulfilled]: (state, actions) => {},
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
-         if (state.groups.length < 8) {
+         if (state.groups.length < 12) {
             state.groups = [...state.groups, newGroup]
          }
       },

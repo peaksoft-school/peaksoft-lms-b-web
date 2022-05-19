@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams, Routes, Route, Navigate } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import { getAllTeachers } from '../../../store/courseSlice'
 import { AppTable } from '../../UI/Table'
 
 export const CourseInnerPage = () => {
    const dispatch = useDispatch()
-   const params = useParams()
+   const [searchParams, setSearchParams] = useSearchParams()
+   const tabs = searchParams.get('tabs')
    // const { teachers } = useSelector((store) => store.courseSlice)
 
    // useEffect(() => {
@@ -57,17 +58,5 @@ export const CourseInnerPage = () => {
          email: 'John@gmail.com',
       },
    ]
-   return (
-      <Routes>
-         <Route path="*" element={<Navigate to="teachers" />} />
-         <Route
-            path="teachers"
-            element={<AppTable columns={DATA_COLLUMN} data={DATA} />}
-         />
-         <Route
-            path="students/*"
-            element={<AppTable columns={DATA_COLLUMN} data={[]} />}
-         />
-      </Routes>
-   )
+   return <AppTable columns={DATA_COLLUMN} data={DATA} />
 }

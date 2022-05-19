@@ -22,12 +22,12 @@ export const CoursePanel = () => {
    const { pathname } = useLocation()
    const page = searchParams.get('page')
    useEffect(() => {
-      dispatch(getCourseList(page))
+      dispatch(getCourseList(page || 1))
    }, [page])
    const { courses, pages } = useSelector((store) => store.courseSlice)
 
    const openInnerPage = (id) => {
-      navigate(`${id}`)
+      navigate(`${id}?tabs=teachers`)
    }
 
    const option = [
@@ -35,7 +35,11 @@ export const CoursePanel = () => {
          id: Math.random().toString(),
          action: (courseInformation) => {
             const { id } = courseInformation
-            setSearchParams({ modal: 'appointTeacherCourse', courseId: id })
+            setSearchParams({
+               modal: 'appointTeacherCourse',
+               courseId: id,
+               page,
+            })
          },
          content: (
             <>
@@ -48,7 +52,7 @@ export const CoursePanel = () => {
          id: Math.random().toString(),
          action: (courseInformation) => {
             const { id } = courseInformation
-            setSearchParams({ modal: 'updateCourse', courseId: id })
+            setSearchParams({ modal: 'updateCourse', courseId: id, page })
          },
          content: (
             <>
@@ -61,7 +65,7 @@ export const CoursePanel = () => {
          id: Math.random().toString(),
          action: (courseInformation) => {
             const { id } = courseInformation
-            setSearchParams({ modal: 'deleteCourse', courseId: id })
+            setSearchParams({ modal: 'deleteCourse', courseId: id, page })
          },
          content: (
             <>
@@ -77,7 +81,7 @@ export const CoursePanel = () => {
          <Flex>
             <Buttons
                onClick={() => {
-                  setSearchParams({ modal: 'addCourse' })
+                  setSearchParams({ modal: 'addCourse', page })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс

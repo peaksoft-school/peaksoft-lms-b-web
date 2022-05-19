@@ -33,7 +33,7 @@ export const baseFetch = async (options) => {
       if (!response.ok) {
          throw new Error('Some thing went wrong')
       }
-      console.log(response)
+
       return response.json()
    } catch (e) {
       throw new Error(e.message)
