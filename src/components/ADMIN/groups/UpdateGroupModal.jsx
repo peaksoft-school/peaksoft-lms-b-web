@@ -71,7 +71,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...updateGroupModalData,
                   dateOfFinish: convertDate(updateGroupModalDate),
-                  image: URL || ' ',
+                  image: URL,
                },
                groupId,
             })
@@ -82,7 +82,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...updateGroupModalData,
                   dateOfFinish: convertDate(updateGroupModalDate),
-                  image: ' ',
+                  image: updateGroupModalImage.frontImage,
                },
                groupId,
             })
