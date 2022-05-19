@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Buttons from '@mui/material/IconButton/IconButton'
 import { getStudentsByGroupId } from '../../../store/adminGroupSlice'
 import { AppTable } from '../../UI/Table'
-import { ReactComponent as TrashBinIcon } from '../../../assets/icons/TrashBinForTable.svg'
+import { BreadCrumb } from '../../UI/BreadCrumb'
 
 const WrapperIcons = styled.div`
    width: 20vh;
@@ -52,6 +52,7 @@ export const GroupsPanelInnerPage = () => {
    const { table } = useSelector((state) => state.groupSlice)
    return (
       <div style={{ marginTop: '30px' }}>
+         <BreadCrumb />
          <AppTable columns={DATA_COLLUMN} data={table} />
       </div>
    )

@@ -27,7 +27,7 @@ export const Cards = ({
    }
    return (
       <Card>
-         {image ? (
+         {image !== ' ' && image !== undefined ? (
             <WrapperImg onClick={onCardClick} src={image} alt="foto" />
          ) : (
             <WrapperImg
