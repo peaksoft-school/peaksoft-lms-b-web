@@ -1,11 +1,11 @@
 import React from 'react'
 import { Layout } from './Layout'
-import { TeacherRoutes } from '../routes/TeacherRoutes'
+import { InstructorRoutes } from '../routes/INSTRUCTOR_ROUTES/InstructorRoutes'
 
 export const InstructorLayout = () => {
    return (
       <Layout roles="INSTRUCTOR">
-         <TeacherRoutes />
+         <InstructorRoutes />
       </Layout>
    )
 }
