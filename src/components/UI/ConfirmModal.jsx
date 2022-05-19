@@ -66,7 +66,7 @@ export const ConfirmModal = ({ isActive, toggleModal, deleteHandler }) => {
          </Backdrop>
          <Modal
             open={isActive}
-            onClose={handleDelete}
+            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
          >
