@@ -85,7 +85,3 @@ const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
 `
-const Flex = styled.div`
-   display: flex;
-   justify-content: end;
-`

@@ -10,14 +10,14 @@ import { AppointTeacherModal } from './AppointTeacherModal'
 export const GroupModal = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { modal, courseId } = Object.fromEntries([...searchParams])
+   const { modal, courseId, page } = Object.fromEntries([...searchParams])
    const deleteHandler = async () => {
       await dispatch(deleteCourse(courseId))
       closeModalHandler()
    }
 
    const closeModalHandler = () => {
-      setSearchParams({})
+      setSearchParams({ page })
    }
 
    if (modal === 'addCourse') {

@@ -45,10 +45,10 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 )
 
 export const TabsTitle = ({ tabs }) => {
-   const [value, setValue] = React.useState('')
+   const [value, setValue] = React.useState(tabs[0].path)
    const [searchParams, setSearchParams] = useSearchParams()
    useEffect(() => {
-      setSearchParams(value ? { tabs: value } : setValue(tabs[0].path))
+      setSearchParams({ tabs: value })
    }, [value])
 
    const handleChange = (event, newValue) => {
