@@ -3,7 +3,12 @@ import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
-   error: null,
+   groupSuccess: {
+      isActive: false,
+   },
+   groupError: {
+      isActive: false,
+   },
    isLoading: null,
    pages: 0,
    groups: [],
@@ -13,7 +18,7 @@ const initState = {
 
 export const getGroupsList = createAsyncThunk(
    'admin/slice/getGroupsList',
-   async (page) => {
+   async (page, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/groups',
@@ -26,14 +31,14 @@ export const getGroupsList = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const sendPhoto = createAsyncThunk(
    'admin/slice/sendPhoto',
-   async (file) => {
+   async (file, { rejectWithValue }) => {
       try {
          const response = await fileFetchApi({
             path: 'api/files/upload',
@@ -41,14 +46,14 @@ export const sendPhoto = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const createGroup = createAsyncThunk(
    'admin/slice/createGroup',
-   async (groupInfo) => {
+   async (groupInfo, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/groups',
@@ -58,14 +63,14 @@ export const createGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const deleteGroup = createAsyncThunk(
    'admin/slice/deleteGroup',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${id}`,
@@ -74,14 +79,14 @@ export const deleteGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const updateGroup = createAsyncThunk(
    'admin/slice/editGrouop',
-   async ({ groupInfo, groupId }) => {
+   async ({ groupInfo, groupId }, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${groupId}`,
@@ -91,14 +96,14 @@ export const updateGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const getStudentsByGroupId = createAsyncThunk(
    'admin/slice/getStudentsByGroupId',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/students/${id}`,
@@ -107,14 +112,14 @@ export const getStudentsByGroupId = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const getGroupById = createAsyncThunk(
    'admin/slice/getGroupById',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${id}`,
@@ -122,7 +127,7 @@ export const getGroupById = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
@@ -130,7 +135,17 @@ export const getGroupById = createAsyncThunk(
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
-   reducers: {},
+   reducers: {
+      finishTheNotificationGroup: (state) => {
+         console.log('HELLO WORLD')
+         state.groupSuccess = {
+            isActive: null,
+         }
+         state.groupError = {
+            isActive: null,
+         }
+      },
+   },
    extraReducers: {
       [getGroupsList.fulfilled]: (state, actions) => {
          const { pages, currentPage, groups } = actions.payload
@@ -138,20 +153,53 @@ export const adminGroupSlice = createSlice({
          state.groups = groups
          state.currentPage = currentPage
       },
-      [sendPhoto.fulfilled]: (state, actions) => {},
+      [getGroupsList.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = message
+      },
+      [sendPhoto.fulfilled]: (state) => {},
+      [sendPhoto.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = {
+            isActive: true,
+            message,
+         }
+      },
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
          if (state.groups.length < 12) {
             state.groups = [...state.groups, newGroup]
          }
+         state.groupSuccess = {
+            isActive: true,
+            message: 'новая группа добавлена',
+         }
       },
       [deleteGroup.fulfilled]: (state, actions) => {
          const { id } = actions.payload
          state.groups = state.groups.filter((item) => item.id !== id)
+         state.groupSuccess = {
+            isActive: true,
+            message: 'группа успешно удалена',
+         }
+      },
+      [deleteGroup.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = {
+            isActive: true,
+            message,
+         }
       },
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
          const table = actions.payload
          state.table = table
+      },
+      [getStudentsByGroupId.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = {
+            isActive: true,
+            message,
+         }
       },
       [updateGroup.fulfilled]: (state, action) => {
          const newGroup = action.payload
@@ -159,8 +207,25 @@ export const adminGroupSlice = createSlice({
             (group) => group.id === newGroup.id
          )
          state.groups.splice(currentIndex, 1, newGroup)
+         state.groupSuccess = {
+            isActive: true,
+            message: 'вы успешно отредактировали группу',
+         }
       },
-      [getGroupById.fulfilled]: (state, actions) => {},
+      [updateGroup.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = {
+            isActive: true,
+            message,
+         }
+      },
+      [getGroupById.rejected]: (state, actions) => {
+         const { message } = actions.error
+         state.groupError = {
+            isActive: true,
+            message,
+         }
+      },
    },
 })
 

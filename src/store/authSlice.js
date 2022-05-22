@@ -35,9 +35,13 @@ const initState = {
       token: null,
       email: null,
    },
-   authError: null,
-   authIsLoading: false,
-   authSuccess: false,
+   authError: {
+      isActive: false,
+   },
+   authIsLoading: null,
+   authSuccess: {
+      isActive: false,
+   },
 }
 
 export const authSlice = createSlice({
@@ -47,8 +51,12 @@ export const authSlice = createSlice({
       : initState,
    reducers: {
       finishTheNotificationAuth: (state) => {
-         state.authError = null
-         state.authSuccess = false
+         state.authError = {
+            isActive: false,
+         }
+         state.authSuccess = {
+            isActive: false,
+         }
       },
    },
    extraReducers: {
@@ -58,11 +66,16 @@ export const authSlice = createSlice({
       [login.fulfilled]: (state, actions) => {
          const response = actions.payload
          state.user = response
-         state.authSuccess = true
+         state.authSuccess = {
+            isActive: true,
+            message: 'вы успешно вошли в аккаунт',
+         }
       },
       [login.rejected]: (state, actions) => {
+         const { message } = actions.error
          state.authError = {
-            message: 'не удалось войти в аккаунт',
+            isActive: true,
+            message,
          }
       },
       [logout.fulfilled]: (state) => {

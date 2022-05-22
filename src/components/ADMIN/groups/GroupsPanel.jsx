@@ -9,7 +9,10 @@ import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
-import { getGroupsList } from '../../../store/adminGroupSlice'
+import {
+   adminGroupActions,
+   getGroupsList,
+} from '../../../store/adminGroupSlice'
 import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { GroupModal } from './GroupModal'
@@ -21,18 +24,25 @@ export const GroupsPanel = () => {
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { groups, pages } = useSelector((store) => store.groupSlice)
+   const { groups, pages, groupSuccess, groupError } = useSelector(
+      (store) => store.groupSlice
+   )
    const { authSuccess } = useSelector((store) => store.auth)
    const page = searchParams.get('page')
 
    useEffect(() => {
       dispatch(getGroupsList(page || 1))
-      if (authSuccess) {
+      if (authSuccess.isActive) {
          setTimeout(() => {
             dispatch(authActions.finishTheNotificationAuth())
          }, 3000)
       }
-   }, [page])
+      if (groupSuccess.isActive) {
+         setTimeout(() => {
+            dispatch(adminGroupActions.finishTheNotificationGroup())
+         }, 3000)
+      }
+   }, [page, authSuccess, groupSuccess])
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -71,8 +81,14 @@ export const GroupsPanel = () => {
       <Wrapper>
          <Notification
             notificationType="success"
-            isActive={authSuccess}
-            title="вы успешно вошли в ваш аккаунт"
+            isActive={
+               authSuccess.isActive ||
+               groupSuccess.isActive ||
+               groupError.isActive
+            }
+            title={
+               authSuccess.message || groupSuccess.message || groupError.message
+            }
          />
          <Flex>
             <Buttons
