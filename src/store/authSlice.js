@@ -9,7 +9,7 @@ import {
 
 export const login = createAsyncThunk(
    'authentification/login',
-   async (userInformation) => {
+   async (userInformation, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/authentication/login',
@@ -20,7 +20,7 @@ export const login = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
@@ -35,8 +35,9 @@ const initState = {
       token: null,
       email: null,
    },
-   error: null,
-   isLoading: false,
+   authError: null,
+   authIsLoading: false,
+   authSuccess: false,
 }
 
 export const authSlice = createSlice({
@@ -44,18 +45,25 @@ export const authSlice = createSlice({
    initialState: getFromLocalStorage(AUTH)
       ? { ...initState, user: getFromLocalStorage(AUTH) }
       : initState,
-   reducers: {},
+   reducers: {
+      finishTheNotificationAuth: (state) => {
+         state.authError = null
+         state.authSuccess = false
+      },
+   },
    extraReducers: {
       [login.pending]: (state) => {
-         state.isLoading = true
+         state.authIsLoading = true
       },
       [login.fulfilled]: (state, actions) => {
          const response = actions.payload
          state.user = response
+         state.authSuccess = true
       },
       [login.rejected]: (state, actions) => {
-         state.error = actions
-         // console.log(payload)
+         state.authError = {
+            message: 'не удалось войти в аккаунт',
+         }
       },
       [logout.fulfilled]: (state) => {
          state.user.email = null

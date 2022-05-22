@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -8,20 +8,27 @@ import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
-import { login } from '../store/authSlice'
+import { authActions, login } from '../store/authSlice'
 import { mainRoutes } from '../utils/constants/routes'
-import { getGroupsList } from '../store/adminGroupSlice'
+import { Notification } from '../components/UI/Notification'
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { role } = useSelector((state) => state.auth.user)
+   const { user, authError } = useSelector((state) => state.auth)
+
    useEffect(() => {
-      if (role === mainRoutes.ADMIN.role) navigate(mainRoutes.ADMIN.path)
-      if (role === mainRoutes.INSTRUCTOR.role)
+      if (user.role === mainRoutes.ADMIN.role) navigate(mainRoutes.ADMIN.path)
+      if (user.role === mainRoutes.INSTRUCTOR.role)
          navigate(mainRoutes.INSTRUCTOR.path)
-      if (role === mainRoutes.STUDENT.role) navigate(mainRoutes.STUDENT.path)
-   }, [role])
+      if (user.role === mainRoutes.STUDENT.role)
+         navigate(mainRoutes.STUDENT.path)
+      if (authError) {
+         setTimeout(() => {
+            dispatch(authActions.finishTheNotificationAuth())
+         }, 3000)
+      }
+   }, [user.role, authError])
 
    const submitHandler = (values) => {
       dispatch(login(values))
@@ -40,82 +47,91 @@ export const LoginPage = () => {
    })
 
    return (
-      <Formik
-         initialValues={{
-            email: '',
-            password: '',
-         }}
-         validateOnBlur
-         onSubmit={(inputsValues) => submitHandler(inputsValues)}
-         validationSchema={validationsSchema}
-      >
-         {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            isValid,
-            handleSubmit,
-            dirty,
-         }) => (
-            <StyledLoginPage>
-               <StyledLeftSection>
-                  <StyledPeakSoftLogo />
-                  <StudentLogo />
-               </StyledLeftSection>
-               <StyledRightSection>
-                  <StyledTitleWrapper>
-                     <StyledTitle>
-                        Добро пожоловать <br />в
-                        <StyledRedSpan> Peaksoft LMS! </StyledRedSpan>
-                     </StyledTitle>
-                  </StyledTitleWrapper>
-                  <StyledLoginForm>
-                     <StyledInputsWrapper>
-                        <StyledLabel>
-                           Логин:{' '}
-                           {touched.email && errors.email && (
-                              <StyledErrorSpan>{errors.email}</StyledErrorSpan>
-                           )}
-                        </StyledLabel>
-                        <Inputs
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                           value={values.email}
-                           name="email"
-                           type="email"
-                        />
-                        <br />
-                        <StyledLabel>
-                           Пароль:{' '}
-                           {touched.password && errors.password && (
-                              <StyledErrorSpan>
-                                 {errors.password}
-                              </StyledErrorSpan>
-                           )}
-                        </StyledLabel>
-                        <Inputs
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                           value={values.password}
-                           name="password"
-                           type="password"
-                        />
-                     </StyledInputsWrapper>
-                     <Buttons
-                        disabled={!isValid && !dirty}
-                        onClick={handleSubmit}
-                        type="submit"
-                        margin="15px 0 0 0"
-                     >
-                        Войти
-                     </Buttons>
-                  </StyledLoginForm>
-               </StyledRightSection>
-            </StyledLoginPage>
-         )}
-      </Formik>
+      <>
+         <Notification
+            isActive={!!authError}
+            title="не удалось войти в аккаунт, попробуйте еще раз"
+            notificationType="error"
+         />
+         <Formik
+            initialValues={{
+               email: '',
+               password: '',
+            }}
+            validateOnBlur
+            onSubmit={(inputsValues) => submitHandler(inputsValues)}
+            validationSchema={validationsSchema}
+         >
+            {({
+               values,
+               errors,
+               touched,
+               handleChange,
+               handleBlur,
+               isValid,
+               handleSubmit,
+               dirty,
+            }) => (
+               <StyledLoginPage>
+                  <StyledLeftSection>
+                     <StyledPeakSoftLogo />
+                     <StudentLogo />
+                  </StyledLeftSection>
+                  <StyledRightSection>
+                     <StyledTitleWrapper>
+                        <StyledTitle>
+                           Добро пожоловать <br />в
+                           <StyledRedSpan> Peaksoft LMS! </StyledRedSpan>
+                        </StyledTitle>
+                     </StyledTitleWrapper>
+                     <StyledLoginForm>
+                        <StyledInputsWrapper>
+                           <StyledLabel>
+                              Логин:{' '}
+                              {touched.email && errors.email && (
+                                 <StyledErrorSpan>
+                                    {errors.email}
+                                 </StyledErrorSpan>
+                              )}
+                           </StyledLabel>
+                           <Inputs
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
+                              name="email"
+                              type="email"
+                           />
+                           <br />
+                           <StyledLabel>
+                              Пароль:{' '}
+                              {touched.password && errors.password && (
+                                 <StyledErrorSpan>
+                                    {errors.password}
+                                 </StyledErrorSpan>
+                              )}
+                           </StyledLabel>
+                           <Inputs
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                              name="password"
+                              type="password"
+                           />
+                        </StyledInputsWrapper>
+                        <Buttons
+                           disabled={!isValid && !dirty}
+                           onClick={handleSubmit}
+                           type="submit"
+                           margin="15px 0 0 0"
+                        >
+                           Войти
+                        </Buttons>
+                     </StyledLoginForm>
+                  </StyledRightSection>
+               </StyledLoginPage>
+            )}
+         </Formik>
+      </>
    )
 }
 

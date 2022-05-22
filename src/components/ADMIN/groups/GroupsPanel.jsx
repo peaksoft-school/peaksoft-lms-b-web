@@ -13,17 +13,26 @@ import { getGroupsList } from '../../../store/adminGroupSlice'
 import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { GroupModal } from './GroupModal'
+import { Notification } from '../../UI/Notification'
+import { authActions } from '../../../store/authSlice'
 
 export const GroupsPanel = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
+   const { groups, pages } = useSelector((store) => store.groupSlice)
+   const { authSuccess } = useSelector((store) => store.auth)
    const page = searchParams.get('page')
+
    useEffect(() => {
       dispatch(getGroupsList(page || 1))
+      if (authSuccess) {
+         setTimeout(() => {
+            dispatch(authActions.finishTheNotificationAuth())
+         }, 3000)
+      }
    }, [page])
-   const { groups, pages } = useSelector((store) => store.groupSlice)
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -60,6 +69,11 @@ export const GroupsPanel = () => {
 
    return (
       <Wrapper>
+         <Notification
+            notificationType="success"
+            isActive={authSuccess}
+            title="вы успешно вошли в ваш аккаунт"
+         />
          <Flex>
             <Buttons
                onClick={() => {
