@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 import DropZone from '../../assets/icons/DropZone.svg'
 import { Title } from './Title'
-import { Notification } from './Notification'
 
 const StyledImagePicker = styled.div`
    display: flex;
@@ -42,20 +41,19 @@ export const ImagePicker = ({ getPhoto, image }) => {
          })
       })
    }, [])
-   const { getRootProps, getInputProps, isDragAccept, isDragReject } =
-      useDropzone({
-         multiple: false,
-         accept: 'image/jpeg,image/png',
-         maxSize: 100000,
-         onDrop,
-      })
+   const { getRootProps, getInputProps } = useDropzone({
+      multiple: false,
+      accept: 'image/jpeg,image/png',
+      maxSize: 100000,
+      onDrop,
+   })
    return (
       <StyledImagePicker>
          <DropZoneWrapper {...getRootProps()}>
             <input type="text" {...getInputProps()} />
             <Image src={image || DropZone} alt="" />
          </DropZoneWrapper>
-         <Title fontSize="14" fontcolor="#8d949e">
+         <Title fontcolor={errors ? 'red' : '#8d949e'} fontSize="14">
             {errors || (
                <p>
                   Нажмите на иконку чтобы <br /> загрузить или перетащите фото
