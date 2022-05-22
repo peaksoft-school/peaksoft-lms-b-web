@@ -1,24 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import styled from 'styled-components'
-import Buttons from '@mui/material/IconButton/IconButton'
 import { getStudentsByGroupId } from '../../../store/adminGroupSlice'
 import { AppTable } from '../../UI/Table'
 import { BreadCrumb } from '../../UI/BreadCrumb'
-
-const WrapperIcons = styled.div`
-   width: 20vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   & > * {
-      &:hover {
-         cursor: pointer;
-         color: blue;
-      }
-   }
-`
 
 const DATA_COLLUMN = [
    {
