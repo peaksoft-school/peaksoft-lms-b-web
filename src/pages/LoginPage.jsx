@@ -23,7 +23,7 @@ export const LoginPage = () => {
          navigate(mainRoutes.INSTRUCTOR.path)
       if (user.role === mainRoutes.STUDENT.role)
          navigate(mainRoutes.STUDENT.path)
-      if (authError) {
+      if (authError.isActive) {
          setTimeout(() => {
             dispatch(authActions.finishTheNotificationAuth())
          }, 3000)
@@ -49,8 +49,8 @@ export const LoginPage = () => {
    return (
       <>
          <Notification
-            isActive={!!authError}
-            title="не удалось войти в аккаунт, попробуйте еще раз"
+            isActive={authError.isActive}
+            title={authError.message}
             notificationType="error"
          />
          <Formik
