@@ -8,19 +8,7 @@ import { ReactComponent as TrashBinIcon } from '../../assets/icons/TrashBinForTa
 import { AppTable } from '../UI/Table'
 import { Buttons } from '../UI/Buttons'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
-
-const WrapperIcons = styled.div`
-   width: 20vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   & > * {
-      &:hover {
-         cursor: pointer;
-         color: blue;
-      }
-   }
-`
+import { getMaterialsByCourseId } from '../../store/instructorCoursesSlice'
 
 const DATA_COLLUMN = [
    {
@@ -49,14 +37,26 @@ const DATA_COLLUMN = [
    },
    {
       title: 'Удалить',
-      accessKey: 'delete',
+      accessKey: '',
+      action: (item) => {
+         return (
+            <WrapperIcons>
+               <Buttons style={{ background: 'none' }}>
+                  <TrashBinIcon />
+               </Buttons>
+            </WrapperIcons>
+         )
+      },
    },
 ]
 
 export const MyCoursesInnerPage = () => {
-   //    const dispatch = useDispatch()
+   const dispatch = useDispatch()
    const { coursesId } = useParams()
-   console.log(coursesId)
+
+   // const getLessons = () => {
+   //    dispatch(getMaterialsByCourseId(11))
+   // }
    //    useEffect(() => {
    //       dispatch(getStudentsByGroupId(groupId))
    //    }, [])
@@ -64,7 +64,7 @@ export const MyCoursesInnerPage = () => {
    return (
       <div style={{ marginTop: '30px' }}>
          <Flex>
-            <Box display="flex" justifyContent="space-between" width="46%">
+            <Box display="flex" justifyContent="space-between" width="500px">
                <Buttons
                   hoverback="null"
                   fontcolor="#3772ff"
@@ -87,4 +87,17 @@ export const MyCoursesInnerPage = () => {
 const Flex = styled.div`
    display: flex;
    justify-content: flex-end;
+`
+
+const WrapperIcons = styled.div`
+   width: 20vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   & > * {
+      &:hover {
+         cursor: pointer;
+         color: blue;
+      }
+   }
 `

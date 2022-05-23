@@ -11,7 +11,7 @@ export const InstructorCoursesRoute = () => {
    return (
       <Routes>
          <Route path="/" element={<MyCourses />} />
-         <Route path="/:coursesId" element={<MyCoursesInnerPage />} />
+         <Route path="/:coursesId/*" element={<MyCoursesInnerPage />} />
       </Routes>
    )
 }

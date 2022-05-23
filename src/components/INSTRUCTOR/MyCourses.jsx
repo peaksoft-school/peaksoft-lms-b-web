@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { FlexCards } from '../UI/FlexCards'
 import { Cards } from '../UI/Cards'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
-import { Buttons } from '../UI/Buttons'
+import { ReactComponent as DoubleStudent } from '../../assets/icons/DoubleStudent.svg'
+import { getAllCoursesList } from '../../store/instructorCoursesSlice'
 
 export const MyCourses = () => {
+   const { courses, pages, currentPage } = useSelector(
+      (store) => store.instructorSlice
+   )
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getAllCoursesList())
+   }, [])
+
+   const openInnerPage = (id) => {
+      navigate(`${id}`)
+   }
    const option = [
       {
          id: Math.random().toString(),
@@ -13,7 +28,7 @@ export const MyCourses = () => {
          content: (
             <>
                <PersonIcon style={{ marginRight: '20px' }} />
-               Редактировать
+               Добавить студента в курс
             </>
          ),
       },
@@ -22,8 +37,8 @@ export const MyCourses = () => {
          action: (groupInformation) => {},
          content: (
             <>
-               <PersonIcon style={{ marginRight: '20px' }} />
-               Удалить
+               <DoubleStudent style={{ marginRight: '20px' }} />
+               Добавить группу в курс
             </>
          ),
       },
@@ -31,78 +46,20 @@ export const MyCourses = () => {
    return (
       <Wrapper>
          <FlexCards>
-            <Cards
-               key="12"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="14"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
-            <Cards
-               key="13"
-               title="Jetigen"
-               image=""
-               description="tuda suda"
-               duration="2019"
-               cardId="34"
-               option={option}
-            />
+            {courses.map((course) => {
+               return (
+                  <Cards
+                     onCardClick={() => openInnerPage(course.id)}
+                     key={course.id}
+                     title={course.courseName}
+                     image={course.image}
+                     description={course.description}
+                     duration={course.duration}
+                     cardId={course.id}
+                     option={option}
+                  />
+               )
+            })}
          </FlexCards>
       </Wrapper>
    )
