@@ -20,7 +20,8 @@ const initState = {
 
 export const getAllCoursesList = createAsyncThunk(
    'instructor/slice/getAllCoursesList',
-   async ({ rejectWithValue }) => {
+   async () => {
+      console.log('slice is working')
       try {
          const response = await baseFetch({
             path: 'api/courses',
@@ -32,7 +33,7 @@ export const getAllCoursesList = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return rejectWithValue(error.messages)
+         return error.message
       }
    }
 )
@@ -62,13 +63,6 @@ export const instructorSlice = createSlice({
          state.pages = pages
          state.currentPage = currentPage
          state.courses = courses
-      },
-      [getAllCoursesList.rejected]: (state, actions) => {
-         const { message } = actions.error
-         state.instructorError = {
-            isActive: true,
-            message,
-         }
       },
       [getMaterialsByCourseId.fulfilled]: (state, actions) => {
          const materials = actions.payload

@@ -6,7 +6,10 @@ import { FlexCards } from '../UI/FlexCards'
 import { Cards } from '../UI/Cards'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
 import { ReactComponent as DoubleStudent } from '../../assets/icons/DoubleStudent.svg'
-import { getAllCoursesList } from '../../store/instructorCoursesSlice'
+import {
+   getAllCoursesList,
+   getMaterialsByCourseId,
+} from '../../store/instructorCoursesSlice'
 
 export const MyCourses = () => {
    const { courses, pages, currentPage } = useSelector(
@@ -15,6 +18,7 @@ export const MyCourses = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    useEffect(() => {
+      console.log('effect is working')
       dispatch(getAllCoursesList())
    }, [])
 

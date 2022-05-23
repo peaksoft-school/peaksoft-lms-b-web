@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -45,8 +45,11 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 )
 
 export const TabsTitle = ({ tabs }) => {
-   const navigate = useNavigate()
-   const [value, setValue] = React.useState(0)
+   const [value, setValue] = React.useState(tabs[0].path)
+   const [searchParams, setSearchParams] = useSearchParams()
+   useEffect(() => {
+      setSearchParams({ tabs: value })
+   }, [value])
 
    const handleChange = (event, newValue) => {
       setValue(newValue)
@@ -61,10 +64,8 @@ export const TabsTitle = ({ tabs }) => {
          {tabs.map((label) => (
             <StyledTab
                key={label.path}
-               onClick={() => {
-                  navigate(label.path)
-               }}
                label={label.label}
+               value={label.path}
             />
          ))}
       </StyledTabs>
