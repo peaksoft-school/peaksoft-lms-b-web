@@ -55,9 +55,9 @@ export const ImagePicker = ({ getPhoto, image }) => {
          </DropZoneWrapper>
          <Title fontcolor={errors ? 'red' : '#8d949e'} fontSize="14">
             {errors || (
-               <p>
+               <>
                   Нажмите на иконку чтобы <br /> загрузить или перетащите фото
-               </p>
+               </>
             )}
          </Title>
       </StyledImagePicker>
