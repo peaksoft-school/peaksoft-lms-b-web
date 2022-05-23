@@ -17,37 +17,19 @@ import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { GroupModal } from './GroupModal'
 import { Notification } from '../../UI/Notification'
-import { authActions } from '../../../store/authSlice'
 
 export const GroupsPanel = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { groups, pages, groupSuccess, groupError } = useSelector(
-      (store) => store.groupSlice
-   )
+   const { groups, pages } = useSelector((store) => store.groupSlice)
    const { authSuccess } = useSelector((store) => store.auth)
    const page = searchParams.get('page')
 
    useEffect(() => {
       dispatch(getGroupsList(page || 1))
-      if (authSuccess.isActive) {
-         setTimeout(() => {
-            dispatch(authActions.finishTheNotificationAuth())
-         }, 3000)
-      }
-      if (groupSuccess.isActive) {
-         setTimeout(() => {
-            dispatch(adminGroupActions.finishTheNotificationGroup())
-         }, 3000)
-      }
-      if (groupError.isActive) {
-         setTimeout(() => {
-            dispatch(adminGroupActions.finishTheNotificationGroup())
-         }, 3000)
-      }
-   }, [page, authSuccess, groupSuccess])
+   }, [page])
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -55,7 +37,7 @@ export const GroupsPanel = () => {
 
    const option = [
       {
-         id: Math.random().toString(),
+         id: 1,
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
             setSearchParams({ modal: 'updateGroup', groupId, page })
@@ -68,7 +50,7 @@ export const GroupsPanel = () => {
          ),
       },
       {
-         id: Math.random().toString(),
+         id: 2,
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
             setSearchParams({ modal: 'deleteGroup', groupId, page })
@@ -84,17 +66,6 @@ export const GroupsPanel = () => {
 
    return (
       <Wrapper>
-         <Notification
-            notificationType={groupError.isActive ? 'error' : 'success'}
-            isActive={
-               authSuccess.isActive ||
-               groupSuccess.isActive ||
-               groupError.isActive
-            }
-            title={
-               authSuccess.message || groupSuccess.message || groupError.message
-            }
-         />
          <Flex>
             <Buttons
                onClick={() => {

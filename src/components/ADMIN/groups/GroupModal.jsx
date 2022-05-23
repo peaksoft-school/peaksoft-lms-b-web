@@ -5,6 +5,7 @@ import { ConfirmModal } from '../../UI/ConfirmModal'
 import { deleteGroup } from '../../../store/adminGroupSlice'
 import { UpdateGroupModal } from './UpdateGroupModal'
 import { CreateGroupModal } from './CreateGroupModal'
+import { MODAL_TYPES } from '../../../utils/constants/constants'
 
 export const GroupModal = () => {
    const dispatch = useDispatch()
@@ -20,13 +21,13 @@ export const GroupModal = () => {
       closeModal()
    }
 
-   if (modal === 'addGroup') {
+   if (modal === MODAL_TYPES.addGroup) {
       return <CreateGroupModal onCloseModal={closeModal} />
    }
-   if (modal === 'updateGroup') {
+   if (modal === MODAL_TYPES.updateGroup) {
       return <UpdateGroupModal onCloseModal={closeModal} groupId={groupId} />
    }
-   if (modal === 'deleteGroup') {
+   if (modal === MODAL_TYPES.deleteGroup) {
       return (
          <ConfirmModal
             isActive

@@ -1,14 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
-   groupSuccess: {
-      isActive: false,
-   },
-   groupError: {
-      isActive: false,
-   },
    isLoading: null,
    pages: 0,
    groups: [],
@@ -154,40 +149,28 @@ export const adminGroupSlice = createSlice({
       },
       [getGroupsList.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = message
+         toast.error(message)
       },
-      [sendPhoto.fulfilled]: (state) => {},
+      [sendPhoto.fulfilled]: () => {},
       [sendPhoto.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
          if (state.groups.length < 12) {
             state.groups = [newGroup, ...state.groups]
          }
-         state.groupSuccess = {
-            isActive: true,
-            message: 'новая группа добавлена',
-         }
+         toast.success('группа успешно добавлена')
       },
       [deleteGroup.fulfilled]: (state, actions) => {
          const { id } = actions.payload
          state.groups = state.groups.filter((item) => item.id !== id)
-         state.groupSuccess = {
-            isActive: true,
-            message: 'группа успешно удалена',
-         }
+         toast.warn('группа успешно удалена')
       },
       [deleteGroup.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
          const table = actions.payload
@@ -195,10 +178,7 @@ export const adminGroupSlice = createSlice({
       },
       [getStudentsByGroupId.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
       [updateGroup.fulfilled]: (state, action) => {
          const newGroup = action.payload
@@ -206,24 +186,15 @@ export const adminGroupSlice = createSlice({
             (group) => group.id === newGroup.id
          )
          state.groups.splice(currentIndex, 1, newGroup)
-         state.groupSuccess = {
-            isActive: true,
-            message: 'вы успешно отредактировали группу',
-         }
+         toast.success('вы успешно отредактировали группу')
       },
       [updateGroup.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
       [getGroupById.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.groupError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
    },
 })

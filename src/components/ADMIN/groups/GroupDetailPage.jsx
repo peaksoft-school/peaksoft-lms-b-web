@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import styled from 'styled-components'
 import { getStudentsByGroupId } from '../../../store/adminGroupSlice'
 import { AppTable } from '../../UI/Table'
 import { BreadCrumb } from '../../UI/BreadCrumb'
@@ -36,9 +37,13 @@ export const GroupsPanelInnerPage = () => {
    }, [])
    const { table } = useSelector((state) => state.groupSlice)
    return (
-      <div style={{ marginTop: '30px' }}>
+      <styledWrapper>
          <BreadCrumb />
          <AppTable columns={DATA_COLLUMN} data={table} />
-      </div>
+      </styledWrapper>
    )
 }
+
+const styledWrapper = styled.div`
+   margin-top: 30px;
+`

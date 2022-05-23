@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { AUTH } from '../utils/constants/constants'
 import {
@@ -35,13 +36,6 @@ const initState = {
       token: null,
       email: null,
    },
-   authError: {
-      isActive: false,
-   },
-   authIsLoading: null,
-   authSuccess: {
-      isActive: false,
-   },
 }
 
 export const authSlice = createSlice({
@@ -49,16 +43,7 @@ export const authSlice = createSlice({
    initialState: getFromLocalStorage(AUTH)
       ? { ...initState, user: getFromLocalStorage(AUTH) }
       : initState,
-   reducers: {
-      finishTheNotificationAuth: (state) => {
-         state.authError = {
-            isActive: false,
-         }
-         state.authSuccess = {
-            isActive: false,
-         }
-      },
-   },
+   reducers: {},
    extraReducers: {
       [login.pending]: (state) => {
          state.authIsLoading = true
@@ -66,22 +51,17 @@ export const authSlice = createSlice({
       [login.fulfilled]: (state, actions) => {
          const response = actions.payload
          state.user = response
-         state.authSuccess = {
-            isActive: true,
-            message: 'вы успешно вошли в аккаунт',
-         }
+         toast.success('вход успешно выполнен')
       },
       [login.rejected]: (state, actions) => {
          const { message } = actions.error
-         state.authError = {
-            isActive: true,
-            message,
-         }
+         toast.error(message)
       },
       [logout.fulfilled]: (state) => {
          state.user.email = null
          state.user.token = null
          state.user.role = null
+         toast.warn('вы успешновышли из аккаунта')
       },
    },
 })

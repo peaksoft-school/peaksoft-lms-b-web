@@ -11,39 +11,37 @@ import { Inputs } from '../../UI/Input'
 
 export const CreateGroupModal = ({ onCloseModal }) => {
    const dispatch = useDispatch()
-   const [createGroupModalImage, setCreateGroupModalImage] = useState({
+   const [image, setImage] = useState({
       frontImage: '',
       backImage: null,
    })
-   const [createGroupModalDate, setCreateGroupModalDate] = useState()
-   const [createGroupModalData, onChangeCreateGroupModalData] = useInput({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useInput({
       groupName: '',
       description: '',
    })
    const getPhotoHandler = (photo) => {
-      setCreateGroupModalImage({
+      setImage({
          frontImage: URL.createObjectURL(photo),
          backImage: photo,
       })
    }
    const createGroupHandler = async () => {
-      if (createGroupModalImage.backImage) {
-         const { URL } = await dispatch(
-            sendPhoto(createGroupModalImage.backImage)
-         ).unwrap()
+      if (image.backImage) {
+         const { URL } = await dispatch(sendPhoto(image.backImage)).unwrap()
          dispatch(
             createGroup({
-               ...createGroupModalData,
-               dateOfFinish: convertDate(createGroupModalDate),
+               ...inputsValue,
+               dateOfFinish: convertDate(date),
                image: URL,
             })
          )
       } else {
          dispatch(
             createGroup({
-               ...createGroupModalData,
-               dateOfFinish: convertDate(createGroupModalDate),
-               image: ' ',
+               ...inputsValue,
+               dateOfFinish: convertDate(date),
+               image: '',
             })
          )
       }
@@ -53,11 +51,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
 
    return (
       <BasicModal
-         isDisabled={
-            createGroupModalDate &&
-            createGroupModalData.description &&
-            createGroupModalData.groupName
-         }
+         isDisabled={date && inputsValue.description && inputsValue.groupName}
          title="Создать  курс"
          isActive
          cancelTitle="Отмена"
@@ -66,28 +60,21 @@ export const CreateGroupModal = ({ onCloseModal }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={createGroupHandler}
       >
-         <ImagePicker
-            image={createGroupModalImage.frontImage}
-            getPhoto={getPhotoHandler}
-         />
+         <ImagePicker image={image.frontImage} getPhoto={getPhotoHandler} />
 
          <FlexInput>
             <Inputs
-               value={createGroupModalData.groupName}
-               onChange={(e) => onChangeCreateGroupModalData(e)}
+               value={inputsValue.groupName}
+               onChange={(e) => setInputsValue(e)}
                name="groupName"
                width="327"
                placeholder="Название курса"
             />
-            <CustomDatePicker
-               value={createGroupModalDate}
-               setDate={setCreateGroupModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
-            value={createGroupModalData.description}
-            onChange={(e) => onChangeCreateGroupModalData(e)}
+            value={inputsValue.description}
+            onChange={(e) => setInputsValue(e)}
             name="description"
             placeholder="Описание курса"
          />

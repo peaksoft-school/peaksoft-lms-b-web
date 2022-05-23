@@ -20,34 +20,34 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
             getGroupById(groupId)
          ).unwrap()
 
-         setUpdateGroupModalImage({
+         setImage({
             frontImage: image,
             backImage: null,
          })
-         setUpdateGroupModalData({
+         setInputsValue({
             groupName,
             description,
          })
 
-         setUpdateGroupModalDate(new Date(dateOfFinish))
+         setDate(new Date(dateOfFinish))
       }
 
       getInitEditModalData()
    }, [])
 
-   const [updateGroupModalImage, setUpdateGroupModalImage] = useState({
+   const [image, setImage] = useState({
       frontImage: '',
       backImage: null,
    })
-   const [updateGroupModalDate, setUpdateGroupModalDate] = useState()
-   const [updateGroupModalData, setUpdateGroupModalData] = useState({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useState({
       groupName: '',
       description: '',
    })
 
    const changeModalInputs = (e) => {
       const { name, value } = e.target
-      setUpdateGroupModalData((prevState) => {
+      setInputsValue((prevState) => {
          return {
             ...prevState,
             [name]: value,
@@ -55,21 +55,19 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       })
    }
    const updatePhotoHandler = (photo) => {
-      setUpdateGroupModalImage({
+      setImage({
          frontImage: URL.createObjectURL(photo),
          backImage: photo,
       })
    }
    const updateGroupHandler = async () => {
-      if (updateGroupModalImage.backImage) {
-         const { URL } = await dispatch(
-            sendPhoto(updateGroupModalImage.backImage)
-         ).unwrap()
+      if (image.backImage) {
+         const { URL } = await dispatch(sendPhoto(image.backImage)).unwrap()
          dispatch(
             updateGroup({
                groupInfo: {
-                  ...updateGroupModalData,
-                  dateOfFinish: convertDate(updateGroupModalDate),
+                  ...inputsValue,
+                  dateOfFinish: convertDate(date),
                   image: URL,
                },
                groupId,
@@ -79,9 +77,9 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          dispatch(
             updateGroup({
                groupInfo: {
-                  ...updateGroupModalData,
-                  dateOfFinish: convertDate(updateGroupModalDate),
-                  image: updateGroupModalImage.frontImage,
+                  ...inputsValue,
+                  dateOfFinish: convertDate(date),
+                  image: image.frontImage,
                },
                groupId,
             })
@@ -91,11 +89,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }
    return (
       <BasicModal
-         isDisabled={
-            updateGroupModalData.groupName &&
-            updateGroupModalData.description &&
-            updateGroupModalDate
-         }
+         isDisabled={inputsValue.groupName && inputsValue.description && date}
          title="Pедактировать"
          isActive
          cancelTitle="Отмена"
@@ -104,28 +98,21 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={updateGroupHandler}
       >
-         <ImagePicker
-            image={updateGroupModalImage.frontImage}
-            getPhoto={updatePhotoHandler}
-         />
+         <ImagePicker image={image.frontImage} getPhoto={updatePhotoHandler} />
 
          <FlexInput>
             <Inputs
                name="groupName"
-               value={updateGroupModalData.groupName}
+               value={inputsValue.groupName}
                onChange={changeModalInputs}
                width="327"
                placeholder="Название группы"
             />
-            <CustomDatePicker
-               value={updateGroupModalDate}
-               setDate={setUpdateGroupModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
             name="description"
-            value={updateGroupModalData.description}
+            value={inputsValue.description}
             onChange={changeModalInputs}
             placeholder="Описание группы"
          />
