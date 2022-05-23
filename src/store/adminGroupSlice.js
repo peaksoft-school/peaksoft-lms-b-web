@@ -138,10 +138,10 @@ export const adminGroupSlice = createSlice({
    reducers: {
       finishTheNotificationGroup: (state) => {
          state.groupSuccess = {
-            isActive: null,
+            isActive: false,
          }
          state.groupError = {
-            isActive: null,
+            isActive: false,
          }
       },
    },
