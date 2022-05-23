@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button } from '@mui/material'
 import styled from 'styled-components'
+import { ReactComponent as EditIcon } from '../../assets/icons/EditIcon.svg'
+import { ReactComponent as DeleteIcon } from '../../assets/icons/DeleteIcon.svg'
 
 const StyledDiv = styled('div')`
    opacity: 0;
@@ -21,11 +23,11 @@ export const CardSettings = ({ onDeleteHandler, onEditHandler }) => {
    return (
       <StyledDiv>
          <StyledButton variant="text" onClick={onEditHandler}>
-            {/* <GreenEdit style={{ margin: 5 }} /> */}
+            <EditIcon style={{ margin: 5 }} />
             Редактировать
          </StyledButton>
          <StyledButton variant="text" onClick={onDeleteHandler}>
-            {/* <Deletesvg style={{ margin: 5 }} /> */}
+            <DeleteIcon style={{ margin: 5 }} />
             Удалить
          </StyledButton>
       </StyledDiv>

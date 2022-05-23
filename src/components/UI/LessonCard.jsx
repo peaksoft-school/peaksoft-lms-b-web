@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -8,6 +7,13 @@ import Divider from '@mui/material/Divider'
 import styled from 'styled-components'
 import { CardSettings } from './LessonSettings'
 import { LessonTypeForm } from './LessonTypeForm'
+import { ReactComponent as DeleteIcon } from '../../assets/icons/DeleteIcon.svg'
+import { ReactComponent as ReedIcon } from '../../assets/icons/ReedIcon.svg'
+import { ReactComponent as VideoIcon } from '../../assets/icons/VideoIcon.svg'
+import { ReactComponent as PrezentationIcon } from '../../assets/icons/PrezentationIcon.svg'
+import { ReactComponent as HmIcon } from '../../assets/icons/HmIcon.svg'
+import { ReactComponent as LinkIcon } from '../../assets/icons/LinkIcon.svg'
+import { ReactComponent as TestIcon } from '../../assets/icons/TestIcon.svg'
 
 const StyledText = styled(ListItemText)`
    span {
@@ -34,7 +40,6 @@ const StyledTitle = styled(ListItemText)`
 
 const style = {
    width: '44%',
-   height: 360,
    bgcolor: 'background.paper',
    border: '1px solid #EBEBEB',
    borderRadius: '10px',
@@ -54,10 +59,14 @@ export default function LessonCard({
       <Box sx={style}>
          <List {...otherProps}>
             <ListItem>
-               <Button>{/* <Reeditsvg onClick={onEditHandler} /> */}</Button>
+               <Button>
+                  <ReedIcon onClick={onEditHandler} />
+               </Button>
                <StyledTitle primary="LESSON_1" />
                <LessonTypeForm />
-               <Button>{/* <Deletesvg onClick={onDeleteHandler} /> */}</Button>
+               <Button>
+                  <DeleteIcon onClick={onDeleteHandler} />
+               </Button>
             </ListItem>
          </List>
 
@@ -65,31 +74,31 @@ export default function LessonCard({
 
          <List>
             <ListItemButton onClick={openVideoHandler} disableRipple>
-               {/* <Videosvg /> */}
+               <VideoIcon />
                <StyledText primary="Видеоурок" />
                <CardSettings />
             </ListItemButton>
 
             <ListItemButton onClick={openPresentationHandler} disableRipple>
-               {/* <Presentationsvg /> */}
+               <PrezentationIcon />
                <StyledText primary="Презентация" />
                <CardSettings />
             </ListItemButton>
 
             <ListItemButton onClick={openTaskHandler} disableRipple>
-               {/* <Tasksvg /> */}
+               <HmIcon />
                <StyledText primary="Задание" />
                <CardSettings />
             </ListItemButton>
 
             <ListItemButton onClick={openLinkHandler} disableRipple>
-               {/* <Linksvg /> */}
+               <LinkIcon />
                <StyledText primary="Ссылка" />
                <CardSettings />
             </ListItemButton>
 
             <ListItemButton onClick={openTestHandler} disableRipple>
-               {/* <Testsvg /> */}
+               <TestIcon />
                <StyledText primary="Тест" />
                <CardSettings />
             </ListItemButton>
