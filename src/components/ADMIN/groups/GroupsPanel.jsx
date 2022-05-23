@@ -37,7 +37,7 @@ export const GroupsPanel = () => {
             dispatch(authActions.finishTheNotificationAuth())
          }, 3000)
       }
-      if (groupSuccess.isActive) {
+      if (groupSuccess.isActive || groupError.isActive) {
          setTimeout(() => {
             dispatch(adminGroupActions.finishTheNotificationGroup())
          }, 3000)
@@ -80,7 +80,7 @@ export const GroupsPanel = () => {
    return (
       <Wrapper>
          <Notification
-            notificationType="success"
+            notificationType={groupError.isActive ? 'error' : 'success'}
             isActive={
                authSuccess.isActive ||
                groupSuccess.isActive ||
