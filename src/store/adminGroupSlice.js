@@ -137,7 +137,6 @@ export const adminGroupSlice = createSlice({
    initialState: initState,
    reducers: {
       finishTheNotificationGroup: (state) => {
-         console.log('HELLO WORLD')
          state.groupSuccess = {
             isActive: null,
          }
