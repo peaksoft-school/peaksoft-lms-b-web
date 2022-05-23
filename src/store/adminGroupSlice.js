@@ -167,7 +167,7 @@ export const adminGroupSlice = createSlice({
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
          if (state.groups.length < 12) {
-            state.groups = [...state.groups, newGroup]
+            state.groups = [newGroup, ...state.groups]
          }
          state.groupSuccess = {
             isActive: true,
