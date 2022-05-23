@@ -27,15 +27,15 @@ const DATA_COLLUMN = [
    },
    {
       title: 'Имя Фамилия',
-      accessKey: 'name',
+      accessKey: 'fullName',
    },
    {
       title: 'Формат обучения',
-      accessKey: 'format',
+      accessKey: 'studyFormat',
    },
    {
       title: 'Номер телефона',
-      accessKey: 'mobile_phone',
+      accessKey: 'phoneNumber',
    },
    {
       title: 'E-Mail',

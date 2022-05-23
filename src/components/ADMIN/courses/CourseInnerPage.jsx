@@ -58,7 +58,7 @@ export const CourseInnerPage = () => {
          },
          {
             title: 'Формат',
-            accessKey: 'format',
+            accessKey: 'studyFormat',
          },
          {
             title: 'Номер телефона',
