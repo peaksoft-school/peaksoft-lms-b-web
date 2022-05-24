@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
 
          return response
       } catch (error) {
-         return rejectWithValue(error.message)
+         return rejectWithValue(error)
       }
    }
 )
@@ -54,8 +54,8 @@ export const authSlice = createSlice({
          toast.success('вход успешно выполнен')
       },
       [login.rejected]: (state, actions) => {
-         const { message } = actions.error
-         toast.error(message)
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
       [logout.fulfilled]: (state) => {
          state.user.email = null

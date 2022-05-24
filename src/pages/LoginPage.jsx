@@ -8,9 +8,19 @@ import { ReactComponent as PeaksoftLogo } from '../assets/icons/Logo.svg'
 import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
-import { authActions, login } from '../store/authSlice'
-import { mainRoutes } from '../utils/constants/routes'
-import { Notification } from '../components/UI/Notification'
+import { login } from '../store/authSlice'
+
+const MAIN_ROUTES = {
+   INSTRUCTOR: {
+      path: '/instructor',
+   },
+   ADMIN: {
+      path: '/admin',
+   },
+   STUDENT: {
+      path: '/student',
+   },
+}
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
@@ -18,11 +28,7 @@ export const LoginPage = () => {
    const { user } = useSelector((state) => state.auth)
 
    useEffect(() => {
-      if (user.role === mainRoutes.ADMIN.role) navigate(mainRoutes.ADMIN.path)
-      if (user.role === mainRoutes.INSTRUCTOR.role)
-         navigate(mainRoutes.INSTRUCTOR.path)
-      if (user.role === mainRoutes.STUDENT.role)
-         navigate(mainRoutes.STUDENT.path)
+      if (MAIN_ROUTES[user.role]) navigate(MAIN_ROUTES[user.role].path)
    }, [user.role])
 
    const submitHandler = (values) => {

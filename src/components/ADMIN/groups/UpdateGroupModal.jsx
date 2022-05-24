@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import {
@@ -21,8 +21,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          ).unwrap()
 
          setImage({
-            frontImage: image,
-            backImage: null,
+            binaryImage: image,
+            imageLink: null,
          })
          setInputsValue({
             groupName,
@@ -36,8 +36,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }, [])
 
    const [image, setImage] = useState({
-      frontImage: '',
-      backImage: null,
+      binaryImage: '',
+      imageLink: null,
    })
    const [date, setDate] = useState()
    const [inputsValue, setInputsValue] = useState({
@@ -56,13 +56,13 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }
    const updatePhotoHandler = (photo) => {
       setImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+         binaryImage: URL.createObjectURL(photo),
+         imageLink: photo,
       })
    }
    const updateGroupHandler = async () => {
       if (image.backImage) {
-         const { URL } = await dispatch(sendPhoto(image.backImage)).unwrap()
+         const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             updateGroup({
                groupInfo: {
@@ -79,7 +79,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...inputsValue,
                   dateOfFinish: convertDate(date),
-                  image: image.frontImage,
+                  image: image.binaryImage,
                },
                groupId,
             })
@@ -87,9 +87,12 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       }
       onCloseModal()
    }
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
    return (
       <BasicModal
-         isDisabled={inputsValue.groupName && inputsValue.description && date}
+         isDisabled={isDisableModal()}
          title="Pедактировать"
          isActive
          cancelTitle="Отмена"
@@ -98,7 +101,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={updateGroupHandler}
       >
-         <ImagePicker image={image.frontImage} getPhoto={updatePhotoHandler} />
+         <ImagePicker image={image.binaryImage} getPhoto={updatePhotoHandler} />
 
          <FlexInput>
             <Inputs

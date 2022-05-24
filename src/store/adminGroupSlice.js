@@ -7,7 +7,7 @@ const initState = {
    isLoading: null,
    pages: 0,
    groups: [],
-   table: [],
+   groupStudents: [],
    currentPage: 0,
 }
 
@@ -173,8 +173,8 @@ export const adminGroupSlice = createSlice({
          toast.error(message)
       },
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
-         const table = actions.payload
-         state.table = table
+         const groupStudents = actions.payload
+         state.groupStudents = groupStudents
       },
       [getStudentsByGroupId.rejected]: (state, actions) => {
          const { message } = actions.error

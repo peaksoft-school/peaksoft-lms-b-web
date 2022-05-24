@@ -35,15 +35,15 @@ export const GroupsPanelInnerPage = () => {
    useEffect(() => {
       dispatch(getStudentsByGroupId(groupId))
    }, [])
-   const { table } = useSelector((state) => state.groupSlice)
+   const { groupStudents } = useSelector((state) => state.groupSlice)
    return (
-      <styledWrapper>
+      <StyledWrapper>
          <BreadCrumb />
-         <AppTable columns={DATA_COLLUMN} data={table} />
-      </styledWrapper>
+         <AppTable columns={DATA_COLLUMN} data={groupStudents} />
+      </StyledWrapper>
    )
 }
 
-const styledWrapper = styled.div`
+const StyledWrapper = styled.div`
    margin-top: 30px;
 `

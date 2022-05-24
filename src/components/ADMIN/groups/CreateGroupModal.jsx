@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useInput } from '../../../hooks/useInput'
@@ -12,8 +12,8 @@ import { Inputs } from '../../UI/Input'
 export const CreateGroupModal = ({ onCloseModal }) => {
    const dispatch = useDispatch()
    const [image, setImage] = useState({
-      frontImage: '',
-      backImage: null,
+      binaryFormat: '',
+      imageLink: null,
    })
    const [date, setDate] = useState()
    const [inputsValue, setInputsValue] = useInput({
@@ -22,13 +22,13 @@ export const CreateGroupModal = ({ onCloseModal }) => {
    })
    const getPhotoHandler = (photo) => {
       setImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+         binaryFormat: URL.createObjectURL(photo),
+         imageLink: photo,
       })
    }
    const createGroupHandler = async () => {
       if (image.backImage) {
-         const { URL } = await dispatch(sendPhoto(image.backImage)).unwrap()
+         const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             createGroup({
                ...inputsValue,
@@ -48,11 +48,14 @@ export const CreateGroupModal = ({ onCloseModal }) => {
 
       onCloseModal()
    }
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
 
    return (
       <BasicModal
-         isDisabled={date && inputsValue.description && inputsValue.groupName}
-         title="Создать  курс"
+         isDisabled={isDisableModal()}
+         title="Создать  группу"
          isActive
          cancelTitle="Отмена"
          successTitle="Добавить"
@@ -60,7 +63,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={createGroupHandler}
       >
-         <ImagePicker image={image.frontImage} getPhoto={getPhotoHandler} />
+         <ImagePicker image={image.binaryFormat} getPhoto={getPhotoHandler} />
 
          <FlexInput>
             <Inputs
@@ -68,7 +71,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
                onChange={(e) => setInputsValue(e)}
                name="groupName"
                width="327"
-               placeholder="Название курса"
+               placeholder="Название группы"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
@@ -76,7 +79,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
             value={inputsValue.description}
             onChange={(e) => setInputsValue(e)}
             name="description"
-            placeholder="Описание курса"
+            placeholder="Описание группы"
          />
       </BasicModal>
    )

@@ -21,13 +21,13 @@ export const GroupModal = () => {
       closeModal()
    }
 
-   if (modal === MODAL_TYPES.addGroup) {
+   if (modal === MODAL_TYPES.ADDGROUP) {
       return <CreateGroupModal onCloseModal={closeModal} />
    }
-   if (modal === MODAL_TYPES.updateGroup) {
+   if (modal === MODAL_TYPES.UPDATEGROUP) {
       return <UpdateGroupModal onCloseModal={closeModal} groupId={groupId} />
    }
-   if (modal === MODAL_TYPES.deleteGroup) {
+   if (modal === MODAL_TYPES.DELETEGROUP) {
       return (
          <ConfirmModal
             isActive
