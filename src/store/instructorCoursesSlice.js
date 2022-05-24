@@ -3,12 +3,6 @@ import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
-   instructorSuccess: {
-      isActive: false,
-   },
-   instructorError: {
-      isActive: false,
-   },
    isLoading: null,
    pages: 0,
    courses: [],
@@ -18,18 +12,13 @@ const initState = {
    materials: [],
 }
 
-export const getAllCoursesList = createAsyncThunk(
+export const getAllTeacherCourses = createAsyncThunk(
    'instructor/slice/getAllCoursesList',
    async () => {
-      console.log('slice is working')
       try {
          const response = await baseFetch({
-            path: 'api/courses',
+            path: 'api/teachers/teacherCourses',
             method: 'GET',
-            params: {
-               page: 1,
-               size: 8,
-            },
          })
          return response
       } catch (error) {
@@ -58,10 +47,10 @@ export const instructorSlice = createSlice({
    initialState: initState,
    reducers: {},
    extraReducers: {
-      [getAllCoursesList.fulfilled]: (state, actions) => {
-         const { courses, currentPage, pages } = actions.payload
-         state.pages = pages
-         state.currentPage = currentPage
+      [getAllTeacherCourses.fulfilled]: (state, actions) => {
+         const courses = actions.payload
+         // state.pages = pages
+         // state.currentPage = currentPage
          state.courses = courses
       },
       [getMaterialsByCourseId.fulfilled]: (state, actions) => {

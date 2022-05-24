@@ -7,7 +7,7 @@ import { Cards } from '../UI/Cards'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
 import { ReactComponent as DoubleStudent } from '../../assets/icons/DoubleStudent.svg'
 import {
-   getAllCoursesList,
+   getAllTeacherCourses,
    getMaterialsByCourseId,
 } from '../../store/instructorCoursesSlice'
 
@@ -18,8 +18,7 @@ export const MyCourses = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    useEffect(() => {
-      console.log('effect is working')
-      dispatch(getAllCoursesList())
+      dispatch(getAllTeacherCourses())
    }, [])
 
    const openInnerPage = (id) => {
