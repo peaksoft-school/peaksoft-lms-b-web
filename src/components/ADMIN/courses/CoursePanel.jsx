@@ -13,7 +13,7 @@ import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
 import { getCourseList } from '../../../store/courseSlice'
 import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
-import { GroupModal } from './CourseModal'
+import { CourseModal } from './CourseModal'
 
 export const CoursePanel = () => {
    const dispatch = useDispatch()
@@ -107,7 +107,7 @@ export const CoursePanel = () => {
                <PaginationLink path={pathname} count={pages} />
             </StyledFooter>
          </ConditionalRender>
-         <GroupModal />
+         <CourseModal />
       </Wrapper>
    )
 }

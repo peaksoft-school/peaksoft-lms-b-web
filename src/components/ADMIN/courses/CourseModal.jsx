@@ -8,7 +8,7 @@ import { UpdateCourseModal } from './UpdateCourseModal'
 import { AppointTeacherModal } from './AppointTeacherModal'
 import { MODAL_TYPES } from '../../../utils/constants/constants'
 
-export const GroupModal = () => {
+export const CourseModal = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
    const { modal, courseId, page } = Object.fromEntries([...searchParams])
