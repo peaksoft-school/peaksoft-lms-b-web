@@ -6,24 +6,25 @@ import { deleteCourse } from '../../../store/courseSlice'
 import { CreateCourseModal } from './CreateCourseModal'
 import { UpdateCourseModal } from './UpdateCourseModal'
 import { AppointTeacherModal } from './AppointTeacherModal'
+import { MODAL_TYPES } from '../../../utils/constants/constants'
 
 export const GroupModal = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { modal, courseId } = Object.fromEntries([...searchParams])
+   const { modal, courseId, page } = Object.fromEntries([...searchParams])
    const deleteHandler = async () => {
       await dispatch(deleteCourse(courseId))
       closeModalHandler()
    }
 
    const closeModalHandler = () => {
-      setSearchParams({})
+      setSearchParams({ page })
    }
 
-   if (modal === 'addCourse') {
+   if (modal === MODAL_TYPES.ADDCOURSE) {
       return <CreateCourseModal onCloseModal={closeModalHandler} />
    }
-   if (modal === 'appointTeacherCourse') {
+   if (modal === MODAL_TYPES.APPOINT_TEACHER) {
       return (
          <AppointTeacherModal
             onCloseModal={closeModalHandler}
@@ -31,7 +32,7 @@ export const GroupModal = () => {
          />
       )
    }
-   if (modal === 'updateCourse') {
+   if (modal === MODAL_TYPES.UPDATECOURSE) {
       return (
          <UpdateCourseModal
             onCloseModal={closeModalHandler}
@@ -39,7 +40,7 @@ export const GroupModal = () => {
          />
       )
    }
-   if (modal === 'deleteCourse') {
+   if (modal === MODAL_TYPES.DELETECOURSE) {
       return (
          <ConfirmModal
             isActive

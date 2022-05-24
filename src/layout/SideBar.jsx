@@ -14,10 +14,10 @@ const sideBar = {
    ADMIN: [
       {
          title: 'Группы',
-         path: 'groups',
+         path: 'groups?page=1',
          icon: <GroupsIcon />,
       },
-      { title: 'Курсы', path: 'courses', icon: <CourseIcon /> },
+      { title: 'Курсы', path: 'courses?page=1', icon: <CourseIcon /> },
       { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
       { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
    ],

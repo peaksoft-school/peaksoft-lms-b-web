@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { useInput } from '../../../hooks/useInput'
-import { getCourseById } from '../../../store/courseSlice'
+import {
+   getCourseById,
+   sendPhoto,
+   updateCourse,
+} from '../../../store/courseSlice'
+import { convertDate } from '../../../utils/helpers/helpers'
 import { BasicModal } from '../../UI/BasicModal'
 import { CustomDatePicker } from '../../UI/CustomDatePicker'
 import { ImagePicker } from '../../UI/ImagePicker'
@@ -15,33 +19,33 @@ export const UpdateCourseModal = ({ onCloseModal, courseId }) => {
          const { courseName, description, image, dateOfFinish } =
             await dispatch(getCourseById(courseId)).unwrap()
 
-         setUpdateCourseModalImage({
-            frontImage: image,
-            backImage: null,
+         setImage({
+            imageLink: image,
+            binaryFormat: null,
          })
-         setUpdateCourseModalData({
+         setInputsValue({
             courseName,
             description,
          })
-         setUpdateCourseModalDate(new Date(dateOfFinish))
+         setDate(new Date(dateOfFinish))
       }
 
       fetch()
    }, [])
 
-   const [updateCourseModalImage, setUpdateCourseModalImage] = useState({
-      frontImage: '',
-      backImage: null,
+   const [image, setImage] = useState({
+      imageLink: '',
+      binaryFormat: null,
    })
-   const [updateCourseModalDate, setUpdateCourseModalDate] = useState()
-   const [updateCourseModalData, setUpdateCourseModalData] = useState({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useState({
       description: '',
       courseName: '',
    })
 
    const InputsChangeHandler = (event) => {
       const { name, value } = event.target
-      setUpdateCourseModalData((prevState) => {
+      setInputsValue((prevState) => {
          return {
             ...prevState,
             [name]: value,
@@ -50,43 +54,57 @@ export const UpdateCourseModal = ({ onCloseModal, courseId }) => {
    }
 
    const editPhotoHandler = (photo) => {
-      setUpdateCourseModalImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+      setImage({
+         imageLink: URL.createObjectURL(photo),
+         binaryFormat: photo,
       })
    }
-   const editHandler = () => {}
+   const editHandler = async () => {
+      let URLCOPY
+      if (image.binaryFormat) {
+         const { URL } = await dispatch(sendPhoto(image.binaryFormat)).unwrap()
+         URLCOPY = URL
+      }
+      dispatch(
+         updateCourse({
+            courseId,
+            courseInformation: {
+               ...inputsValue,
+               dateOfFinish: convertDate(date),
+               image: URLCOPY || image.imageLink || '',
+            },
+         })
+      )
+      onCloseModal()
+   }
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
    return (
       <BasicModal
          title="Pедактировать"
          isActive
          cancelTitle="Отмена"
-         successTitle="Добавить"
+         successTitle="Редактировать"
          isActiveFooter="true"
          modalCloseHanlder={onCloseModal}
          addHandler={editHandler}
+         isDisabled={isDisableModal}
       >
-         <ImagePicker
-            image={updateCourseModalImage.frontImage}
-            getPhoto={editPhotoHandler}
-         />
+         <ImagePicker image={image.imageLink} getPhoto={editPhotoHandler} />
          <FlexInput>
             <Inputs
                name="courseName"
-               value={updateCourseModalData.courseName}
+               value={inputsValue.courseName}
                onChange={InputsChangeHandler}
                width="327"
                placeholder="Название курса"
             />
-            <CustomDatePicker
-               value={updateCourseModalDate}
-               setDate={setUpdateCourseModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
             name="description"
-            value={updateCourseModalData.description}
+            value={inputsValue.description}
             onChange={InputsChangeHandler}
             placeholder="Описание курса"
          />
