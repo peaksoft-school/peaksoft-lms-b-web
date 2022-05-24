@@ -11,10 +11,7 @@ export const fileFetchApi = async (options) => {
 
       const requestOptions = {
          method: 'POST',
-         headers: {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
-         },
+         headers: {},
       }
       if (file) {
          fd.append('file', file)

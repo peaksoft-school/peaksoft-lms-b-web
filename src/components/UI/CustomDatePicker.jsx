@@ -41,7 +41,6 @@ export const CustomDatePicker = ({ value, setDate, width }) => {
                   inputProps={{
                      ...params.inputProps,
                      readOnly: true,
-                     placeholder: 'дд.мм.гг',
                   }}
                />
             )}

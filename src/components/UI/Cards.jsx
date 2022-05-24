@@ -10,8 +10,8 @@ export const Cards = ({
    duration,
    description,
    onCardClick,
-   cardId,
    option,
+   allInformation,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
@@ -22,17 +22,21 @@ export const Cards = ({
       setAnchorEl(null)
    }
    const actionHandler = (action) => {
-      action({ id: cardId })
+      action(allInformation)
       closeHandler()
    }
    return (
-      <Card onClick={onCardClick}>
-         {image ? (
-            <WrapperImg src={image} alt="foto" />
+      <Card>
+         {image !== ' ' && image !== undefined ? (
+            <WrapperImg onClick={onCardClick} src={image} alt="foto" />
          ) : (
-            <WrapperImg src={DefaultCardImage} alt="foto" />
+            <WrapperImg
+               onClick={onCardClick}
+               src={DefaultCardImage}
+               alt="foto"
+            />
          )}
-         <WrapperGroupTitle>
+         <WrapperGroupTitle onClick={onCardClick}>
             <Title
                lineHeight="25px"
                fontWeight="600, bold"

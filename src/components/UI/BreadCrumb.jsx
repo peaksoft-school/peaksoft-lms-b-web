@@ -8,7 +8,7 @@ const StyledNavlink = styled(NavLink)`
    text-decoration: none;
 `
 
-const BreadCrumb = () => {
+export const BreadCrumb = () => {
    const { pathname } = useLocation()
    const crumbs = pathname.split('/').filter((el) => el)
 
@@ -33,5 +33,3 @@ const BreadCrumb = () => {
       </div>
    )
 }
-
-export default BreadCrumb

@@ -1,80 +1,103 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
+import { styled as muiStyled } from '@mui/material/styles'
+import {
+   TableContainer as MuiTableContainer,
+   Table,
+   TableHead,
+   TableBody,
+   TableRow,
+   TableCell,
+   Paper,
+   ThemeProvider,
+   createTheme,
+} from '@mui/material'
 
-export function Table({ data, headers }) {
-   const headerOfTable = headers.map((header) => (
-      <th key={header.title}>{header.title}</th>
-   ))
-   const bodyOfTable = data.map((row) => (
-      <tr key={row.id}>
-         {headers.map((column) => {
-            return (
-               <td key={column.accessKey}>
-                  {row[column.accessKey]}
-                  {column.action ? column.action(row) : ''}
-               </td>
-            )
-         })}
-      </tr>
-   ))
+export const AppTable = ({ columns, data }) => {
    return (
-      <WraperForTable>
-         <StyledTable cellPadding={0} cellSpacing={0}>
-            <Thead>
-               <tr>{headerOfTable}</tr>
-            </Thead>
-            <Tbody>{bodyOfTable}</Tbody>
-         </StyledTable>
-      </WraperForTable>
+      <ThemeProvider theme={customTheme}>
+         <Container component={Paper}>
+            <Table>
+               <TableHead>
+                  <TableRowContainer>
+                     {columns.map((col) => {
+                        return (
+                           <TableContainer key={col.accessKey}>
+                              {col.title}
+                           </TableContainer>
+                        )
+                     })}
+                  </TableRowContainer>
+               </TableHead>
+               <TableBody>
+                  {data.map((item) => {
+                     return (
+                        <StyledTableRow key={item.id}>
+                           {columns.map((col) => {
+                              if (col.action) {
+                                 return col.action(item)
+                              }
+                              return (
+                                 <StyledTable key={col.accessKey}>
+                                    {item[col.accessKey]}
+                                 </StyledTable>
+                              )
+                           })}
+                        </StyledTableRow>
+                     )
+                  })}
+               </TableBody>
+            </Table>
+         </Container>
+      </ThemeProvider>
    )
 }
-const WraperForTable = styled.div`
-   min-height: 86.3vh;
-   min-height: 94.5vh;
-   background-color: #fff;
+
+const Container = styled(MuiTableContainer)`
+   min-width: 1140px;
+   min-height: 587px;
+   margin: 20px auto;
+   left: 10%;
+   right: 0%;
+   top: 137px;
+   background: #ffffff;
+   border: 1px solid #d4d4d4;
+   box-sizing: border-box;
    border-radius: 10px;
 `
-const StyledTable = styled.table`
-   background-color: #eff0f6;
-   font-family: var(--base-font);
+const TableRowContainer = styled(TableRow)`
+   border-bottom: 1.5px solid #f7f8fa; ;
+`
+const StyledTable = styled(TableCell)`
+   border: none;
+   font-family: 'Open Sans', sans-serif;
    font-style: normal;
-   width: 170vh;
-   color: #1d293f;
-   hr {
-      border-top: 0.2px solid #e7e9eb;
-   }
-`
-const Thead = styled.thead`
-   font-weight: 400;
-   font-size: 14px;
-   line-height: 19px;
-   width: 170vh;
-
-   th {
-      white-space: nowrap;
-      padding: 1rem;
-      text-align: left;
-      background-color: #ffffff;
-      border-bottom: 1px solid silver;
-   }
-`
-const Tbody = styled.tbody`
    font-weight: 400;
    font-size: 16px;
    line-height: 22px;
-   tbody,
-   tr:nth-child(odd) {
-      background-color: white;
-      &:hover {
-         transition: 0.3s;
-         background: #d7dbf0;
-      }
-   }
-   td {
-      white-space: nowrap;
-      width: 20%;
-      overflow-wrap: break-word;
-      padding: 0.5rem;
-      padding: 10px 30px 10px 20px;
-   }
+   color: #1d293f;
+   letter-spacing: 0.02em;
 `
+const TableContainer = styled(TableCell)`
+   font-family: 'Open Sans', sans-serif;
+   font-style: normal;
+   font-weight: 600;
+   font-size: 14px;
+   line-height: 19px;
+   color: #1d293f;
+   border: none;
+`
+const customTheme = createTheme({
+   palette: {
+      main: 'rgba(26, 35, 126, 0.07);',
+      hover: 'rgba(27, 35, 119, 0.199)',
+   },
+})
+
+const StyledTableRow = muiStyled(TableRow)(({ theme }) => ({
+   '&:nth-of-type(even)': {
+      backgroundColor: theme.palette.main,
+   },
+   '&:hover': {
+      background: theme.palette.hover,
+   },
+}))
