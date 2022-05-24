@@ -10,7 +10,7 @@ export const getCourseList = createAsyncThunk(
             path: 'api/courses',
             method: 'GET',
             params: {
-               page: 0,
+               page,
                size: 8,
             },
          })
