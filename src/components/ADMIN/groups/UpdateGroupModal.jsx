@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { useInput } from '../../../hooks/useInput'
 import {
    getGroupById,
    sendPhoto,
@@ -21,34 +20,34 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
             getGroupById(groupId)
          ).unwrap()
 
-         setUpdateGroupModalImage({
-            frontImage: image,
-            backImage: null,
+         setImage({
+            binaryImage: image,
+            imageLink: null,
          })
-         setUpdateGroupModalData({
+         setInputsValue({
             groupName,
             description,
          })
 
-         setUpdateGroupModalDate(new Date(dateOfFinish))
+         setDate(new Date(dateOfFinish))
       }
 
       getInitEditModalData()
    }, [])
 
-   const [updateGroupModalImage, setUpdateGroupModalImage] = useState({
-      frontImage: '',
-      backImage: null,
+   const [image, setImage] = useState({
+      binaryImage: '',
+      imageLink: null,
    })
-   const [updateGroupModalDate, setUpdateGroupModalDate] = useState()
-   const [updateGroupModalData, setUpdateGroupModalData] = useState({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useState({
       groupName: '',
       description: '',
    })
 
    const changeModalInputs = (e) => {
       const { name, value } = e.target
-      setUpdateGroupModalData((prevState) => {
+      setInputsValue((prevState) => {
          return {
             ...prevState,
             [name]: value,
@@ -56,22 +55,20 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       })
    }
    const updatePhotoHandler = (photo) => {
-      setUpdateGroupModalImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+      setImage({
+         binaryImage: URL.createObjectURL(photo),
+         imageLink: photo,
       })
    }
    const updateGroupHandler = async () => {
-      if (updateGroupModalImage.backImage) {
-         const { URL } = await dispatch(
-            sendPhoto(updateGroupModalImage.backImage)
-         ).unwrap()
+      if (image.backImage) {
+         const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             updateGroup({
                groupInfo: {
-                  ...updateGroupModalData,
-                  dateOfFinish: convertDate(updateGroupModalDate),
-                  image: URL || ' ',
+                  ...inputsValue,
+                  dateOfFinish: convertDate(date),
+                  image: URL,
                },
                groupId,
             })
@@ -80,9 +77,9 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          dispatch(
             updateGroup({
                groupInfo: {
-                  ...updateGroupModalData,
-                  dateOfFinish: convertDate(updateGroupModalDate),
-                  image: ' ',
+                  ...inputsValue,
+                  dateOfFinish: convertDate(date),
+                  image: image.binaryImage,
                },
                groupId,
             })
@@ -90,13 +87,12 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       }
       onCloseModal()
    }
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
    return (
       <BasicModal
-         isDisabled={
-            updateGroupModalData.groupName &&
-            updateGroupModalData.description &&
-            updateGroupModalDate
-         }
+         isDisabled={isDisableModal()}
          title="Pедактировать"
          isActive
          cancelTitle="Отмена"
@@ -105,28 +101,21 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={updateGroupHandler}
       >
-         <ImagePicker
-            image={updateGroupModalImage.frontImage}
-            getPhoto={updatePhotoHandler}
-         />
+         <ImagePicker image={image.binaryImage} getPhoto={updatePhotoHandler} />
 
          <FlexInput>
             <Inputs
                name="groupName"
-               value={updateGroupModalData.groupName}
+               value={inputsValue.groupName}
                onChange={changeModalInputs}
                width="327"
                placeholder="Название группы"
             />
-            <CustomDatePicker
-               value={updateGroupModalDate}
-               setDate={setUpdateGroupModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
             name="description"
-            value={updateGroupModalData.description}
+            value={inputsValue.description}
             onChange={changeModalInputs}
             placeholder="Описание группы"
          />

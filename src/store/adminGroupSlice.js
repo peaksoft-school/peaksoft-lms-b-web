@@ -1,19 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
-   error: null,
    isLoading: null,
    pages: 0,
    groups: [],
-   table: [],
+   groupStudents: [],
    currentPage: 0,
 }
 
 export const getGroupsList = createAsyncThunk(
    'admin/slice/getGroupsList',
-   async (page) => {
+   async (page, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/groups',
@@ -26,14 +26,14 @@ export const getGroupsList = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const sendPhoto = createAsyncThunk(
    'admin/slice/sendPhoto',
-   async (file) => {
+   async (file, { rejectWithValue }) => {
       try {
          const response = await fileFetchApi({
             path: 'api/files/upload',
@@ -41,14 +41,14 @@ export const sendPhoto = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const createGroup = createAsyncThunk(
    'admin/slice/createGroup',
-   async (groupInfo) => {
+   async (groupInfo, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/groups',
@@ -58,14 +58,14 @@ export const createGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const deleteGroup = createAsyncThunk(
    'admin/slice/deleteGroup',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${id}`,
@@ -74,14 +74,14 @@ export const deleteGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const updateGroup = createAsyncThunk(
    'admin/slice/editGrouop',
-   async ({ groupInfo, groupId }) => {
+   async ({ groupInfo, groupId }, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${groupId}`,
@@ -91,14 +91,14 @@ export const updateGroup = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const getStudentsByGroupId = createAsyncThunk(
    'admin/slice/getStudentsByGroupId',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/students/${id}`,
@@ -107,14 +107,14 @@ export const getStudentsByGroupId = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const getGroupById = createAsyncThunk(
    'admin/slice/getGroupById',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/groups/${id}`,
@@ -122,7 +122,7 @@ export const getGroupById = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
@@ -130,7 +130,16 @@ export const getGroupById = createAsyncThunk(
 export const adminGroupSlice = createSlice({
    name: 'admin/slice',
    initialState: initState,
-   reducers: {},
+   reducers: {
+      finishTheNotificationGroup: (state) => {
+         state.groupSuccess = {
+            isActive: false,
+         }
+         state.groupError = {
+            isActive: false,
+         }
+      },
+   },
    extraReducers: {
       [getGroupsList.fulfilled]: (state, actions) => {
          const { pages, currentPage, groups } = actions.payload
@@ -138,20 +147,38 @@ export const adminGroupSlice = createSlice({
          state.groups = groups
          state.currentPage = currentPage
       },
-      [sendPhoto.fulfilled]: (state, actions) => {},
+      [getGroupsList.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
+      },
+      [sendPhoto.fulfilled]: () => {},
+      [sendPhoto.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
+      },
       [createGroup.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
          if (state.groups.length < 12) {
-            state.groups = [...state.groups, newGroup]
+            state.groups = [newGroup, ...state.groups]
          }
+         toast.success('группа успешно добавлена')
       },
       [deleteGroup.fulfilled]: (state, actions) => {
          const { id } = actions.payload
          state.groups = state.groups.filter((item) => item.id !== id)
+         toast.warn('группа успешно удалена')
+      },
+      [deleteGroup.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
       },
       [getStudentsByGroupId.fulfilled]: (state, actions) => {
-         const table = actions.payload
-         state.table = table
+         const groupStudents = actions.payload
+         state.groupStudents = groupStudents
+      },
+      [getStudentsByGroupId.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
       },
       [updateGroup.fulfilled]: (state, action) => {
          const newGroup = action.payload
@@ -159,8 +186,16 @@ export const adminGroupSlice = createSlice({
             (group) => group.id === newGroup.id
          )
          state.groups.splice(currentIndex, 1, newGroup)
+         toast.success('вы успешно отредактировали группу')
       },
-      [getGroupById.fulfilled]: (state, actions) => {},
+      [updateGroup.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
+      },
+      [getGroupById.rejected]: (state, actions) => {
+         const { message } = actions.error
+         toast.error(message)
+      },
    },
 })
 
