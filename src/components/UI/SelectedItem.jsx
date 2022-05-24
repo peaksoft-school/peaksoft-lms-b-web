@@ -20,7 +20,8 @@ const StyledSelectedItem = styled.div`
 export const SelectedItem = ({ userInfo, onDelete }) => {
    return (
       <StyledSelectedItem>
-         <span>{userInfo.name}</span>
+         <span>{userInfo.teacherName}</span>
+         <span>{userInfo.lastName}</span>
          <DeleteIcon onClick={onDelete} />
       </StyledSelectedItem>
    )
