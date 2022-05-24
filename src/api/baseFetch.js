@@ -31,9 +31,11 @@ export const baseFetch = async (options) => {
 
       const response = await fetch(`${BASE_URL}/${url}`, requestOptions)
       if (!response.ok) {
-         throw new Error('Some thing went wrong')
+         return response.json().then((response) => {
+            throw new Error(response.message)
+         })
       }
-      console.log(response)
+
       return response.json()
    } catch (e) {
       throw new Error(e.message)

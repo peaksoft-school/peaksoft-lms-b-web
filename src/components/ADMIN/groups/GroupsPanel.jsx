@@ -19,11 +19,12 @@ export const GroupsPanel = () => {
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
-   const page = searchParams.get('page')
-   // useEffect(() => {
-   //    dispatch(getGroupsList(page || 0))
-   // }, [page])
    const { groups, pages } = useSelector((store) => store.groupSlice)
+   const page = searchParams.get('page')
+
+   useEffect(() => {
+      dispatch(getGroupsList(page || 1))
+   }, [page])
 
    const openInnerPage = (id) => {
       navigate(`${id}`)
@@ -31,10 +32,10 @@ export const GroupsPanel = () => {
 
    const option = [
       {
-         id: Math.random().toString(),
+         id: 1,
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'updateGroup', groupId })
+            setSearchParams({ modal: 'updateGroup', groupId, page })
          },
          content: (
             <>
@@ -44,10 +45,10 @@ export const GroupsPanel = () => {
          ),
       },
       {
-         id: Math.random().toString(),
+         id: 2,
          action: (groupInformation) => {
             const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'deleteGroup', groupId })
+            setSearchParams({ modal: 'deleteGroup', groupId, page })
          },
          content: (
             <>
@@ -63,7 +64,7 @@ export const GroupsPanel = () => {
          <Flex>
             <Buttons
                onClick={() => {
-                  setSearchParams({ modal: 'addGroup' })
+                  setSearchParams({ modal: 'addGroup', page })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс

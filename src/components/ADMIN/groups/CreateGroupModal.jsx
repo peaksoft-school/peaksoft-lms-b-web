@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useInput } from '../../../hooks/useInput'
@@ -11,54 +11,51 @@ import { Inputs } from '../../UI/Input'
 
 export const CreateGroupModal = ({ onCloseModal }) => {
    const dispatch = useDispatch()
-   const [createGroupModalImage, setCreateGroupModalImage] = useState({
-      frontImage: '',
-      backImage: null,
+   const [image, setImage] = useState({
+      binaryFormat: '',
+      imageLink: null,
    })
-   const [createGroupModalDate, setCreateGroupModalDate] = useState()
-   const [createGroupModalData, onChangeCreateGroupModalData] = useInput({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useInput({
       groupName: '',
       description: '',
    })
    const getPhotoHandler = (photo) => {
-      setCreateGroupModalImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+      setImage({
+         binaryFormat: URL.createObjectURL(photo),
+         imageLink: photo,
       })
    }
    const createGroupHandler = async () => {
-      if (createGroupModalImage.backImage) {
-         const { URL } = await dispatch(
-            sendPhoto(createGroupModalImage.backImage)
-         ).unwrap()
+      if (image.backImage) {
+         const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             createGroup({
-               ...createGroupModalData,
-               dateOfFinish: convertDate(createGroupModalDate),
+               ...inputsValue,
+               dateOfFinish: convertDate(date),
                image: URL,
             })
          )
       } else {
          dispatch(
             createGroup({
-               ...createGroupModalData,
-               dateOfFinish: convertDate(createGroupModalDate),
-               image: ' ',
+               ...inputsValue,
+               dateOfFinish: convertDate(date),
+               image: '',
             })
          )
       }
 
       onCloseModal()
    }
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
 
    return (
       <BasicModal
-         isDisabled={
-            createGroupModalDate &&
-            createGroupModalData.description &&
-            createGroupModalData.groupName
-         }
-         title="Создать  курс"
+         isDisabled={isDisableModal()}
+         title="Создать  группу"
          isActive
          cancelTitle="Отмена"
          successTitle="Добавить"
@@ -66,30 +63,23 @@ export const CreateGroupModal = ({ onCloseModal }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={createGroupHandler}
       >
-         <ImagePicker
-            image={createGroupModalImage.frontImage}
-            getPhoto={getPhotoHandler}
-         />
+         <ImagePicker image={image.binaryFormat} getPhoto={getPhotoHandler} />
 
          <FlexInput>
             <Inputs
-               value={createGroupModalData.groupName}
-               onChange={(e) => onChangeCreateGroupModalData(e)}
+               value={inputsValue.groupName}
+               onChange={(e) => setInputsValue(e)}
                name="groupName"
                width="327"
-               placeholder="Название курса"
+               placeholder="Название группы"
             />
-            <CustomDatePicker
-               value={createGroupModalDate}
-               setDate={setCreateGroupModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
-            value={createGroupModalData.description}
-            onChange={(e) => onChangeCreateGroupModalData(e)}
+            value={inputsValue.description}
+            onChange={(e) => setInputsValue(e)}
             name="description"
-            placeholder="Описание курса"
+            placeholder="Описание группы"
          />
       </BasicModal>
    )
