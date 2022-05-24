@@ -36,8 +36,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }, [])
 
    const [image, setImage] = useState({
-      binaryImage: '',
-      imageLink: null,
+      imageLink: '',
+      binaryImage: null,
    })
    const [date, setDate] = useState()
    const [inputsValue, setInputsValue] = useState({
@@ -61,8 +61,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
       })
    }
    const updateGroupHandler = async () => {
-      if (image.backImage) {
-         const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
+      if (image.binaryImage) {
+         const { URL } = await dispatch(sendPhoto(image.binaryImage)).unwrap()
          dispatch(
             updateGroup({
                groupInfo: {
@@ -79,7 +79,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                groupInfo: {
                   ...inputsValue,
                   dateOfFinish: convertDate(date),
-                  image: image.binaryImage,
+                  image: image.imageLink,
                },
                groupId,
             })

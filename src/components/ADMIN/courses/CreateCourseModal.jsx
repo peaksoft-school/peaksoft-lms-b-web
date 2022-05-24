@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useInput } from '../../../hooks/useInput'
@@ -11,70 +11,65 @@ import { Inputs } from '../../UI/Input'
 
 export const CreateCourseModal = ({ onCloseModal }) => {
    const dispatch = useDispatch()
-   const [createCourseModalImage, setCreateCourseModalImage] = useState({
-      frontImage: '',
-      backImage: null,
+   const [image, setImage] = useState({
+      imageLink: '',
+      binaryFormat: null,
    })
-   const [createCourseModalDate, setCreateCourseModalDate] = useState()
-   const [createCourseModalData, onChangeCreateCourseModalData] = useInput({
+   const [date, setDate] = useState()
+   const [inputsValue, setInputsValue] = useInput({
       courseName: '',
       description: '',
    })
    const createPhotoHandler = (photo) => {
-      setCreateCourseModalImage({
-         frontImage: URL.createObjectURL(photo),
-         backImage: photo,
+      setImage({
+         imageLink: URL.createObjectURL(photo),
+         binaryFormat: photo,
       })
    }
    const createHandler = async () => {
-      const { URL } = await dispatch(
-         sendPhoto(createCourseModalImage.backImage)
-      ).unwrap()
+      let URLCOPY
+      if (image.binaryFormat) {
+         const { URL } = await dispatch(sendPhoto(image.binaryFormat)).unwrap()
+         URLCOPY = URL
+      }
       dispatch(
          createCourse({
-            ...createCourseModalData,
-            dateOfFinish: convertDate(createCourseModalDate),
-            image: URL,
+            ...inputsValue,
+            dateOfFinish: convertDate(date),
+            image: URLCOPY || '',
          })
       )
       onCloseModal()
    }
+
+   const isDisableModal = useCallback(() => {
+      return inputsValue.groupName && inputsValue.description && date
+   }, [inputsValue.groupName, inputsValue.description, date])
    return (
       <BasicModal
          title="Создать  курс"
          isActive
-         isDisabled={
-            createCourseModalData.courseName &&
-            createCourseModalData.description &&
-            createCourseModalDate
-         }
+         isDisabled={isDisableModal()}
          cancelTitle="Отмена"
          successTitle="Добавить"
          isActiveFooter="true"
          modalCloseHanlder={onCloseModal}
          addHandler={createHandler}
       >
-         <ImagePicker
-            image={createCourseModalImage.frontImage}
-            getPhoto={createPhotoHandler}
-         />
+         <ImagePicker image={image.imageLink} getPhoto={createPhotoHandler} />
          <FlexInput>
             <Inputs
-               value={createCourseModalData.title}
-               onChange={(e) => onChangeCreateCourseModalData(e)}
+               value={inputsValue.title}
+               onChange={(e) => setInputsValue(e)}
                name="courseName"
                width="327"
                placeholder="Название курса"
             />
-            <CustomDatePicker
-               value={createCourseModalDate}
-               setDate={setCreateCourseModalDate}
-               width="149px"
-            />
+            <CustomDatePicker value={date} setDate={setDate} width="149px" />
          </FlexInput>
          <Textarea
-            value={createCourseModalData.description}
-            onChange={(e) => onChangeCreateCourseModalData(e)}
+            value={inputsValue.description}
+            onChange={(e) => setInputsValue(e)}
             name="description"
             placeholder="Описание курса"
          />

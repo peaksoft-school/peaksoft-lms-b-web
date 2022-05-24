@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
 export const getCourseList = createAsyncThunk(
    'admin/slice/getCourseList',
-   async (page) => {
+   async (page, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/courses',
@@ -17,13 +18,13 @@ export const getCourseList = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 export const createCourse = createAsyncThunk(
    'admin/slice/createCourse',
-   async (groupInfo) => {
+   async (groupInfo, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/courses',
@@ -32,14 +33,14 @@ export const createCourse = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const sendPhoto = createAsyncThunk(
    'admin/slice/sendPhoto',
-   async (file) => {
+   async (file, { rejectWithValue }) => {
       try {
          const response = await fileFetchApi({
             path: 'api/files/upload',
@@ -47,13 +48,13 @@ export const sendPhoto = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 export const deleteCourse = createAsyncThunk(
    'admin/slice/deleteCourse',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/courses/${id}`,
@@ -61,14 +62,14 @@ export const deleteCourse = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const getCourseById = createAsyncThunk(
    'admin/slice/getCourseById',
-   async (id) => {
+   async (id, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/courses/${id}`,
@@ -76,7 +77,7 @@ export const getCourseById = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
@@ -98,7 +99,7 @@ export const getAllTeachers = createAsyncThunk(
 
 export const getTeachersByCourseId = createAsyncThunk(
    'admin/slice/getTeachersByCourseId',
-   async (courseId) => {
+   async (courseId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/courses/teachers/${courseId}`,
@@ -106,13 +107,13 @@ export const getTeachersByCourseId = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 export const getStudentsByCourseId = createAsyncThunk(
    'admin/slice/getStudentsByCourseId',
-   async (courseId) => {
+   async (courseId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/courses/students/${courseId}`,
@@ -120,14 +121,14 @@ export const getStudentsByCourseId = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
       }
    }
 )
 
 export const assignTeacherToCourse = createAsyncThunk(
    'admin/slice/assignTeacherToCourse',
-   async (teachers) => {
+   async (teachers, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/courses/assignTeachers',
@@ -136,17 +137,32 @@ export const assignTeacherToCourse = createAsyncThunk(
          })
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const updateCourse = createAsyncThunk(
+   'admin/slice/updateCourse',
+   async ({ courseId, courseInformation }, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/courses/${courseId}`,
+            method: 'PUT',
+            body: courseInformation,
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.message)
       }
    }
 )
 
 const initState = {
-   error: null,
    isLoading: null,
    pages: 0,
    courses: [],
-   table: [],
+   coursesDetails: [],
    currentPage: 0,
    teachers: [],
 }
@@ -160,36 +176,60 @@ export const courseSlice = createSlice({
          state.courses = courses
          state.currentPage = currentPage
          state.pages = pages
-         console.log(courses)
       },
       [getCourseList.rejected]: (state, actions) => {
-         console.log('Error')
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
 
-      [sendPhoto.fulfilled]: (state, actions) => {
-         console.log('GeshaSexy')
+      [sendPhoto.fulfilled]: () => {
+         toast.success('файл успешно сохранен')
       },
       [createCourse.fulfilled]: (state, actions) => {
          const newGroup = actions.payload
-         state.courses = [...state.courses, newGroup]
+         state.courses = [newGroup, ...state.courses]
+         toast.success('новый курс успешно создан')
+      },
+      [createCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
       [deleteCourse.fulfilled]: (state, action) => {
          const { id } = action.payload
          state.courses = state.courses.filter((item) => item.id !== id)
+         toast.warn('курс успешно удален!!')
       },
       [getCourseById.fulfilled]: () => {},
       [getAllTeachers.fulfilled]: (state, actions) => {
          const teachers = actions.payload
          state.teachers = teachers
       },
-      [assignTeacherToCourse.fulfilled]: () => {},
+      [assignTeacherToCourse.fulfilled]: (state, actions) => {
+         toast.success('учителя успешно добавлены')
+      },
+      [assignTeacherToCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
+      },
       [getTeachersByCourseId.fulfilled]: (state, actions) => {
          const teachers = actions.payload
-         state.table = teachers
+         state.coursesDetails = teachers
       },
       [getStudentsByCourseId.fulfilled]: (state, actions) => {
          const students = actions.payload
-         state.table = students
+         state.coursesDetails = students
+      },
+      [updateCourse.fulfilled]: (state, actions) => {
+         const newCourse = actions.payload
+         const currentIndex = state.courses.findIndex(
+            (course) => course.id === newCourse.id
+         )
+         state.courses.splice(currentIndex, 1, newCourse)
+         toast.success('вы успешно отредактировали группу')
+      },
+      [updateCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
    },
 })

@@ -14,7 +14,7 @@ export const CourseInnerPage = () => {
    const [searchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
    const { coursesId } = useParams()
-   const { table } = useSelector((store) => store.courseSlice)
+   const { coursesDetails } = useSelector((store) => store.courseSlice)
 
    useEffect(() => {
       if (tabs === 'teachers') dispatch(getTeachersByCourseId(coursesId))
@@ -73,7 +73,7 @@ export const CourseInnerPage = () => {
 
    return (
       <Wrapper>
-         <AppTable columns={DATA_COLLUMN[tabs]} data={table} />
+         <AppTable columns={DATA_COLLUMN[tabs]} data={coursesDetails} />
       </Wrapper>
    )
 }

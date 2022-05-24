@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { CoursePanel } from '../../components/ADMIN/courses/CoursePanel'
-import { CourseInnerPage } from '../../components/ADMIN/courses/CourseInnerPage'
+import { CourseInnerPage } from '../../components/ADMIN/courses/CourseDetailsPage'
 
 export const CoursesRoutes = () => {
    return (
