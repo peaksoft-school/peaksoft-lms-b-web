@@ -12,11 +12,7 @@ export const getCourseList = createAsyncThunk(
             method: 'GET',
             params: {
                page,
-<<<<<<< HEAD
-               size: 8,
-=======
                size: 12,
->>>>>>> eaa94e2eb7df016cdc5dfbe0f42009289186ea07
             },
          })
 
