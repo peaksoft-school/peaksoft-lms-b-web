@@ -6,6 +6,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Profile } from '../components/UI/Profile'
 import { logout } from '../store/authSlice'
 import { TabsTitle } from '../components/UI/Tabs'
+import TemporaryDrawer from '../components/UI/Drawer'
+import media from '../utils/helpers/media'
 
 const userRole = {
    ADMIN: {
@@ -54,10 +56,10 @@ export const Header = ({ roles }) => {
    const logoutHandler = () => {
       dispatch(logout())
    }
-
    return (
       <StyledHeader>
-         <Box width="100%" display="flex" justifyContent="space-between">
+         <TemporaryDrawer roles={roles} />
+         <StyledBox width="100%" display="flex" justifyContent="space-between">
             <div />
             <Routes>
                <Route
@@ -66,7 +68,7 @@ export const Header = ({ roles }) => {
                />
             </Routes>
             <Profile onLogout={logoutHandler} title={userRole[roles].role} />
-         </Box>
+         </StyledBox>
       </StyledHeader>
    )
 }
@@ -78,3 +80,5 @@ const StyledHeader = styled.header`
    height: 60px;
    border-bottom: 1px solid #c4c4c4;
 `
+
+const StyledBox = styled(Box)``

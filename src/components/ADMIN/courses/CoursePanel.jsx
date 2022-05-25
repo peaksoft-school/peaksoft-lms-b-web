@@ -1,44 +1,58 @@
 import React, { useEffect } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
+import { ReactComponent as FixIcon } from '../../../assets/icons/FixIcon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
-import {
-   adminGroupActions,
-   getGroupsList,
-} from '../../../store/adminGroupSlice'
+import { getCourseList } from '../../../store/courseSlice'
 import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
-import { GroupModal } from './GroupModal'
+import { GroupModal } from './CourseModal'
 
-export const GroupsPanel = () => {
+export const CoursePanel = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { pathname } = useLocation()
    const [searchParams, setSearchParams] = useSearchParams()
-   const { groups, pages } = useSelector((store) => store.groupSlice)
+   const { pathname } = useLocation()
    const page = searchParams.get('page')
-
    useEffect(() => {
-      dispatch(getGroupsList(page || 1))
+      dispatch(getCourseList(page || 1))
    }, [page])
+   const { courses, pages } = useSelector((store) => store.courseSlice)
 
    const openInnerPage = (id) => {
-      navigate(`${id}`)
+      navigate(`${id}?tabs=teachers`)
    }
 
    const option = [
       {
-         id: 1,
-         action: (groupInformation) => {
-            const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'updateGroup', groupId, page })
+         id: Math.random().toString(),
+         action: (courseInformation) => {
+            const { id } = courseInformation
+            setSearchParams({
+               modal: 'appointTeacherCourse',
+               courseId: id,
+               page,
+            })
+         },
+         content: (
+            <>
+               <FixIcon style={{ marginRight: '20px' }} />
+               Назначить учителя
+            </>
+         ),
+      },
+      {
+         id: Math.random().toString(),
+         action: (courseInformation) => {
+            const { id } = courseInformation
+            setSearchParams({ modal: 'updateCourse', courseId: id, page })
          },
          content: (
             <>
@@ -48,10 +62,10 @@ export const GroupsPanel = () => {
          ),
       },
       {
-         id: 2,
-         action: (groupInformation) => {
-            const { id: groupId } = groupInformation
-            setSearchParams({ modal: 'deleteGroup', groupId, page })
+         id: Math.random().toString(),
+         action: (courseInformation) => {
+            const { id } = courseInformation
+            setSearchParams({ modal: 'deleteCourse', courseId: id, page })
          },
          content: (
             <>
@@ -67,21 +81,21 @@ export const GroupsPanel = () => {
          <Flex>
             <Buttons
                onClick={() => {
-                  setSearchParams({ modal: 'addGroup', page })
+                  setSearchParams({ modal: 'addCourse', page })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс
             </Buttons>
          </Flex>
          <FlexCards>
-            {groups.map((el) => (
+            {courses.map((el) => (
                <Cards
                   onCardClick={() => openInnerPage(el.id)}
                   key={el.id}
-                  title={el.groupName}
+                  title={el.courseName}
                   image={el.image}
                   description={el.description}
-                  duration={el.duration}
+                  duration={el.dateOfFinish}
                   cardId={el.id}
                   option={option}
                   allInformation={el}
@@ -99,8 +113,7 @@ export const GroupsPanel = () => {
 }
 
 const StyledFooter = styled.footer`
-   display: flex;
-   justify-content: center;
+   margin-left: 50vh;
    margin-top: 30px;
 `
 const Wrapper = styled.div`

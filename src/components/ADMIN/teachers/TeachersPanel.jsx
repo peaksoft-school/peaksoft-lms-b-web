@@ -1,6 +1,6 @@
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import IconButton from '@mui/material/IconButton/IconButton'
 import { useSearchParams } from 'react-router-dom'
@@ -13,7 +13,6 @@ import {
    getTeacherById,
 } from '../../../store/adminTeachersSlice'
 import { TeachersModal } from './TeachersModal'
-import { PaginationLink } from '../../UI/BasicPagination'
 
 const Btn = styled.div`
    display: flex;
