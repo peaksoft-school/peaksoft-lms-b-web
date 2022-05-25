@@ -50,6 +50,7 @@ export const TeachersPanel = () => {
       await setSearchParams({
          modal: 'updateTeacher',
          teacherId,
+         page: pages,
       })
    }
 
@@ -92,7 +93,11 @@ export const TeachersPanel = () => {
                   </IconButton>
                   <IconButton
                      onClick={() => {
-                        setSearchParams({ modal: 'deleteTeacher', teacherId })
+                        setSearchParams({
+                           modal: 'deleteTeacher',
+                           teacherId,
+                           page: pages,
+                        })
                      }}
                   >
                      <TrashBinIcon />
@@ -116,9 +121,9 @@ export const TeachersPanel = () => {
                <AiOutlinePlus fontSize="25px" /> Добавить учителя
             </Buttons>
          </Btn>
-         <TeachersModal />
+         <TeachersModal page={pages} />
          <AppTable
-            isActivePagination
+            isActivePagination={page > 1}
             columns={headers}
             data={teachers}
             page={page}

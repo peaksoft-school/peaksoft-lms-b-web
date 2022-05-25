@@ -6,18 +6,18 @@ import { ConfirmModal } from '../../UI/ConfirmModal'
 import { AddTeacherModal } from './AddTeacherModal'
 import { deleteTeachers } from '../../../store/adminTeachersSlice'
 
-export const TeachersModal = () => {
+export const TeachersModal = ({ page }) => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
    const { modal, teacherId } = Object.fromEntries([...searchParams])
 
    const closeModalHandler = () => {
-      setSearchParams({})
+      setSearchParams({ page })
    }
 
    const deleteHandler = () => {
       dispatch(deleteTeachers(teacherId))
-      setSearchParams({})
+      setSearchParams({ page })
    }
 
    if (modal === 'addTeacher') {
