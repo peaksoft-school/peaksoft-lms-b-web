@@ -4,10 +4,6 @@ import { MyCourses } from '../../components/INSTRUCTOR/MyCourses'
 import { MyCoursesInnerPage } from '../../components/INSTRUCTOR/MyCoursesInnerPage'
 
 export const InstructorCoursesRoute = () => {
-   // const [searchParams, setSearchParams] = useSearchParams()
-   // useEffect(() => {
-   //    setSearchParams({ page: 1 })
-   // }, [])
    return (
       <Routes>
          <Route path="/" element={<MyCourses />} />
