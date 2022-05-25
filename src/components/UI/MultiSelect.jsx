@@ -71,8 +71,7 @@ export const MultiSelect = ({ data = [], listTitle, value = [], setValue }) => {
                </MenuItem>
                {search(data, value).map((user) => (
                   <MenuItem key={user.id} value={user}>
-                     <ListItemText primary={user.teacherName} />
-                     <ListItemText primary={user.lastName} />
+                     <ListItemText primary={user.fullName} />
                      <Checkbox checked={person.indexOf(user) > -1} />
                   </MenuItem>
                ))}

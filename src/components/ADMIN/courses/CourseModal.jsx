@@ -18,7 +18,7 @@ export const CourseModal = () => {
    }
 
    const closeModalHandler = () => {
-      setSearchParams({ page })
+      setSearchParams({ page: page || 1 })
    }
 
    if (modal === MODAL_TYPES.ADDCOURSE) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import {
    getAllTeachers,
    assignTeacherToCourse,
@@ -7,13 +8,18 @@ import {
 import { BasicModal } from '../../UI/BasicModal'
 import { MultiSelect } from '../../UI/MultiSelect'
 
-export const AppointTeacherModal = ({ onCloseModal, courseId }) => {
+export const AppointTeacherModal = ({ courseId }) => {
    const { teachers } = useSelector((store) => store.courseSlice)
    const [teachersId, setTeachersId] = useState([])
+   const [searchParams, setSearchParams] = useSearchParams()
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getAllTeachers())
    }, [])
+
+   const onCloseModal = () => {
+      setSearchParams({ page: 1, tabs: 'teachers' })
+   }
 
    const appointTeacherToCourse = () => {
       dispatch(
