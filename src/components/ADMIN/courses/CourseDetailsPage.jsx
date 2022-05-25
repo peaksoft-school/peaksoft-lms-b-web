@@ -8,13 +8,20 @@ import {
    getTeachersByCourseId,
 } from '../../../store/courseSlice'
 import { AppTable } from '../../UI/Table'
+import { Buttons } from '../../UI/Buttons'
+import { ConditionalRender } from '../../UI/ConditionalRender'
+import { CourseModal } from './CourseModal'
 
 export const CourseInnerPage = () => {
    const dispatch = useDispatch()
-   const [searchParams] = useSearchParams()
+   const [searchParams, setSearchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
    const { coursesId } = useParams()
    const { coursesDetails } = useSelector((store) => store.courseSlice)
+
+   const AppointTeacher = () => {
+      setSearchParams({ modal: 'appointTeacherCourse', coursesId })
+   }
 
    useEffect(() => {
       if (tabs === 'teachers') dispatch(getTeachersByCourseId(coursesId))
@@ -73,7 +80,15 @@ export const CourseInnerPage = () => {
 
    return (
       <Wrapper>
+         <ConditionalRender isActive={tabs === 'teachers'}>
+            <FlexButton>
+               <Buttons onClick={AppointTeacher} width="300px">
+                  Назначить учителя
+               </Buttons>
+            </FlexButton>
+         </ConditionalRender>
          <AppTable columns={DATA_COLLUMN[tabs]} data={coursesDetails} />
+         <CourseModal />
       </Wrapper>
    )
 }
@@ -84,4 +99,9 @@ const Wrapper = styled.div`
    width: 100%;
    display: flex;
    flex-direction: column;
+`
+
+const FlexButton = styled.div`
+   display: flex;
+   justify-content: flex-end;
 `
