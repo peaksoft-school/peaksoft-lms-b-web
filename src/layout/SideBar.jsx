@@ -18,8 +18,8 @@ const sideBar = {
          icon: <GroupsIcon />,
       },
       { title: 'Курсы', path: 'courses?page=1', icon: <CourseIcon /> },
-      { title: 'Учителя', path: 'teachers', icon: <TeachersIcon /> },
-      { title: 'Студенты', path: 'students', icon: <StudentIcon /> },
+      { title: 'Учителя', path: 'teachers?page=1', icon: <TeachersIcon /> },
+      { title: 'Студенты', path: 'students?page=1', icon: <StudentIcon /> },
    ],
 
    INSTRUCTOR: [
