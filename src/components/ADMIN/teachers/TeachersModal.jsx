@@ -35,13 +35,13 @@ export const TeachersModal = () => {
          <UpdateTeacherModal
             teacherId={teacherId}
             onClose={closeModalHandler}
+            setSearchParams={setSearchParams}
          />
       )
    }
    if (modal === 'deleteTeacher') {
       return (
          <ConfirmModal
-            // isActive={isShowConfirmModal}
             isActive
             title="Вы уверены, что хотите удалить группу...?"
             toggleModal={closeModalHandler}

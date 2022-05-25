@@ -19,7 +19,6 @@ const Input = styled(InputMask)`
    padding: 10px 8px 10px 18px;
    width: 100%;
    height: 42px;
-   margin-bottom: 12px;
    background: #ffffff;
    border: 1px solid #d4d4d4;
    box-sizing: border-box;
@@ -30,6 +29,7 @@ const Input = styled(InputMask)`
    font-size: 16px;
    line-height: 22px;
    gap: 10px;
+   margin-bottom: 12px;
    &:focus {
       outline: none !important;
       border: 1px solid #1f6ed4 !important;

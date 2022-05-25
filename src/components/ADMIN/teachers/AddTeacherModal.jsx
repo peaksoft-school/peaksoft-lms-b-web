@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { Inputs } from '../../UI/Input'
 import { BasicModal } from '../../UI/BasicModal'
@@ -21,9 +21,29 @@ export const AddTeacherModal = ({ setSearchParams, onClose }) => {
       dispatch(addTeachers(value))
       setSearchParams()
    }
+   const {
+      teacherName,
+      lastName,
+      phoneNumber,
+      email,
+      specialization,
+      password,
+   } = value
+
+   const isDisabledModal = useCallback(() => {
+      return (
+         teacherName &&
+         lastName &&
+         phoneNumber &&
+         email &&
+         specialization &&
+         password
+      )
+   }, [teacherName, lastName, phoneNumber, email, specialization, password])
 
    return (
       <BasicModal
+         isDisabled={isDisabledModal()}
          isActive
          cancelTitle="Отмена"
          successTitle="Добавить"

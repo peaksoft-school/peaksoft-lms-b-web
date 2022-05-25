@@ -5,6 +5,8 @@ const init = {
    teachers: [],
    isLoading: null,
    teacher: null,
+   currentPage: 1,
+   page: 0,
 }
 
 export const addTeachers = createAsyncThunk(
@@ -25,12 +27,17 @@ export const addTeachers = createAsyncThunk(
 )
 export const getAllTeachers = createAsyncThunk(
    'admin/slice/getAllTeachers',
-   async () => {
-      const response = await baseFetch({
-         path: 'api/teachers',
-         method: 'GET',
-      })
-      return response
+
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: 'api/teachers/?page=1&size=4',
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.value)
+      }
    }
 )
 export const deleteTeachers = createAsyncThunk(
@@ -41,7 +48,6 @@ export const deleteTeachers = createAsyncThunk(
             path: `api/teachers/${teacherId}`,
             method: 'DELETE',
          })
-
          return response
       } catch (error) {
          return rejectWithValue(error.message)
@@ -66,17 +72,15 @@ export const getTeacherById = createAsyncThunk(
 
 export const updateTeachers = createAsyncThunk(
    'admin/slice/updateTeachers',
-   async ({ teacherId, value }, { rejectWithValue, dispatch }) => {
+   async ({ teacherId, value }, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: `api/teachers/${teacherId}`,
             method: 'PUT',
             body: {
                ...value,
-               password: '',
             },
          })
-         dispatch(getAllTeachers())
          return response
       } catch (error) {
          return rejectWithValue(error.message)
@@ -98,8 +102,10 @@ export const teachersSlice = createSlice({
          state.isLoading = false
       },
       [getAllTeachers.fulfilled]: (state, actions) => {
-         const newTeachers = actions.payload
-         state.teachers = [...newTeachers]
+         const { pages, currentPage, teachers } = actions.payload
+         state.teachers = teachers
+         state.page = pages
+         state.currentPage = currentPage
       },
       [getTeacherById.fulfilled]: (state, actions) => {
          const teacher = actions.payload

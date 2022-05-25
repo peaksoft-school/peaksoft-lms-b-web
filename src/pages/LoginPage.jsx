@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -9,18 +9,27 @@ import { ReactComponent as StudentLogo } from '../assets/icons/Student.svg'
 import { Inputs } from '../components/UI/Input'
 import { Buttons } from '../components/UI/Buttons'
 import { login } from '../store/authSlice'
-import { mainRoutes } from '../utils/constants/routes'
+
+const MAIN_ROUTES = {
+   INSTRUCTOR: {
+      path: '/instructor',
+   },
+   ADMIN: {
+      path: '/admin',
+   },
+   STUDENT: {
+      path: '/student',
+   },
+}
 
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { role } = useSelector((state) => state.auth.user)
+   const { user } = useSelector((state) => state.auth)
+
    useEffect(() => {
-      if (role === mainRoutes.ADMIN.role) navigate(mainRoutes.ADMIN.path)
-      if (role === mainRoutes.INSTRUCTOR.role)
-         navigate(mainRoutes.INSTRUCTOR.path)
-      if (role === mainRoutes.STUDENT.role) navigate(mainRoutes.STUDENT.path)
-   }, [role])
+      if (MAIN_ROUTES[user.role]) navigate(MAIN_ROUTES[user.role].path)
+   }, [user.role])
 
    const submitHandler = (values) => {
       dispatch(login(values))

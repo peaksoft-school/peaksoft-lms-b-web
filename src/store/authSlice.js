@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { AUTH } from '../utils/constants/constants'
 import {
@@ -9,7 +10,7 @@ import {
 
 export const login = createAsyncThunk(
    'authentification/login',
-   async (userInformation) => {
+   async (userInformation, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
             path: 'api/authentication/login',
@@ -20,7 +21,7 @@ export const login = createAsyncThunk(
 
          return response
       } catch (error) {
-         return error.message
+         return rejectWithValue(error)
       }
    }
 )
@@ -35,8 +36,6 @@ const initState = {
       token: null,
       email: null,
    },
-   error: null,
-   isLoading: false,
 }
 
 export const authSlice = createSlice({
@@ -47,20 +46,22 @@ export const authSlice = createSlice({
    reducers: {},
    extraReducers: {
       [login.pending]: (state) => {
-         state.isLoading = true
+         state.authIsLoading = true
       },
       [login.fulfilled]: (state, actions) => {
          const response = actions.payload
          state.user = response
+         toast.success('вход успешно выполнен')
       },
-      [login.rejected]: (state, payload) => {
-         state.error = payload
-         // console.log(payload)
+      [login.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
       [logout.fulfilled]: (state) => {
          state.user.email = null
          state.user.token = null
          state.user.role = null
+         toast.warn('вы успешновышли из аккаунта')
       },
    },
 })

@@ -12,7 +12,7 @@ import {
    createTheme,
 } from '@mui/material'
 
-export const AppTable = ({ columns = [], data = [] }) => {
+export const AppTable = ({ columns, data }) => {
    return (
       <ThemeProvider theme={customTheme}>
          <Container component={Paper}>
@@ -53,7 +53,7 @@ export const AppTable = ({ columns = [], data = [] }) => {
 }
 
 const Container = styled(MuiTableContainer)`
-   min-width: 100px;
+   min-width: 1140px;
    min-height: 587px;
    margin: 20px auto;
    left: 10%;

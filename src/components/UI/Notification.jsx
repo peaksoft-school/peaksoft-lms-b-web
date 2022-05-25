@@ -1,30 +1,43 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect } from 'react'
+import Button from '@mui/material/Button'
+import Snackbar from '@mui/material/Snackbar'
+import Slide from '@mui/material/Slide'
+import MuiAlert from '@mui/material/Alert'
 
-const StyledNotification = styled.div`
-   background-color: ${({ backColor }) =>
-      backColor === 'succes' ? '#36AC0C' : '#C91E1E'};
-   width: 30vh;
-   display: flex;
-   align-items: center;
-   text-align: center;
-   justify-content: center;
-   border-radius: 10px;
-   padding: 15px;
-`
-const StyledTitle = styled.h3`
-   margin: 0;
-   color: white;
-   margin-right: 10px;
-   font-size: 16px;
-   font-family: var(--base-font);
-`
+const Alert = React.forwardRef(function Alert(props, ref) {
+   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
-export const Notification = ({ title, backColor, icon }) => {
+function TransitionRight(props) {
+   return <Slide {...props} direction="left" />
+}
+
+export const Notification = ({ isActive, title, notificationType }) => {
+   const [transition, setTransition] = React.useState(undefined)
+   useEffect(() => {
+      setTransition(() => TransitionRight)
+   })
+   const [state, setState] = React.useState({
+      vertical: 'top',
+      horizontal: 'right',
+   })
+
+   const { vertical, horizontal } = state
+
+   const handleClose = () => {
+      setState({ ...state })
+   }
+
    return (
-      <StyledNotification backColor={backColor}>
-         <StyledTitle className="title">{title}</StyledTitle>
-         {icon}
-      </StyledNotification>
+      <Snackbar
+         anchorOrigin={{ vertical, horizontal }}
+         open={isActive}
+         TransitionComponent={transition}
+         onClose={handleClose}
+         message={title}
+         key={vertical + horizontal}
+      >
+         <Alert severity={notificationType}>{title}</Alert>
+      </Snackbar>
    )
 }

@@ -1,6 +1,6 @@
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import IconButton from '@mui/material/IconButton/IconButton'
 import { useSearchParams } from 'react-router-dom'
@@ -13,6 +13,7 @@ import {
    getTeacherById,
 } from '../../../store/adminTeachersSlice'
 import { TeachersModal } from './TeachersModal'
+import { PaginationLink } from '../../UI/BasicPagination'
 
 const Btn = styled.div`
    display: flex;
@@ -40,53 +41,57 @@ export const TeachersPanel = () => {
    useEffect(() => {
       dispatch(getAllTeachers())
    }, [])
-   const { teachers } = useSelector((state) => state.teacher)
+   const { teachers } = useSelector((store) => store.teacher)
+
+   const getTeacherInformation = async (teacherId) => {
+      await dispatch(getTeacherById(teacherId))
+      await setSearchParams({
+         modal: 'updateTeacher',
+         teacherId,
+      })
+   }
 
    const headers = [
       {
+         id: 1,
          title: 'ID',
          accessKey: 'id',
       },
       {
+         id: 2,
          title: 'Имя Фамилия',
          accessKey: 'fullName',
       },
       {
+         id: 3,
          title: 'Специализация',
          accessKey: 'specialization',
       },
       {
+         id: 4,
          title: 'Номер телефона',
          accessKey: 'phoneNumber',
       },
       {
+         id: 5,
          title: 'E-mail',
          accessKey: 'email',
       },
       {
+         id: 6,
          title: 'Действие',
          accessKey: '',
          action: (teacherInformation) => {
             const { id: teacherId } = teacherInformation
             return (
                <WrapperIcons>
-                  <IconButton
-                     onClick={async () => {
-                        await dispatch(getTeacherById(teacherId))
-                        await setSearchParams({
-                           modal: 'updateTeacher',
-                           teacherId,
-                        })
-                     }}
-                     style={{ background: 'none' }}
-                  >
+                  <IconButton onClick={() => getTeacherInformation(teacherId)}>
                      <EditIcon />
                   </IconButton>
                   <IconButton
                      onClick={() => {
                         setSearchParams({ modal: 'deleteTeacher', teacherId })
                      }}
-                     style={{ background: 'none' }}
                   >
                      <TrashBinIcon />
                   </IconButton>

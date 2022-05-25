@@ -1,22 +1,45 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useCallback } from 'react'
 import { Inputs } from '../../UI/Input'
 import { BasicModal } from '../../UI/BasicModal'
 import { useInput } from '../../../hooks/useInput'
 import { MaskedInput } from '../../UI/MuskedInput'
 import { updateTeachers } from '../../../store/adminTeachersSlice'
 
-export const UpdateTeacherModal = ({ teacherId, onClose }) => {
+export const UpdateTeacherModal = ({ setSearchParams, teacherId, onClose }) => {
    const dispatch = useDispatch()
    const { teacher } = useSelector((store) => store.teacher)
    const [value, onChangeInputs] = useInput({
       ...teacher,
+      password: '',
    })
    const onSubmit = (e) => {
       e.preventDefault()
       dispatch(updateTeachers({ teacherId, value }))
+      setSearchParams()
    }
+   const {
+      teacherName,
+      lastName,
+      phoneNumber,
+      email,
+      specialization,
+      password,
+   } = value
+
+   const isDisabledModal = useCallback(() => {
+      return (
+         teacherName &&
+         lastName &&
+         phoneNumber &&
+         email &&
+         specialization &&
+         password.trim().length !== 0
+      )
+   }, [teacherName, lastName, phoneNumber, email, specialization, password])
    return (
       <BasicModal
+         isDisabled={isDisabledModal()}
          isActive
          cancelTitle="Отмена"
          successTitle="Добавить"

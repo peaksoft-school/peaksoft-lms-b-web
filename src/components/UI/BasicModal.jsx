@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
+import { isDisabled } from '@testing-library/user-event/dist/utils'
 import styled from 'styled-components'
 import { Buttons } from './Buttons'
 
@@ -37,12 +38,12 @@ const StyledHeaderTitle = styled.h1`
    font-family: var(--base-font);
 `
 const StyledContentContainer = styled.div`
-   padding: 25px;
+   padding: 16px 25px 20px 25px;
 `
 const StyledFooter = styled.footer`
    display: flex;
    justify-content: flex-end;
-   padding: 25px;
+   padding: 0 20px 25px;
    div {
       width: 250px;
       display: flex;
@@ -58,6 +59,7 @@ export const BasicModal = ({
    isActiveFooter = true,
    cancelTitle,
    successTitle,
+   isDisabled,
 }) => {
    return (
       <Modal
@@ -76,15 +78,16 @@ export const BasicModal = ({
                   <div>
                      <Buttons
                         width="100px"
+                        hoverback="null"
                         fontcolor="#3772ff"
                         background="#fff"
                         border="1px solid #3772ff"
-                        hoverBack="none"
                         onClick={modalCloseHanlder}
                      >
                         {cancelTitle}
                      </Buttons>
                      <Buttons
+                        disabled={!isDisabled}
                         width="100px"
                         fontcolor="#fff"
                         background="#3772ff"
