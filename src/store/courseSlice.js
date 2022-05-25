@@ -89,6 +89,10 @@ export const getAllTeachers = createAsyncThunk(
          const response = await baseFetch({
             path: `api/teachers`,
             method: 'GET',
+            params: {
+               page: 1,
+               size: 10000000,
+            },
          })
          return response
       } catch (error) {
@@ -199,9 +203,13 @@ export const courseSlice = createSlice({
          state.courses = state.courses.filter((item) => item.id !== id)
          toast.warn('курс успешно удален!!')
       },
+      [deleteCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
+      },
       [getCourseById.fulfilled]: () => {},
       [getAllTeachers.fulfilled]: (state, actions) => {
-         const teachers = actions.payload
+         const { pages, currentPage, teachers } = actions.payload
          state.teachers = teachers
       },
       [assignTeacherToCourse.fulfilled]: (state, actions) => {
