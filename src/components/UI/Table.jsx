@@ -25,7 +25,7 @@ export const AppTable = ({ columns, data }) => {
                               {col.title}
                            </TableContainer>
                         )
-                     })}
+                     }) g}
                   </TableRowContainer>
                </TableHead>
                <TableBody>
