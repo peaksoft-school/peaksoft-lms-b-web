@@ -8,4 +8,6 @@ export const MODAL_TYPES = {
    APPOINT_TEACHER: 'appointTeacherCourse',
    UPDATECOURSE: 'updateCourse',
    DELETECOURSE: 'deleteCourse',
+   ADDSTUDENTTOCOURSE: 'addStudentToCourse',
+   ADDGROUPSTOCOURSE: 'addGroupsToCourse',
 }
