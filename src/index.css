@@ -35,7 +35,10 @@ body {
    outline: none;
    font-family: var(--base-font);
    color: var(--font-color);
-   max-width: 1600px;
+   max-width: 100%;
+}
+.ProseMirror:focus {
+   border: 1px solid var(--blue-border-color);
 }
 
 .ProseMirror ol,
