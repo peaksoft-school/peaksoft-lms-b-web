@@ -27,7 +27,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
       })
    }
    const createGroupHandler = async () => {
-      if (image.backImage) {
+      if (image.imageLink) {
          const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             createGroup({

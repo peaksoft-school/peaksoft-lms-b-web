@@ -71,19 +71,22 @@ export const GroupsPanel = () => {
             </Buttons>
          </Flex>
          <FlexCards>
-            {groups.map((el) => (
-               <Cards
-                  onCardClick={() => openInnerPage(el.id)}
-                  key={el.id}
-                  title={el.groupName}
-                  image={el.image}
-                  description={el.description}
-                  duration={el.duration}
-                  cardId={el.id}
-                  option={option}
-                  allInformation={el}
-               />
-            ))}
+            {groups.map((el) => {
+               console.log(el)
+               return (
+                  <Cards
+                     onCardClick={() => openInnerPage(el.id)}
+                     key={el.id}
+                     title={el.groupName}
+                     image={el.image}
+                     description={el.description}
+                     duration={el.duration}
+                     cardId={el.id}
+                     option={option}
+                     allInformation={el}
+                  />
+               )
+            })}
          </FlexCards>
          <ConditionalRender isActive={pages > 1}>
             <StyledFooter>

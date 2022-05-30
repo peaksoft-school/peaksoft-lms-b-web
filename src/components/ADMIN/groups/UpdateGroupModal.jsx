@@ -21,8 +21,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          ).unwrap()
 
          setImage({
-            binaryImage: image,
-            imageLink: null,
+            binaryImage: null,
+            imageLink: image,
          })
          setInputsValue({
             groupName,
@@ -63,6 +63,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    const updateGroupHandler = async () => {
       if (image.binaryImage) {
          const { URL } = await dispatch(sendPhoto(image.binaryImage)).unwrap()
+
          dispatch(
             updateGroup({
                groupInfo: {
@@ -101,7 +102,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={updateGroupHandler}
       >
-         <ImagePicker image={image.binaryImage} getPhoto={updatePhotoHandler} />
+         <ImagePicker image={image.imageLink} getPhoto={updatePhotoHandler} />
 
          <FlexInput>
             <Inputs

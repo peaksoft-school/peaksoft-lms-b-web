@@ -25,9 +25,10 @@ export const Cards = ({
       action(allInformation)
       closeHandler()
    }
+
    return (
       <Card>
-         {image !== ' ' && image !== undefined ? (
+         {image ? (
             <WrapperImg onClick={onCardClick} src={image} alt="foto" />
          ) : (
             <WrapperImg
@@ -88,9 +89,10 @@ const Card = styled.div`
    border-radius: 10px;
    cursor: pointer;
 `
-const WrapperImg = styled.img`
+const WrapperImg = styled.div`
    width: 100%;
    min-height: 171px;
+   background-image: ${({ image }) => image};
    border-top-left-radius: 10px;
    cursor: pointer;
    border-top-right-radius: 10px;

@@ -10,7 +10,23 @@ const initState = {
    currentPage: 0,
    teachers: [],
    materials: [],
+   students: [],
 }
+
+export const getAllTeacherStudents = createAsyncThunk(
+   'instructor/slice/getAllTeacherStudents',
+   async (courseId, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/courses/students/${4}`,
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
 
 export const getAllTeacherCourses = createAsyncThunk(
    'instructor/slice/getAllCoursesList',
@@ -49,9 +65,11 @@ export const instructorSlice = createSlice({
    extraReducers: {
       [getAllTeacherCourses.fulfilled]: (state, actions) => {
          const courses = actions.payload
-         // state.pages = pages
-         // state.currentPage = currentPage
          state.courses = courses
+      },
+      [getAllTeacherStudents.fulfilled]: (state, actions) => {
+         const students = actions.payload
+         state.students = students
       },
       [getMaterialsByCourseId.fulfilled]: (state, actions) => {
          const materials = actions.payload

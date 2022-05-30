@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Box } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
 import { Buttons } from '../UI/Buttons'
 import { ReactComponent as TrashBinIcon } from '../../assets/icons/TrashBinForTable.svg'
 import { AppTable } from '../UI/Table'
 import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 import { MODAL_TYPES } from '../../utils/constants/constants'
+import { getAllTeacherStudents } from '../../store/instructorCoursesSlice'
 
 export const InstructorStudents = () => {
    const [searchParams, setSearchParams] = useSearchParams()
+   const { students } = useSelector((store) => store.instructorSlice)
+   const { coursesId } = useParams()
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getAllTeacherStudents(coursesId))
+   }, [])
    const DATA_COLLUMN = [
       {
          title: 'ID',
@@ -18,24 +27,21 @@ export const InstructorStudents = () => {
       },
       {
          title: 'Имя Фамилия',
-         accessKey: 'name',
+         accessKey: 'fullName',
       },
       {
          title: 'Формат обучения',
-         accessKey: 'format',
+         accessKey: 'studyFormat',
       },
       {
          title: 'Номер телефона',
-         accessKey: 'mobile_phone',
+         accessKey: 'phoneNumber',
       },
       {
          title: 'E-Mail',
          accessKey: 'email',
       },
-      {
-         title: 'Пароль',
-         accessKey: 'password',
-      },
+
       {
          title: 'Удалить',
          accessKey: '',
@@ -84,7 +90,7 @@ export const InstructorStudents = () => {
                </Buttons>
             </Box>
          </Flex>
-         <AppTable columns={DATA_COLLUMN} data={[]} />
+         <AppTable columns={DATA_COLLUMN} data={students} />
       </div>
    )
 }
