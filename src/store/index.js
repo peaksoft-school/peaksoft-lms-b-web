@@ -4,6 +4,7 @@ import { adminGroupSlice } from './adminGroupSlice'
 import { courseSlice } from './courseSlice'
 import { teachersSlice } from './adminTeachersSlice'
 import { instructorSlice } from './instructorCoursesSlice'
+import { TaskCreaterSlice } from './InstructorTaskCreaterSlice'
 
 export const store = configureStore({
    reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
       courseSlice: courseSlice.reducer,
       teacher: teachersSlice.reducer,
       instructorSlice: instructorSlice.reducer,
+      TaskCreaterSlice: TaskCreaterSlice.reducer,
    },
    middleware: (getDefaultMiddleware) => {
       return [...getDefaultMiddleware({ serializableCheck: false })]

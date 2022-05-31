@@ -10,4 +10,5 @@ export const MODAL_TYPES = {
    DELETECOURSE: 'deleteCourse',
    ADDSTUDENTTOCOURSE: 'addStudentToCourse',
    ADDGROUPSTOCOURSE: 'addGroupsToCourse',
+   ADDNEWPREZENTATION: 'addNewPrezentation',
 }

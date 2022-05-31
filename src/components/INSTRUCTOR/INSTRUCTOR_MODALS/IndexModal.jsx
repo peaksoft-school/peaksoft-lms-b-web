@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { BasicModal } from '../../UI/BasicModal'
 import { BasicSelect } from '../../UI/BasicSelect'
 import { MODAL_TYPES } from '../../../utils/constants/constants'
+import { Inputs } from '../../UI/Input'
 
 export const IndexModal = () => {
    const [searchParams, setSearchParams] = useSearchParams()
@@ -10,6 +11,10 @@ export const IndexModal = () => {
    const tabs = searchParams.get('tabs')
    const closeModal = () => {
       setSearchParams({ tabs })
+   }
+
+   const closeTasksModal = () => {
+      setSearchParams({})
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
@@ -37,6 +42,23 @@ export const IndexModal = () => {
             modalCloseHanlder={closeModal}
          >
             <BasicSelect data={[]} />
+         </BasicModal>
+      )
+   }
+
+   if (modal === MODAL_TYPES.ADDNEWPREZENTATION) {
+      return (
+         <BasicModal
+            title="Создать  группу"
+            isActive
+            cancelTitle="Отмена"
+            successTitle="Добавить"
+            isActiveFooter="true"
+            modalCloseHanlder={closeTasksModal}
+         >
+            <Inputs />
+            <Inputs />
+            <Inputs />
          </BasicModal>
       )
    }
