@@ -14,6 +14,10 @@ import { ReactComponent as CodeEditor } from '../../../assets/icons/CodeEditor.s
 import { IndexModal } from '../INSTRUCTOR_MODALS/IndexModal'
 import { MODAL_TYPES } from '../../../utils/constants/constants'
 import { sendTaskFile } from '../../../store/InstructorTaskCreaterSlice'
+import { TaskImagePicker } from './TaskImagePicker'
+import { TaskFileItem } from './TaskFileItem'
+import { TaskLinkItem } from './TaskLinkItem'
+import { Buttons } from '../../UI/Buttons'
 
 export const TaskCreater = () => {
    const dispatch = useDispatch()
@@ -55,9 +59,27 @@ export const TaskCreater = () => {
             <StyledTasksWrapper>
                <TextEditor isHasEditor />
                <TextEditor />
+               <TaskImagePicker image="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+               <TaskFileItem file="hello world.png" />
+               <TaskLinkItem
+                  link="google.com"
+                  linkName="google for your account"
+               />
             </StyledTasksWrapper>
+            <StyledFooter>
+               <Buttons
+                  hoverback="none"
+                  background="none"
+                  border="1px solid #3772FF "
+                  fontcolor="#3772FF"
+                  margin="0 10px 0 0 "
+               >
+                  Отмена
+               </Buttons>
+               <Buttons>Сохранить</Buttons>
+            </StyledFooter>
+            <IndexModal />
          </StyledTaskCreater>
-         <IndexModal />
       </Wrapper>
    )
 }
@@ -144,8 +166,14 @@ const StyledTasksWrapper = styled.div`
    border-radius: 10px;
    padding: 15px;
    margin-top: 25px;
+   margin-bottom: 24px;
 `
 
 const DropZoneWrapper = styled.div`
    display: flex;
+`
+
+const StyledFooter = styled.footer`
+   display: flex;
+   justify-content: flex-end;
 `
