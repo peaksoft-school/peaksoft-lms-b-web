@@ -59,6 +59,7 @@ export const InstructorMaterials = ({ coursesId }) => {
                   <LessonCard
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
                      lessonName={lesson.name}
+                     lessonId={lesson.id}
                   />
                )
             })}

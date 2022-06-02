@@ -14,4 +14,7 @@ export const MODAL_TYPES = {
    ADDNEWLINK: 'addNewLink',
    ADDNEWLESSON: 'addNewLesson',
    DELETELESSON: 'deleteLesson',
+   ADDVIDEOFORLESSON: 'addVideoForLesson',
+   ADDPREZENTATIONFORLESSON: 'addPrezentationForLesson',
+   ADDLINKFORLESSON: 'addLinkForLesson',
 }

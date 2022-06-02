@@ -10,6 +10,10 @@ export const InstructorCoursesRoute = () => {
       <Routes>
          <Route path="/" element={<MyCourses />} />
          <Route path="/:coursesId/*" element={<MyCoursesInnerPage />} />
+         <Route
+            path="/:coursesId/addTasksForLesson/:lessonId"
+            element={<TaskCreater />}
+         />
       </Routes>
    )
 }

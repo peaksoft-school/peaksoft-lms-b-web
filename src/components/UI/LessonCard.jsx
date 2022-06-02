@@ -1,10 +1,12 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import { ListItem, ListItemText, Button } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import styled from 'styled-components'
+import { useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { CardSettings } from './LessonSettings'
 import { LessonTypeForm } from './LessonTypeForm'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/DeleteIcon.svg'
@@ -14,6 +16,7 @@ import { ReactComponent as PrezentationIcon } from '../../assets/icons/Prezentat
 import { ReactComponent as HmIcon } from '../../assets/icons/HmIcon.svg'
 import { ReactComponent as LinkIcon } from '../../assets/icons/LinkIcon.svg'
 import { ReactComponent as TestIcon } from '../../assets/icons/TestIcon.svg'
+import { MODAL_TYPES } from '../../utils/constants/constants'
 
 const StyledText = styled(ListItemText)`
    span {
@@ -47,6 +50,7 @@ const style = {
 
 export default function LessonCard({
    lessonName,
+   lessonId,
    onEditHandler,
    onDeleteHandler,
    openVideoHandler,
@@ -57,6 +61,57 @@ export default function LessonCard({
 
    ...otherProps
 }) {
+   const navigate = useNavigate()
+   const [searchParams, setSearchParams] = useSearchParams()
+   const tabs = searchParams.get('tabs')
+   const [value, setValue] = useState('')
+   const SELECT_PATHS = {
+      10: {
+         action: () => {
+            setSearchParams({
+               modal: MODAL_TYPES.ADDVIDEOFORLESSON,
+               tabs,
+               lessonId,
+            })
+         },
+      },
+      20: {
+         action: () => {
+            setSearchParams({
+               modal: MODAL_TYPES.ADDPREZENTATIONFORLESSON,
+               tabs,
+               lessonId,
+            })
+         },
+      },
+      30: {
+         action: () => {
+            navigate(`addTasksForLesson/${lessonId}`)
+         },
+      },
+      40: {
+         action: () => {
+            setSearchParams({
+               modal: MODAL_TYPES.ADDLINKFORLESSON,
+               tabs,
+               lessonId,
+            })
+         },
+      },
+      50: {
+         action: () => {
+            navigate(`addTestForLesson/${lessonId}`)
+         },
+      },
+   }
+   useEffect(() => {
+      if (value) SELECT_PATHS[value].action()
+   }, [value])
+
+   const selectChangeHandler = (event) => {
+      setValue(event.target.value)
+   }
+
    return (
       <Box sx={style}>
          <List {...otherProps}>
@@ -65,7 +120,10 @@ export default function LessonCard({
                   <ReedIcon onClick={onEditHandler} />
                </Button>
                <StyledTitle primary={lessonName} />
-               <LessonTypeForm />
+               <LessonTypeForm
+                  value={value}
+                  handleChange={selectChangeHandler}
+               />
                <Button>
                   <DeleteIcon onClick={onDeleteHandler} />
                </Button>

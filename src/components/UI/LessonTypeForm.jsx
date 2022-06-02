@@ -44,9 +44,9 @@ export function LessonTypeForm({
             >
                <MenuItem value={10}>Видеоурок</MenuItem>
                <MenuItem value={20}>Презентация</MenuItem>
-               <MenuItem value={40}>Задание</MenuItem>
-               <MenuItem value={50}>Ссылка</MenuItem>
-               <MenuItem value={60}>Тест</MenuItem>
+               <MenuItem value={30}>Задание</MenuItem>
+               <MenuItem value={40}>Ссылка</MenuItem>
+               <MenuItem value={50}>Тест</MenuItem>
             </Select>
          </StyledFormControl>
       </div>

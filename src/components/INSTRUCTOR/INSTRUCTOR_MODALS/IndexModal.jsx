@@ -164,5 +164,33 @@ export const IndexModal = ({
          />
       )
    }
+   if (modal === MODAL_TYPES.ADDLINKFORLESSON) {
+      return (
+         <BasicModal
+            title="Добавить ссылку"
+            isActive
+            cancelTitle="Отмена"
+            successTitle="Добавить"
+            isActiveFooter="true"
+            modalCloseHanlder={closeModal}
+            addHandler={addLinkHandler}
+            isDisabled={linkData.link && linkData.linkName}
+         >
+            <Inputs
+               value={linkData.linkName}
+               onChange={(e) => setLinkData(e)}
+               name="linkName"
+               margin="0 0 12px 0"
+               placeholder="Отоброжаемый текст"
+            />
+            <Inputs
+               value={linkData.link}
+               onChange={(e) => setLinkData(e)}
+               name="link"
+               placeholder="Вставьте ссылку"
+            />
+         </BasicModal>
+      )
+   }
    return null
 }
