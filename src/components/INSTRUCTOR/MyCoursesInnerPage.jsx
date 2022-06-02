@@ -9,6 +9,7 @@ export const MyCoursesInnerPage = () => {
    const dispatch = useDispatch()
    const [searchParams] = useSearchParams()
    const { coursesId } = useParams()
+   console.log(coursesId)
    const tabs = searchParams.get('tabs')
    // const getLessons = () => {
    //    dispatch(getMaterialsByCourseId(11))
@@ -22,7 +23,7 @@ export const MyCoursesInnerPage = () => {
       return <InstructorStudents coursesId={coursesId} />
    }
    if (tabs === 'material') {
-      return <InstructorMaterials />
+      return <InstructorMaterials coursesId={coursesId} />
    }
    return null
 }

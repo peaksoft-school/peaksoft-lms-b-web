@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { BasicModal } from '../../UI/BasicModal'
@@ -8,11 +8,12 @@ import { Inputs } from '../../UI/Input'
 import { Buttons } from '../../UI/Buttons'
 import { useInput } from '../../../hooks/useInput'
 
-export const IndexModal = ({ onAddLinkHandler }) => {
+export const IndexModal = ({ onAddLinkHandler, onAddNewLesson }) => {
    const [linkData, setLinkData] = useInput({
       link: '',
       linkName: '',
    })
+   const [lessonName, setLessonName] = useState('')
    const [searchParams, setSearchParams] = useSearchParams()
    const modal = searchParams.get('modal')
    const tabs = searchParams.get('tabs')
@@ -23,6 +24,12 @@ export const IndexModal = ({ onAddLinkHandler }) => {
    const addLinkHandler = () => {
       closeModal()
       return onAddLinkHandler(linkData)
+   }
+
+   const addNewLesson = () => {
+      closeModal()
+      setLessonName('')
+      return onAddNewLesson(lessonName)
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
@@ -119,20 +126,20 @@ export const IndexModal = ({ onAddLinkHandler }) => {
    if (modal === MODAL_TYPES.ADDNEWLESSON) {
       return (
          <BasicModal
-            title="Добавить ссылку"
+            title="Добавить урок"
             isActive
             cancelTitle="Отмена"
             successTitle="Добавить"
             isActiveFooter="true"
             modalCloseHanlder={closeModal}
-            addHandler={addLinkHandler}
-            isDisabled={linkData.link && linkData.linkName}
+            addHandler={addNewLesson}
+            isDisabled={lessonName}
          >
             <Inputs
-               value={linkData.link}
-               onChange={(e) => setLinkData(e)}
+               value={lessonName}
+               onChange={(e) => setLessonName(e.target.value)}
                name="link"
-               placeholder="Вставьте ссылку"
+               placeholder="Название урока"
             />
          </BasicModal>
       )

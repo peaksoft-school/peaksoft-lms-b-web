@@ -46,6 +46,7 @@ const style = {
 }
 
 export default function LessonCard({
+   lessonName,
    onEditHandler,
    onDeleteHandler,
    openVideoHandler,
@@ -62,7 +63,7 @@ export default function LessonCard({
                <Button>
                   <ReedIcon onClick={onEditHandler} />
                </Button>
-               <StyledTitle primary="LESSON_1" />
+               <StyledTitle primary={lessonName} />
                <LessonTypeForm />
                <Button>
                   <DeleteIcon onClick={onDeleteHandler} />

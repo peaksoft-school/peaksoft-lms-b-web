@@ -48,7 +48,7 @@ export const getMaterialsByCourseId = createAsyncThunk(
    async (courseId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/lessons/teacherCourses/${courseId}`,
+            path: `api/lessons/courseLessons/${courseId}`,
             method: 'GET',
          })
          return response
@@ -56,6 +56,26 @@ export const getMaterialsByCourseId = createAsyncThunk(
          return rejectWithValue(error.messages)
       }
    }
+)
+
+export const addNewLessonByCourseId = createAsyncThunk(
+   'instructor/slice/addNewLessonByCourseId',
+   async (lessonName, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/lessons/`,
+            method: 'POST',
+            body: lessonName,
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
+export const deleteLessonById = createAsyncThunk(
+   'instructor/slice/deleleteLesson'
 )
 
 export const instructorSlice = createSlice({
@@ -81,6 +101,10 @@ export const instructorSlice = createSlice({
             isActive: true,
             message,
          }
+      },
+      [addNewLessonByCourseId.fulfilled]: (state, actions) => {
+         const newLesson = actions.payload
+         state.materials.push(newLesson)
       },
    },
 })
