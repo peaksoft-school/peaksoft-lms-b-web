@@ -64,7 +64,7 @@ export const addNewLessonByCourseId = createAsyncThunk(
    async (lessonName, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/lessons/`,
+            path: `api/lessons`,
             method: 'POST',
             body: lessonName,
          })
@@ -82,6 +82,22 @@ export const deleteLessonById = createAsyncThunk(
          const response = await baseFetch({
             path: `api/lessons/${lessonId}`,
             method: 'DELETE',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
+export const addVideoForLesson = createAsyncThunk(
+   'instructor/slice/addVideoForLesson',
+   async (videoData, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/videoLessons`,
+            method: 'POST',
+            body: videoData,
          })
          return response
       } catch (error) {
@@ -122,6 +138,9 @@ export const instructorSlice = createSlice({
          const { name, id } = actions.payload
          state.materials = state.materials.filter((item) => item.id !== id)
          toast.success(`${name} успешно удален`)
+      },
+      [addVideoForLesson.fulfilled]: (state, actions) => {
+         toast.success(actions.payload)
       },
    },
 })

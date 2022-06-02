@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import {
    addNewLessonByCourseId,
+   addVideoForLesson,
    deleteLessonById,
    getMaterialsByCourseId,
 } from '../../store/instructorCoursesSlice'
@@ -17,7 +18,6 @@ import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 
 export const InstructorMaterials = ({ coursesId }) => {
    const dispatch = useDispatch()
-   const navigate = useNavigate()
    const [searchParams, setSearchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
    const { materials } = useSelector((store) => store.instructorSlice)
@@ -43,8 +43,8 @@ export const InstructorMaterials = ({ coursesId }) => {
       dispatch(deleteLessonById(lessonId))
    }
 
-   const addTaskForLesson = () => {
-      navigate('addTaskForLesson')
+   const addVideo = (videoLessonData) => {
+      dispatch(addVideoForLesson(videoLessonData))
    }
 
    return (
@@ -65,6 +65,7 @@ export const InstructorMaterials = ({ coursesId }) => {
             })}
          </FlexCards>
          <IndexModal
+            onAddVideoLesson={addVideo}
             deleteLesson={deleteLesson}
             onAddNewLesson={addNewLesson}
          />

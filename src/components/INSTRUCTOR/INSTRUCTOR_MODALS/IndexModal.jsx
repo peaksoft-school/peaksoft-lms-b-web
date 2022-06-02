@@ -13,11 +13,18 @@ export const IndexModal = ({
    onAddLinkHandler,
    onAddNewLesson,
    deleteLesson,
+   onAddVideoLesson,
 }) => {
    const [linkData, setLinkData] = useInput({
       link: '',
       linkName: '',
    })
+   const [videoLesson, onChangeVideoLesson] = useInput({
+      name: '',
+      description: '',
+      link: '',
+   })
+   const [prezentation, onChangePrezentation] = useInput({})
    const [lessonName, setLessonName] = useState('')
    const [searchParams, setSearchParams] = useSearchParams()
    const modal = searchParams.get('modal')
@@ -41,6 +48,14 @@ export const IndexModal = ({
    const deleteLessonHandler = () => {
       closeModal()
       return deleteLesson(lessonId)
+   }
+
+   const addVideoLesson = () => {
+      closeModal()
+      return onAddVideoLesson({
+         ...videoLesson,
+         lessonId,
+      })
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
@@ -189,6 +204,76 @@ export const IndexModal = ({
                name="link"
                placeholder="Вставьте ссылку"
             />
+         </BasicModal>
+      )
+   }
+   if (modal === MODAL_TYPES.ADDVIDEOFORLESSON) {
+      return (
+         <BasicModal
+            title="Добавить ссылку"
+            isActive
+            cancelTitle="Отмена"
+            successTitle="Добавить"
+            isActiveFooter="true"
+            modalCloseHanlder={closeModal}
+            addHandler={addVideoLesson}
+            isDisabled={
+               videoLesson.name && videoLesson.description && videoLesson.link
+            }
+         >
+            <Inputs
+               value={videoLesson.name}
+               onChange={(e) => onChangeVideoLesson(e)}
+               name="name"
+               margin="0 0 12px 0"
+               placeholder="Введите название видеоурока"
+            />
+            <Inputs
+               value={videoLesson.description}
+               onChange={(e) => onChangeVideoLesson(e)}
+               name="description"
+               margin="0 0 12px 0"
+               placeholder="Введите описание видеоурока"
+            />
+            <Inputs
+               value={videoLesson.link}
+               onChange={(e) => onChangeVideoLesson(e)}
+               name="link"
+               placeholder="Введите ссылку на видеоурок"
+            />
+         </BasicModal>
+      )
+   }
+   if (modal === MODAL_TYPES.ADDPREZENTATIONFORLESSON) {
+      return (
+         <BasicModal
+            title="Создать  группу"
+            isActive
+            cancelTitle="Отмена"
+            successTitle="Добавить"
+            isActiveFooter="true"
+            modalCloseHanlder={closeModal}
+         >
+            <Inputs
+               placeholder="Введите название презентации"
+               margin="0 0 12px 0"
+            />
+            <Inputs
+               placeholder="Введите описание презентации"
+               margin="0 0 12px 0"
+            />
+            <Box display="flex">
+               <Inputs placeholder="Выберите файл в формате ppt" />
+               <Buttons
+                  border="1px solid #3772FF"
+                  background="none"
+                  hoverback="none"
+                  margin="0 0 0 10px"
+                  fontcolor="#3772FF"
+               >
+                  Обзор..
+               </Buttons>
+            </Box>
          </BasicModal>
       )
    }
