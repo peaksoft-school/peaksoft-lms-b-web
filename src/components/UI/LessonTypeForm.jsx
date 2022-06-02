@@ -42,7 +42,6 @@ export function LessonTypeForm({
                label="value"
                onChange={handleChange}
             >
-               <MenuItem value={5}>None</MenuItem>
                <MenuItem value={10}>Видеоурок</MenuItem>
                <MenuItem value={20}>Презентация</MenuItem>
                <MenuItem value={40}>Задание</MenuItem>

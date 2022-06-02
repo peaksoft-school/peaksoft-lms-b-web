@@ -13,4 +13,5 @@ export const MODAL_TYPES = {
    ADDNEWPREZENTATION: 'addNewPrezentation',
    ADDNEWLINK: 'addNewLink',
    ADDNEWLESSON: 'addNewLesson',
+   DELETELESSON: 'deleteLesson',
 }

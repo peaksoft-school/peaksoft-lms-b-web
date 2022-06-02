@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
@@ -75,7 +76,18 @@ export const addNewLessonByCourseId = createAsyncThunk(
 )
 
 export const deleteLessonById = createAsyncThunk(
-   'instructor/slice/deleleteLesson'
+   'instructor/slice/deleleteLesson',
+   async (lessonId, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/lessons/${lessonId}`,
+            method: 'DELETE',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
 )
 
 export const instructorSlice = createSlice({
@@ -105,6 +117,11 @@ export const instructorSlice = createSlice({
       [addNewLessonByCourseId.fulfilled]: (state, actions) => {
          const newLesson = actions.payload
          state.materials.push(newLesson)
+      },
+      [deleteLessonById.fulfilled]: (state, actions) => {
+         const { name, id } = actions.payload
+         state.materials = state.materials.filter((item) => item.id !== id)
+         toast.success(`${name} успешно удален`)
       },
    },
 })

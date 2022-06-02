@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router'
 import {
    addNewLessonByCourseId,
+   deleteLessonById,
    getMaterialsByCourseId,
 } from '../../store/instructorCoursesSlice'
 import { FlexCards } from '../UI/FlexCards'
@@ -15,6 +17,7 @@ import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 
 export const InstructorMaterials = ({ coursesId }) => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [searchParams, setSearchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
    const { materials } = useSelector((store) => store.instructorSlice)
@@ -32,6 +35,18 @@ export const InstructorMaterials = ({ coursesId }) => {
       )
    }
 
+   const openDeleteLessonModal = (lessonId) => {
+      setSearchParams({ tabs, modal: MODAL_TYPES.DELETELESSON, lessonId })
+   }
+
+   const deleteLesson = (lessonId) => {
+      dispatch(deleteLessonById(lessonId))
+   }
+
+   const addTaskForLesson = () => {
+      navigate('addTaskForLesson')
+   }
+
    return (
       <>
          <Flex>
@@ -40,10 +55,18 @@ export const InstructorMaterials = ({ coursesId }) => {
          </Flex>
          <FlexCards>
             {materials.map((lesson) => {
-               return <LessonCard lessonName={lesson.name} />
+               return (
+                  <LessonCard
+                     onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
+                     lessonName={lesson.name}
+                  />
+               )
             })}
          </FlexCards>
-         <IndexModal onAddNewLesson={addNewLesson} />
+         <IndexModal
+            deleteLesson={deleteLesson}
+            onAddNewLesson={addNewLesson}
+         />
       </>
    )
 }

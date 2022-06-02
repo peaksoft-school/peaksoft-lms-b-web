@@ -7,8 +7,13 @@ import { MODAL_TYPES } from '../../../utils/constants/constants'
 import { Inputs } from '../../UI/Input'
 import { Buttons } from '../../UI/Buttons'
 import { useInput } from '../../../hooks/useInput'
+import { ConfirmModal } from '../../UI/ConfirmModal'
 
-export const IndexModal = ({ onAddLinkHandler, onAddNewLesson }) => {
+export const IndexModal = ({
+   onAddLinkHandler,
+   onAddNewLesson,
+   deleteLesson,
+}) => {
    const [linkData, setLinkData] = useInput({
       link: '',
       linkName: '',
@@ -17,6 +22,7 @@ export const IndexModal = ({ onAddLinkHandler, onAddNewLesson }) => {
    const [searchParams, setSearchParams] = useSearchParams()
    const modal = searchParams.get('modal')
    const tabs = searchParams.get('tabs')
+   const lessonId = searchParams.get('lessonId')
    const closeModal = () => {
       setSearchParams({ tabs })
    }
@@ -30,6 +36,11 @@ export const IndexModal = ({ onAddLinkHandler, onAddNewLesson }) => {
       closeModal()
       setLessonName('')
       return onAddNewLesson(lessonName)
+   }
+
+   const deleteLessonHandler = () => {
+      closeModal()
+      return deleteLesson(lessonId)
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
@@ -142,6 +153,15 @@ export const IndexModal = ({ onAddLinkHandler, onAddNewLesson }) => {
                placeholder="Название урока"
             />
          </BasicModal>
+      )
+   }
+   if (modal === MODAL_TYPES.DELETELESSON) {
+      return (
+         <ConfirmModal
+            isActive
+            deleteHandler={deleteLessonHandler}
+            toggleModal={closeModal}
+         />
       )
    }
    return null

@@ -54,6 +54,7 @@ export default function LessonCard({
    openTaskHandler,
    openLinkHandler,
    openTestHandler,
+
    ...otherProps
 }) {
    return (
