@@ -13,6 +13,7 @@ export const TaskLinkItem = ({ link, linkName }) => {
 
 const StyledWrapper = styled.div`
    display: flex;
+   margin-bottom: 20px;
 `
 
 const StyledLink = styled.a`

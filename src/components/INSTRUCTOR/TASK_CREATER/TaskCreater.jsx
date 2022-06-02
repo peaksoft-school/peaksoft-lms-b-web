@@ -22,15 +22,73 @@ import { Buttons } from '../../UI/Buttons'
 export const TaskCreater = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
-   const [photo, setPhoto] = useState(null)
-   const getPhotoHandler = (photo) => {
+   const [tasks, setTasks] = useState([])
+   const addTextEditor = () => {
+      setTasks((prevState) => {
+         return [
+            ...prevState,
+            {
+               resourceType: 'TEXT',
+               value: '',
+               id: Math.random().toString(),
+            },
+         ]
+      })
+   }
+   const addCodeEditor = () => {
+      setTasks((prevState) => {
+         return [
+            ...prevState,
+            {
+               resourceType: 'CODE',
+               value: '',
+               id: Math.random().toString(),
+            },
+         ]
+      })
+   }
+   const getPhotoHandler = async (photo) => {
       if (photo) {
-         dispatch(sendTaskFile(photo))
+         const { URL } = await dispatch(sendTaskFile(photo)).unwrap()
+         setTasks((prevState) => {
+            return [
+               ...prevState,
+               {
+                  resourceType: 'IMAGE',
+                  value: URL,
+                  id: Math.random().toString(),
+               },
+            ]
+         })
       }
    }
-   const openModalHandler = () => {
+   const openPrezentationModal = () => {
       setSearchParams({
          modal: MODAL_TYPES.ADDNEWPREZENTATION,
+      })
+   }
+
+   const addLinkHandler = ({ link, linkName }) => {
+      setTasks((prevState) => {
+         return [
+            ...prevState,
+            {
+               resourceType: 'LINK',
+               value: {
+                  link,
+                  linkName,
+               },
+               id: Math.random().toString(),
+            },
+         ]
+      })
+   }
+
+   const onChangeEditContent = ({ editContent, id }) => {}
+
+   const openLinkModal = () => {
+      setSearchParams({
+         modal: MODAL_TYPES.ADDNEWLINK,
       })
    }
    return (
@@ -39,32 +97,45 @@ export const TaskCreater = () => {
          <StyledTaskCreater>
             <Header>Создать задание</Header>
             <ControlMenu>
-               <Inputs width="2000px" />
-               <EditorButtons>
+               <Inputs placeholder="Название задания" width="2000px" />
+               <EditorButtons onClick={addTextEditor}>
                   <Text />
                </EditorButtons>
-               <EditorButtons onClick={openModalHandler}>
+               <EditorButtons onClick={openPrezentationModal}>
                   <FileEditor />
                </EditorButtons>
                <EditorButtons>
                   <ImagePicker getPhoto={getPhotoHandler} />
                </EditorButtons>
-               <EditorButtons>
+               <EditorButtons onClick={openLinkModal}>
                   <LinkEditor />
                </EditorButtons>
-               <EditorButtons>
+               <EditorButtons onClick={addCodeEditor}>
                   <CodeEditor />
                </EditorButtons>
             </ControlMenu>
             <StyledTasksWrapper>
-               <TextEditor isHasEditor />
-               <TextEditor />
-               <TaskImagePicker image="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
-               <TaskFileItem file="hello world.png" />
-               <TaskLinkItem
-                  link="google.com"
-                  linkName="google for your account"
-               />
+               {tasks.map((task) => {
+                  if (task.resourceType === 'IMAGE') {
+                     return <TaskImagePicker id={task.id} image={task.value} />
+                  }
+                  if (task.resourceType === 'TEXT') {
+                     return <TextEditor id={task.id} isHasEditor />
+                  }
+                  if (task.resourceType === 'CODE') {
+                     return <TextEditor id={task.id} />
+                  }
+                  if (task.resourceType === 'LINK') {
+                     return (
+                        <TaskLinkItem
+                           id={task.id}
+                           link={task.value.link}
+                           linkName={task.value.linkName}
+                        />
+                     )
+                  }
+                  return null
+               })}
             </StyledTasksWrapper>
             <StyledFooter>
                <Buttons
@@ -78,7 +149,7 @@ export const TaskCreater = () => {
                </Buttons>
                <Buttons>Сохранить</Buttons>
             </StyledFooter>
-            <IndexModal />
+            <IndexModal onAddLinkHandler={addLinkHandler} />
          </StyledTaskCreater>
       </Wrapper>
    )

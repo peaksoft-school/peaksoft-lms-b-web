@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -9,12 +9,12 @@ import { ConditionalRender } from '../../UI/ConditionalRender'
 import { ReactComponent as CodeEditor } from '../../../assets/icons/CodeEditor.svg'
 import { ReactComponent as Text } from '../../../assets/icons/Text.svg'
 
-export const TextEditor = ({ isHasEditor }) => {
+export const TextEditor = ({ isHasEditor, setEditContent }) => {
    const editor = useEditor({
       extensions: [StarterKit, UnderLine, Code],
       content: !isHasEditor ? '<code>Code</code>' : '<p>Имя</p>',
-      onUpdate: ({ editor }) => {
-         console.log(editor.getHTML())
+      onBlur: ({ editor }) => {
+         setEditContent(editor.getHTML())
       },
    })
 
