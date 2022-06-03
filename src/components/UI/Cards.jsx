@@ -89,10 +89,9 @@ const Card = styled.div`
    border-radius: 10px;
    cursor: pointer;
 `
-const WrapperImg = styled.div`
+const WrapperImg = styled.img`
    width: 100%;
    min-height: 171px;
-   background-image: ${({ image }) => image};
    border-top-left-radius: 10px;
    cursor: pointer;
    border-top-right-radius: 10px;

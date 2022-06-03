@@ -22,6 +22,7 @@ const Image = styled.img`
 `
 
 export const ImagePicker = ({ getPhoto, image }) => {
+   console.log(image)
    const [errors, setErrors] = useState('')
 
    const onDrop = useCallback((acceptedFiles, fileRejections) => {

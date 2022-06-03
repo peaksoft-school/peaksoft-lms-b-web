@@ -56,8 +56,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }
    const updatePhotoHandler = (photo) => {
       setImage({
-         binaryImage: URL.createObjectURL(photo),
-         imageLink: photo,
+         binaryImage: photo,
+         imageLink: URL.createObjectURL(photo),
       })
    }
    const updateGroupHandler = async () => {
