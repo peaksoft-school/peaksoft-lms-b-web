@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useParams } from 'react-router'
 import { BreadCrumb } from '../../UI/BreadCrumb'
 import { TextEditor } from '../TEXT_EDITOR/TextEditor'
 import { Inputs } from '../../UI/Input'
@@ -14,7 +15,10 @@ import { ReactComponent as LinkEditor } from '../../../assets/icons/LinkEditor.s
 import { ReactComponent as CodeEditor } from '../../../assets/icons/CodeEditor.svg'
 import { IndexModal } from '../INSTRUCTOR_MODALS/IndexModal'
 import { MODAL_TYPES } from '../../../utils/constants/constants'
-import { sendTaskFile } from '../../../store/InstructorTaskCreaterSlice'
+import {
+   createTask,
+   sendTaskFile,
+} from '../../../store/InstructorTaskCreaterSlice'
 import { TaskImagePicker } from './TaskImagePicker'
 import { TaskFileItem } from './TaskFileItem'
 import { TaskLinkItem } from './TaskLinkItem'
@@ -22,6 +26,7 @@ import { Buttons } from '../../UI/Buttons'
 
 export const TaskCreater = () => {
    const dispatch = useDispatch()
+   const { lessonId } = useParams()
    const [title, setTitle] = useState('')
    const [searchParams, setSearchParams] = useSearchParams()
    const [tasks, setTasks] = useState([])
@@ -77,10 +82,8 @@ export const TaskCreater = () => {
                ...prevState,
                {
                   resourceType: 'FILE',
-                  value: {
-                     URL,
-                     fileName: file.path,
-                  },
+                  value: URL,
+                  name: file.path,
                   id: Math.random().toString(),
                },
             ]
@@ -95,7 +98,7 @@ export const TaskCreater = () => {
             {
                resourceType: 'LINK',
                value: link,
-               linkName,
+               name: linkName,
                id: Math.random().toString(),
             },
          ]
@@ -123,10 +126,19 @@ export const TaskCreater = () => {
    }
 
    const SubmitHandler = () => {
-      console.log({
-         name: title,
-         resources: tasks,
-      })
+      dispatch(
+         createTask({
+            name: title,
+            resources: tasks.map((task) => {
+               return {
+                  value: task.value,
+                  name: task.name ? task.name : null,
+                  resourceType: task.resourceType,
+               }
+            }),
+            lessonId,
+         })
+      )
    }
    return (
       <Wrapper>
@@ -183,16 +195,13 @@ export const TaskCreater = () => {
                         <TaskLinkItem
                            id={task.id}
                            link={task.value}
-                           linkName={task.linkName}
+                           linkName={task.name}
                         />
                      )
                   }
                   if (task.resourceType === 'FILE') {
                      return (
-                        <TaskFileItem
-                           link={task.value}
-                           fileName={task.fileName}
-                        />
+                        <TaskFileItem link={task.value} fileName={task.name} />
                      )
                   }
                   return null
@@ -208,7 +217,7 @@ export const TaskCreater = () => {
                >
                   Отмена
                </Buttons>
-               <Buttons>Сохранить</Buttons>
+               <Buttons onClick={SubmitHandler}>Сохранить</Buttons>
             </StyledFooter>
             <IndexModal onAddLinkHandler={addLinkHandler} />
          </StyledTaskCreater>

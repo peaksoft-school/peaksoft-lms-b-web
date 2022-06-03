@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 import { fileFetchApi } from '../api/fileFetchApi'
 
@@ -28,16 +29,40 @@ export const sendTaskFile = createAsyncThunk(
    }
 )
 
+export const createTask = createAsyncThunk(
+   'instructor/task/createTask',
+   async (tasks, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: 'api/tasks',
+            method: 'POST',
+            body: tasks,
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
 export const TaskCreaterSlice = createSlice({
    name: 'task/creater/slice',
    initialState: initState,
    reducers: {},
    extraReducers: {
       [sendTaskFile.fulfilled]: (state, actions) => {
-         console.log(actions.payload)
+         toast.success('Файл успешно добавлен')
       },
       [sendTaskFile.rejected]: (state, actions) => {
-         console.log(actions.error)
+         const error = actions.payload
+         toast.error(` ${error}`)
+      },
+      [createTask.fulfilled]: (state, actions) => {
+         toast.success('Задание успешно добавлено')
+      },
+      [createTask.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
    },
 })
