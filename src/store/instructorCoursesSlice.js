@@ -140,7 +140,7 @@ export const instructorSlice = createSlice({
          toast.success(`${name} успешно удален`)
       },
       [addVideoForLesson.fulfilled]: (state, actions) => {
-         toast.success(actions.payload)
+         toast.success('Видео успешно добавлено')
       },
    },
 })

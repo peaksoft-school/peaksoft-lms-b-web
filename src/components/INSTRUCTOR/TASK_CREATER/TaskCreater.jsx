@@ -125,8 +125,8 @@ export const TaskCreater = () => {
       })
    }
 
-   const SubmitHandler = () => {
-      dispatch(
+   const SubmitHandler = async () => {
+      await dispatch(
          createTask({
             name: title,
             resources: tasks.map((task) => {
@@ -139,6 +139,9 @@ export const TaskCreater = () => {
             lessonId,
          })
       )
+      setSearchParams({
+         tabs: 'materialss',
+      })
    }
    return (
       <Wrapper>
