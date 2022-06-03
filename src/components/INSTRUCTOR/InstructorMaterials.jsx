@@ -18,6 +18,7 @@ import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 
 export const InstructorMaterials = ({ coursesId }) => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [searchParams, setSearchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
    const { materials } = useSelector((store) => store.instructorSlice)
@@ -47,6 +48,14 @@ export const InstructorMaterials = ({ coursesId }) => {
       dispatch(addVideoForLesson(videoLessonData))
    }
 
+   const openVideoPreview = (lessonId) => {
+      navigate(`previewPage/${lessonId}`)
+   }
+
+   const openTasksPreview = (lessonId) => {
+      navigate(`previewPage/${lessonId}`)
+   }
+
    return (
       <>
          <Flex>
@@ -57,6 +66,8 @@ export const InstructorMaterials = ({ coursesId }) => {
             {materials.map((lesson) => {
                return (
                   <LessonCard
+                     openTaskHandler={() => openTasksPreview(lesson.id)}
+                     openVideoHandler={() => openVideoPreview(lesson.id)}
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
                      lessonName={lesson.name}
                      lessonId={lesson.id}

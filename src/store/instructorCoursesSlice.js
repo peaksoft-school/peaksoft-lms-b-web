@@ -12,6 +12,7 @@ const initState = {
    teachers: [],
    materials: [],
    students: [],
+   videoLesson: null,
 }
 
 export const getAllTeacherStudents = createAsyncThunk(
@@ -106,6 +107,21 @@ export const addVideoForLesson = createAsyncThunk(
    }
 )
 
+export const getVideoLessonByLessonid = createAsyncThunk(
+   'instructor/slice/getVideoLesson',
+   async (lessonId, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/videoLessons/${lessonId}`,
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
 export const instructorSlice = createSlice({
    name: 'instructor/slice',
    initialState: initState,
@@ -141,6 +157,10 @@ export const instructorSlice = createSlice({
       },
       [addVideoForLesson.fulfilled]: (state, actions) => {
          toast.success('Видео успешно добавлено')
+      },
+      [getVideoLessonByLessonid.fulfilled]: (state, actions) => {
+         const videoLesson = actions.payload
+         state.videoLesson = videoLesson
       },
    },
 })
