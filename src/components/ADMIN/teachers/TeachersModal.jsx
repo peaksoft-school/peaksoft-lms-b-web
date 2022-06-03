@@ -12,7 +12,7 @@ export const TeachersModal = ({ page }) => {
    const { modal, teacherId } = Object.fromEntries([...searchParams])
 
    const closeModalHandler = () => {
-      setSearchParams({ page })
+      setSearchParams({ page: 1 })
    }
 
    const deleteHandler = () => {

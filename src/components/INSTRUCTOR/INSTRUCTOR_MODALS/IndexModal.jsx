@@ -87,40 +87,6 @@ export const IndexModal = ({
       )
    }
 
-   if (modal === MODAL_TYPES.ADDNEWPREZENTATION) {
-      return (
-         <BasicModal
-            title="Создать  группу"
-            isActive
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModal}
-         >
-            <Inputs
-               placeholder="Введите название презентации"
-               margin="0 0 12px 0"
-            />
-            <Inputs
-               placeholder="Введите описание презентации"
-               margin="0 0 12px 0"
-            />
-            <Box display="flex">
-               <Inputs placeholder="Выберите файл в формате ppt" />
-               <Buttons
-                  border="1px solid #3772FF"
-                  background="none"
-                  hoverback="none"
-                  margin="0 0 0 10px"
-                  fontcolor="#3772FF"
-               >
-                  Обзор..
-               </Buttons>
-            </Box>
-         </BasicModal>
-      )
-   }
-
    if (modal === MODAL_TYPES.ADDNEWLINK) {
       return (
          <BasicModal

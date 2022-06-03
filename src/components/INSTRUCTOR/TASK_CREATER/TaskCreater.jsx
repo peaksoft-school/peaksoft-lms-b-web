@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useSearchParams } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 import { BreadCrumb } from '../../UI/BreadCrumb'
 import { TextEditor } from '../TEXT_EDITOR/TextEditor'
 import { Inputs } from '../../UI/Input'
@@ -21,8 +22,14 @@ import { Buttons } from '../../UI/Buttons'
 
 export const TaskCreater = () => {
    const dispatch = useDispatch()
+   const [title, setTitle] = useState('')
    const [searchParams, setSearchParams] = useSearchParams()
    const [tasks, setTasks] = useState([])
+
+   const onChangeTitle = (event) => {
+      setTitle(event.target.value)
+   }
+
    const addTextEditor = () => {
       setTasks((prevState) => {
          return [
@@ -62,10 +69,23 @@ export const TaskCreater = () => {
          })
       }
    }
-   const openPrezentationModal = () => {
-      setSearchParams({
-         modal: MODAL_TYPES.ADDNEWPREZENTATION,
-      })
+   const getFileHandler = async (file) => {
+      if (file) {
+         const { URL } = await dispatch(sendTaskFile(file)).unwrap()
+         setTasks((prevState) => {
+            return [
+               ...prevState,
+               {
+                  resourceType: 'FILE',
+                  value: {
+                     URL,
+                     fileName: file.path,
+                  },
+                  id: Math.random().toString(),
+               },
+            ]
+         })
+      }
    }
 
    const addLinkHandler = ({ link, linkName }) => {
@@ -74,21 +94,38 @@ export const TaskCreater = () => {
             ...prevState,
             {
                resourceType: 'LINK',
-               value: {
-                  link,
-                  linkName,
-               },
+               value: link,
+               linkName,
                id: Math.random().toString(),
             },
          ]
       })
    }
 
-   const onChangeEditContent = ({ editContent, id }) => {}
+   const onChangeEditContent = ({ editContent, id }) => {
+      setTasks((prevState) => {
+         return prevState.map((task) => {
+            if (task.id === id) {
+               return {
+                  ...task,
+                  value: editContent,
+               }
+            }
+            return task
+         })
+      })
+   }
 
    const openLinkModal = () => {
       setSearchParams({
          modal: MODAL_TYPES.ADDNEWLINK,
+      })
+   }
+
+   const SubmitHandler = () => {
+      console.log({
+         name: title,
+         resources: tasks,
       })
    }
    return (
@@ -97,12 +134,17 @@ export const TaskCreater = () => {
          <StyledTaskCreater>
             <Header>Создать задание</Header>
             <ControlMenu>
-               <Inputs placeholder="Название задания" width="2000px" />
+               <Inputs
+                  value={title}
+                  onChange={onChangeTitle}
+                  placeholder="Название задания"
+                  width="2000px"
+               />
                <EditorButtons onClick={addTextEditor}>
                   <Text />
                </EditorButtons>
-               <EditorButtons onClick={openPrezentationModal}>
-                  <FileEditor />
+               <EditorButtons>
+                  <FilePicker getFile={getFileHandler} />
                </EditorButtons>
                <EditorButtons>
                   <ImagePicker getPhoto={getPhotoHandler} />
@@ -120,17 +162,36 @@ export const TaskCreater = () => {
                      return <TaskImagePicker id={task.id} image={task.value} />
                   }
                   if (task.resourceType === 'TEXT') {
-                     return <TextEditor id={task.id} isHasEditor />
+                     return (
+                        <TextEditor
+                           setEditContent={onChangeEditContent}
+                           id={task.id}
+                           isHasEditor
+                        />
+                     )
                   }
                   if (task.resourceType === 'CODE') {
-                     return <TextEditor id={task.id} />
+                     return (
+                        <TextEditor
+                           setEditContent={onChangeEditContent}
+                           id={task.id}
+                        />
+                     )
                   }
                   if (task.resourceType === 'LINK') {
                      return (
                         <TaskLinkItem
                            id={task.id}
-                           link={task.value.link}
-                           linkName={task.value.linkName}
+                           link={task.value}
+                           linkName={task.linkName}
+                        />
+                     )
+                  }
+                  if (task.resourceType === 'FILE') {
+                     return (
+                        <TaskFileItem
+                           link={task.value}
+                           fileName={task.fileName}
                         />
                      )
                   }
@@ -185,6 +246,39 @@ const ImagePicker = ({ getPhoto }) => {
       <DropZoneWrapper {...getRootProps()}>
          <input type="text" {...getInputProps()} />
          <ImageEditor />
+      </DropZoneWrapper>
+   )
+}
+
+const FilePicker = ({ getFile }) => {
+   const [errors, setErrors] = useState('')
+
+   const onDrop = useCallback((acceptedFiles, fileRejections) => {
+      if (acceptedFiles[0]) {
+         getFile(acceptedFiles[0])
+         setErrors('')
+      }
+      fileRejections.forEach((file) => {
+         file.errors.forEach((err) => {
+            if (err.code === 'file-too-large') {
+               toast.error('Недопустимый размер фото ')
+            }
+
+            if (err.code === 'file-invalid-type') {
+               toast.error(`недопустимый формат фото`)
+            }
+         })
+      })
+   }, [])
+   const { getRootProps, getInputProps } = useDropzone({
+      multiple: false,
+      maxSize: 100000,
+      onDrop,
+   })
+   return (
+      <DropZoneWrapper {...getRootProps()}>
+         <input type="text" {...getInputProps()} />
+         <FileEditor />
       </DropZoneWrapper>
    )
 }

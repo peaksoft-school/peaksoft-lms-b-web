@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import { ReactComponent as FileEditor } from '../../../assets/icons/FileEditor.svg'
 import { Title } from '../../UI/Title'
 
-export const TaskFileItem = ({ file }) => {
+export const TaskFileItem = ({ link, fileName }) => {
    return (
       <StyledFileItemWrapper>
          <StyledFileEditor />
-         <Title cursor="pointer">{file}</Title>
+         <Title cursor="pointer">
+            <a href={link}>{fileName}</a>
+         </Title>
       </StyledFileItemWrapper>
    )
 }

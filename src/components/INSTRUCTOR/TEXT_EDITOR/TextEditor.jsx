@@ -9,12 +9,15 @@ import { ConditionalRender } from '../../UI/ConditionalRender'
 import { ReactComponent as CodeEditor } from '../../../assets/icons/CodeEditor.svg'
 import { ReactComponent as Text } from '../../../assets/icons/Text.svg'
 
-export const TextEditor = ({ isHasEditor, setEditContent }) => {
+export const TextEditor = ({ isHasEditor, setEditContent, id }) => {
    const editor = useEditor({
       extensions: [StarterKit, UnderLine, Code],
       content: !isHasEditor ? '<code>Code</code>' : '<p>Имя</p>',
-      onBlur: ({ editor }) => {
-         setEditContent(editor.getHTML())
+      onUpdate: ({ editor }) => {
+         setEditContent({
+            editContent: editor.getHTML(),
+            id,
+         })
       },
    })
 
