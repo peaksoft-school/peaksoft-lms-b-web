@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
-import { fileFetchApi } from '../api/fileFetchApi'
 
 const initState = {
    isLoading: null,
@@ -112,8 +111,24 @@ export const getVideoLessonByLessonid = createAsyncThunk(
    async (lessonId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/videoLessons/${lessonId}`,
+            path: `api/videoLessons/lesson/${lessonId}`,
             method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
+export const addPresentationForLesson = createAsyncThunk(
+   'instructor/slice/sendPresentation',
+   async (presentation, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/presentations`,
+            method: 'POST',
+            body: presentation,
          })
          return response
       } catch (error) {
@@ -161,6 +176,13 @@ export const instructorSlice = createSlice({
       [getVideoLessonByLessonid.fulfilled]: (state, actions) => {
          const videoLesson = actions.payload
          state.videoLesson = videoLesson
+      },
+      [addPresentationForLesson.fulfilled]: (state, actions) => {
+         toast.success('Презентация успешно добавлена')
+      },
+      [addPresentationForLesson.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
    },
 })

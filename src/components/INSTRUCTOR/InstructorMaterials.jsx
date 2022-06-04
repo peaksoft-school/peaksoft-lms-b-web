@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import {
    addNewLessonByCourseId,
+   addPresentationForLesson,
    addVideoForLesson,
    deleteLessonById,
    getMaterialsByCourseId,
@@ -15,6 +16,7 @@ import { Buttons } from '../UI/Buttons'
 import { BreadCrumb } from '../UI/BreadCrumb'
 import { MODAL_TYPES } from '../../utils/constants/constants'
 import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
+import { sendTaskFile } from '../../store/InstructorTaskCreaterSlice'
 
 export const InstructorMaterials = ({ coursesId }) => {
    const dispatch = useDispatch()
@@ -56,6 +58,20 @@ export const InstructorMaterials = ({ coursesId }) => {
       navigate(`previewPage/${lessonId}`)
    }
 
+   const addPresentation = async (presentationData) => {
+      if (presentationData) {
+         const { URL } = await dispatch(
+            sendTaskFile(presentationData.file)
+         ).unwrap()
+         dispatch(
+            addPresentationForLesson({
+               ...presentationData,
+               file: URL,
+            })
+         )
+      }
+   }
+
    return (
       <>
          <Flex>
@@ -79,6 +95,7 @@ export const InstructorMaterials = ({ coursesId }) => {
             onAddVideoLesson={addVideo}
             deleteLesson={deleteLesson}
             onAddNewLesson={addNewLesson}
+            onAddPresentation={addPresentation}
          />
       </>
    )

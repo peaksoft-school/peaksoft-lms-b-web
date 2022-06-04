@@ -8,12 +8,14 @@ import { Inputs } from '../../UI/Input'
 import { Buttons } from '../../UI/Buttons'
 import { useInput } from '../../../hooks/useInput'
 import { ConfirmModal } from '../../UI/ConfirmModal'
+import { FilePickerButton } from '../../UI/FilePickerButton'
 
 export const IndexModal = ({
    onAddLinkHandler,
    onAddNewLesson,
    deleteLesson,
    onAddVideoLesson,
+   onAddPresentation,
 }) => {
    const [linkData, setLinkData] = useInput({
       link: '',
@@ -24,7 +26,11 @@ export const IndexModal = ({
       description: '',
       link: '',
    })
-   const [prezentation, onChangePrezentation] = useInput({})
+   const [presentation, onChangePresentation] = useInput({
+      name: '',
+      description: '',
+   })
+   const [presentationFile, setPresentationFile] = useState(null)
    const [lessonName, setLessonName] = useState('')
    const [searchParams, setSearchParams] = useSearchParams()
    const modal = searchParams.get('modal')
@@ -56,6 +62,15 @@ export const IndexModal = ({
          ...videoLesson,
          lessonId,
       })
+   }
+
+   const addPresentation = () => {
+      onAddPresentation({
+         ...presentation,
+         file: presentationFile,
+         lessonId,
+      })
+      closeModal()
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
@@ -218,27 +233,42 @@ export const IndexModal = ({
             cancelTitle="Отмена"
             successTitle="Добавить"
             isActiveFooter="true"
+            addHandler={addPresentation}
             modalCloseHanlder={closeModal}
+            isDisabled={
+               presentation.name && presentation.description && presentationFile
+            }
          >
             <Inputs
+               name="name"
+               value={presentation.name}
+               onChange={(e) => onChangePresentation(e)}
                placeholder="Введите название презентации"
                margin="0 0 12px 0"
             />
             <Inputs
+               name="description"
+               value={presentation.description}
+               onChange={(e) => onChangePresentation(e)}
                placeholder="Введите описание презентации"
                margin="0 0 12px 0"
             />
             <Box display="flex">
-               <Inputs placeholder="Выберите файл в формате ppt" />
-               <Buttons
-                  border="1px solid #3772FF"
-                  background="none"
-                  hoverback="none"
-                  margin="0 0 0 10px"
-                  fontcolor="#3772FF"
-               >
-                  Обзор..
-               </Buttons>
+               <Inputs
+                  value={presentationFile ? presentationFile.path : ''}
+                  placeholder="Выберите файл в формате ppt"
+               />
+               <FilePickerButton getFile={setPresentationFile}>
+                  <Buttons
+                     border="1px solid #3772FF"
+                     background="none"
+                     hoverback="none"
+                     margin="0 0 0 10px"
+                     fontcolor="#3772FF"
+                  >
+                     Обзор..
+                  </Buttons>
+               </FilePickerButton>
             </Box>
          </BasicModal>
       )

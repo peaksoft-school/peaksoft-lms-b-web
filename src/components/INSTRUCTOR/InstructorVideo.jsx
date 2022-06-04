@@ -13,15 +13,21 @@ const InstructorVideo = () => {
    }, [])
    const videoLesson = useSelector((store) => store.instructorSlice.videoLesson)
 
-   console.log(videoLesson)
-
    return (
       <div>
          {videoLesson ? (
             <>
                <StyledHeader>{videoLesson.name}</StyledHeader>
-               <StyledParagraph>{videoLesson.name}</StyledParagraph>
-               <ReactPlayer borderRadius controls url={videoLesson.link} />
+               <StyledParagraph>{videoLesson.description}</StyledParagraph>
+               <StyledPleyerWrapper>
+                  <ReactPlayer
+                     width="792px"
+                     height="464px"
+                     borderRadius
+                     controls
+                     url={videoLesson.link}
+                  />
+               </StyledPleyerWrapper>
             </>
          ) : (
             <StyledHeader>Video Not Found</StyledHeader>
@@ -35,7 +41,7 @@ const StyledParagraph = styled.p`
    max-width: 797px;
    font-family: var(--base-font);
    font-size: 15px;
-   margin-bottom: 16px;
+   margin-bottom: 20px;
 `
 
 const StyledHeader = styled.h1`
@@ -44,6 +50,10 @@ const StyledHeader = styled.h1`
    line-height: 40px;
    letter-spacing: 0.4px;
    margin-bottom: 20px;
+`
+
+const StyledPleyerWrapper = styled.div`
+   margin-bottom: 100px;
 `
 
 export default InstructorVideo
