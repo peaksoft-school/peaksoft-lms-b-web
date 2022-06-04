@@ -3,13 +3,19 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import ReactPlayer from 'react-player'
-import { getVideoLessonByLessonid } from '../../store/instructorCoursesSlice'
+import {
+   getVideoLessonByVideoId,
+   InstructorActions,
+} from '../../store/instructorCoursesSlice'
 
 const InstructorVideo = () => {
    const dispatch = useDispatch()
-   const { lessonId } = useParams()
+   const { subtaskId } = useParams()
    useEffect(() => {
-      dispatch(getVideoLessonByLessonid(lessonId))
+      dispatch(getVideoLessonByVideoId(subtaskId))
+      return () => {
+         dispatch(InstructorActions.clearVideoLesson())
+      }
    }, [])
    const videoLesson = useSelector((store) => store.instructorSlice.videoLesson)
 

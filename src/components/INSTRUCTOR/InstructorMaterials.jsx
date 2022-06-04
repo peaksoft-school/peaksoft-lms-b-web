@@ -11,12 +11,12 @@ import {
    getMaterialsByCourseId,
 } from '../../store/instructorCoursesSlice'
 import { FlexCards } from '../UI/FlexCards'
-import LessonCard from '../UI/LessonCard'
 import { Buttons } from '../UI/Buttons'
 import { BreadCrumb } from '../UI/BreadCrumb'
 import { MODAL_TYPES } from '../../utils/constants/constants'
 import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 import { sendTaskFile } from '../../store/InstructorTaskCreaterSlice'
+import { LessonCard } from '../UI/LessonCard'
 
 export const InstructorMaterials = ({ coursesId }) => {
    const dispatch = useDispatch()
@@ -50,12 +50,16 @@ export const InstructorMaterials = ({ coursesId }) => {
       dispatch(addVideoForLesson(videoLessonData))
    }
 
-   const openVideoPreview = (lessonId) => {
-      navigate(`previewPage/${lessonId}?view=video`)
+   const openVideoPreview = (videoLessonId) => {
+      if (videoLessonId) {
+         navigate(`previewPage/${videoLessonId}?view=video`)
+      }
    }
 
-   const openTasksPreview = (lessonId) => {
-      navigate(`previewPage/${lessonId}?view=task`)
+   const openTasksPreview = (taskId) => {
+      if (taskId) {
+         navigate(`previewPage/${taskId}?view=task`)
+      }
    }
 
    const addPresentation = async (presentationData) => {
@@ -80,13 +84,21 @@ export const InstructorMaterials = ({ coursesId }) => {
          </Flex>
          <FlexCards>
             {materials.map((lesson) => {
+               console.log(lesson)
                return (
                   <LessonCard
-                     openTaskHandler={() => openTasksPreview(lesson.id)}
-                     openVideoHandler={() => openVideoPreview(lesson.id)}
+                     openTaskHandler={() => openTasksPreview(lesson.taskId)}
+                     openVideoHandler={() =>
+                        openVideoPreview(lesson.videoLessonId)
+                     }
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
                      lessonName={lesson.name}
                      lessonId={lesson.id}
+                     taskId={lesson.taskId}
+                     linkId={lesson.linkId}
+                     testId={lesson.testId}
+                     videoId={lesson.videoLessonId}
+                     presentationId={lesson.presentationId}
                   />
                )
             })}

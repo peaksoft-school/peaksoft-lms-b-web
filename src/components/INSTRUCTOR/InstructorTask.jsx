@@ -7,17 +7,17 @@ import { FileItem } from './TASKS_PREVIEW/FileItem'
 import { TextItem } from './TASKS_PREVIEW/TextItem'
 import { ImageItem } from './TASKS_PREVIEW/ImageItem'
 import { LinkItem } from './TASKS_PREVIEW/LinkItem'
-import { getTasksByLessonId } from '../../store/instructorCoursesSlice'
+import { getTasksById } from '../../store/instructorCoursesSlice'
 
 export const InstructorTasks = () => {
    const dispatch = useDispatch()
    const { name, resources } = useSelector(
       (store) => store.instructorSlice.tasks
    )
-   console.log(resources)
-   const { lessonId } = useParams()
+
+   const { subtaskId } = useParams()
    useEffect(() => {
-      dispatch(getTasksByLessonId(lessonId))
+      dispatch(getTasksById(subtaskId))
    }, [])
    return (
       <div>

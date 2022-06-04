@@ -15,7 +15,7 @@ export const InstructorCoursesRoute = () => {
             element={<TaskCreater />}
          />
          <Route
-            path="/:coursesId/previewPage/:lessonId"
+            path="/:coursesId/previewPage/:subtaskId"
             element={<InstructorPreview />}
          />
       </Routes>

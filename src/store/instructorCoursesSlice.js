@@ -107,12 +107,12 @@ export const addVideoForLesson = createAsyncThunk(
    }
 )
 
-export const getVideoLessonByLessonid = createAsyncThunk(
+export const getVideoLessonByVideoId = createAsyncThunk(
    'instructor/slice/getVideoLesson',
-   async (lessonId, { rejectWithValue }) => {
+   async (videoId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/videoLessons/lesson/${lessonId}`,
+            path: `api/videoLessons/${videoId}`,
             method: 'GET',
          })
          return response
@@ -122,12 +122,12 @@ export const getVideoLessonByLessonid = createAsyncThunk(
    }
 )
 
-export const getTasksByLessonId = createAsyncThunk(
+export const getTasksById = createAsyncThunk(
    'instructor/slice/getTasksByLessonId',
-   async (lessonId, { rejectWithValue }) => {
+   async (taskId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/tasks/${lessonId}`,
+            path: `api/tasks/task/${taskId}`,
             method: 'GET',
          })
          return response
@@ -156,7 +156,11 @@ export const addPresentationForLesson = createAsyncThunk(
 export const instructorSlice = createSlice({
    name: 'instructor/slice',
    initialState: initState,
-   reducers: {},
+   reducers: {
+      clearVideoLesson: (state, actions) => {
+         state.videoLesson = null
+      },
+   },
    extraReducers: {
       [getAllTeacherCourses.fulfilled]: (state, actions) => {
          const courses = actions.payload
@@ -189,7 +193,7 @@ export const instructorSlice = createSlice({
       [addVideoForLesson.fulfilled]: (state, actions) => {
          toast.success('Видео успешно добавлено')
       },
-      [getVideoLessonByLessonid.fulfilled]: (state, actions) => {
+      [getVideoLessonByVideoId.fulfilled]: (state, actions) => {
          const videoLesson = actions.payload
          state.videoLesson = videoLesson
       },
@@ -200,7 +204,7 @@ export const instructorSlice = createSlice({
          const error = actions.payload
          toast.error(` ${error}`)
       },
-      [getTasksByLessonId.fulfilled]: (state, actions) => {
+      [getTasksById.fulfilled]: (state, actions) => {
          const tasks = actions.payload
          state.tasks = tasks
       },

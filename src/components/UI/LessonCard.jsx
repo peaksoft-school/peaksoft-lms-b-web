@@ -48,9 +48,14 @@ const style = {
    borderRadius: '10px',
 }
 
-export default function LessonCard({
+export const LessonCard = ({
    lessonName,
    lessonId,
+   taskId,
+   linkId,
+   testId,
+   videoId,
+   presentationId,
    onEditHandler,
    onDeleteHandler,
    openVideoHandler,
@@ -60,7 +65,7 @@ export default function LessonCard({
    openTestHandler,
 
    ...otherProps
-}) {
+}) => {
    const navigate = useNavigate()
    const [searchParams, setSearchParams] = useSearchParams()
    const tabs = searchParams.get('tabs')
@@ -133,31 +138,51 @@ export default function LessonCard({
          <Divider />
 
          <List>
-            <ListItemButton onClick={openVideoHandler} disableRipple>
+            <ListItemButton
+               disabled={!videoId}
+               onClick={openVideoHandler}
+               disableRipple
+            >
                <VideoIcon />
                <StyledText primary="Видеоурок" />
                <CardSettings />
             </ListItemButton>
 
-            <ListItemButton onClick={openPresentationHandler} disableRipple>
+            <ListItemButton
+               disabled={!presentationId}
+               onClick={openPresentationHandler}
+               disableRipple
+            >
                <PrezentationIcon />
                <StyledText primary="Презентация" />
                <CardSettings />
             </ListItemButton>
 
-            <ListItemButton onClick={openTaskHandler} disableRipple>
+            <ListItemButton
+               disabled={!taskId}
+               onClick={openTaskHandler}
+               disableRipple
+            >
                <HmIcon />
                <StyledText primary="Задание" />
                <CardSettings />
             </ListItemButton>
 
-            <ListItemButton onClick={openLinkHandler} disableRipple>
+            <ListItemButton
+               disabled={!linkId}
+               onClick={openLinkHandler}
+               disableRipple
+            >
                <LinkIcon />
                <StyledText primary="Ссылка" />
                <CardSettings />
             </ListItemButton>
 
-            <ListItemButton onClick={openTestHandler} disableRipple>
+            <ListItemButton
+               disabled={!testId}
+               onClick={openTestHandler}
+               disableRipple
+            >
                <TestIcon />
                <StyledText primary="Тест" />
                <CardSettings />
