@@ -51,11 +51,11 @@ export const InstructorMaterials = ({ coursesId }) => {
    }
 
    const openVideoPreview = (lessonId) => {
-      navigate(`previewPage/${lessonId}`)
+      navigate(`previewPage/${lessonId}?view=video`)
    }
 
    const openTasksPreview = (lessonId) => {
-      navigate(`previewPage/${lessonId}`)
+      navigate(`previewPage/${lessonId}?view=task`)
    }
 
    const addPresentation = async (presentationData) => {
