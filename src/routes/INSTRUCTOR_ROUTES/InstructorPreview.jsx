@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { useSearchParams } from 'react-router-dom'
 import InstructorVideo from '../../components/INSTRUCTOR/InstructorVideo'
 import { InstructorTasks } from '../../components/INSTRUCTOR/InstructorTask'
+import { InstructorPresentation } from '../../components/INSTRUCTOR/InstructorPresentation'
 
 const views = {
    video: <InstructorVideo />,
    task: <InstructorTasks />,
+   presentation: <InstructorPresentation />,
 }
 
 export const InstructorPreview = () => {

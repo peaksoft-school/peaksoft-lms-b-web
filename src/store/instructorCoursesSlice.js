@@ -153,6 +153,21 @@ export const addPresentationForLesson = createAsyncThunk(
    }
 )
 
+export const getPresentationById = createAsyncThunk(
+   'instructor/slice/getPresentationById',
+   async (presentationId, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/presentations/${presentationId}`,
+            method: 'GET',
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
 export const instructorSlice = createSlice({
    name: 'instructor/slice',
    initialState: initState,
@@ -207,6 +222,9 @@ export const instructorSlice = createSlice({
       [getTasksById.fulfilled]: (state, actions) => {
          const tasks = actions.payload
          state.tasks = tasks
+      },
+      [getPresentationById.fulfilled]: (state, actions) => {
+         console.log(actions.payload)
       },
    },
 })

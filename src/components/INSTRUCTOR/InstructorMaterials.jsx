@@ -9,6 +9,7 @@ import {
    addVideoForLesson,
    deleteLessonById,
    getMaterialsByCourseId,
+   getPresentationById,
 } from '../../store/instructorCoursesSlice'
 import { FlexCards } from '../UI/FlexCards'
 import { Buttons } from '../UI/Buttons'
@@ -76,6 +77,12 @@ export const InstructorMaterials = ({ coursesId }) => {
       }
    }
 
+   const getPresentation = (presentationId) => {
+      if (presentationId) {
+         navigate(`previewPage/${presentationId}?view=presentation`)
+      }
+   }
+
    return (
       <>
          <Flex>
@@ -84,12 +91,14 @@ export const InstructorMaterials = ({ coursesId }) => {
          </Flex>
          <FlexCards>
             {materials.map((lesson) => {
-               console.log(lesson)
                return (
                   <LessonCard
                      openTaskHandler={() => openTasksPreview(lesson.taskId)}
                      openVideoHandler={() =>
                         openVideoPreview(lesson.videoLessonId)
+                     }
+                     openPresentationHandler={() =>
+                        getPresentation(lesson.presentationId)
                      }
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
                      lessonName={lesson.name}
