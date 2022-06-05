@@ -42,7 +42,11 @@ export const IndexModal = ({
 
    const addLinkHandler = () => {
       closeModal()
-      return onAddLinkHandler(linkData)
+      return onAddLinkHandler({
+         text: linkData.linkName,
+         link: linkData.link,
+         lessonId,
+      })
    }
 
    const addNewLesson = () => {

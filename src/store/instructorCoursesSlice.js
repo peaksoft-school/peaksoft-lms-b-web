@@ -12,6 +12,7 @@ const initState = {
    materials: [],
    students: [],
    videoLesson: null,
+   presentation: null,
    tasks: [],
 }
 
@@ -100,7 +101,7 @@ export const addVideoForLesson = createAsyncThunk(
             method: 'POST',
             body: videoData,
          })
-         return response
+         return { lessonId: videoData.lessonId, ...response }
       } catch (error) {
          return rejectWithValue(error.messages)
       }
@@ -146,7 +147,10 @@ export const addPresentationForLesson = createAsyncThunk(
             method: 'POST',
             body: presentation,
          })
-         return response
+         return {
+            lessonId: presentation.lessonId,
+            ...response,
+         }
       } catch (error) {
          return rejectWithValue(error.messages)
       }
@@ -162,6 +166,25 @@ export const getPresentationById = createAsyncThunk(
             method: 'GET',
          })
          return response
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
+export const addLinkToLesson = createAsyncThunk(
+   'instructor/slice/addLinkToLesson',
+   async (lessonData, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/links`,
+            method: 'POST',
+            body: lessonData,
+         })
+         return {
+            lessonId: lessonData.lessonId,
+            ...response,
+         }
       } catch (error) {
          return rejectWithValue(error.messages)
       }
@@ -206,6 +229,11 @@ export const instructorSlice = createSlice({
          toast.success(`${name} успешно удален`)
       },
       [addVideoForLesson.fulfilled]: (state, actions) => {
+         const { lessonId, id: videoId } = actions.payload
+         const currentLesson = state.materials.find(
+            (lesson) => lesson.id === Number(lessonId)
+         )
+         currentLesson.videoLessonId = videoId
          toast.success('Видео успешно добавлено')
       },
       [getVideoLessonByVideoId.fulfilled]: (state, actions) => {
@@ -213,6 +241,12 @@ export const instructorSlice = createSlice({
          state.videoLesson = videoLesson
       },
       [addPresentationForLesson.fulfilled]: (state, actions) => {
+         const { lessonId, id: presentationId } = actions.payload
+         console.log(lessonId)
+         const currentLesson = state.materials.find(
+            (lesson) => lesson.id === Number(lessonId)
+         )
+         currentLesson.presentationId = presentationId
          toast.success('Презентация успешно добавлена')
       },
       [addPresentationForLesson.rejected]: (state, actions) => {
@@ -224,7 +258,16 @@ export const instructorSlice = createSlice({
          state.tasks = tasks
       },
       [getPresentationById.fulfilled]: (state, actions) => {
-         console.log(actions.payload)
+         const presentation = actions.payload
+         state.presentation = presentation
+      },
+      [addLinkToLesson.fulfilled]: (state, actions) => {
+         const { lessonId, id: linkId } = actions.payload
+         const currentLesson = state.materials.find(
+            (lesson) => lesson.id === Number(lessonId)
+         )
+         currentLesson.linkId = linkId
+         toast.success('Ссылка успешно добавлена')
       },
    },
 })

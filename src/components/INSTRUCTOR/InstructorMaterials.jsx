@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import {
+   addLinkToLesson,
    addNewLessonByCourseId,
    addPresentationForLesson,
    addVideoForLesson,
@@ -63,6 +64,10 @@ export const InstructorMaterials = ({ coursesId }) => {
       }
    }
 
+   const addLink = (linkData) => {
+      dispatch(addLinkToLesson(linkData))
+   }
+
    const addPresentation = async (presentationData) => {
       if (presentationData) {
          const { URL } = await dispatch(
@@ -91,6 +96,7 @@ export const InstructorMaterials = ({ coursesId }) => {
          </Flex>
          <FlexCards>
             {materials.map((lesson) => {
+               console.log(lesson)
                return (
                   <LessonCard
                      openTaskHandler={() => openTasksPreview(lesson.taskId)}
@@ -117,6 +123,7 @@ export const InstructorMaterials = ({ coursesId }) => {
             deleteLesson={deleteLesson}
             onAddNewLesson={addNewLesson}
             onAddPresentation={addPresentation}
+            onAddLinkHandler={addLink}
          />
       </>
    )
