@@ -6,7 +6,7 @@ export const TestName = () => {
    return (
       <StyledTestName>
          <StyledTitle>Названия теста</StyledTitle>
-         <Inputs width="1220" />
+         <Inputs width="100%" />
       </StyledTestName>
    )
 }
@@ -18,6 +18,7 @@ const StyledTestName = styled.div`
    margin-top: 24px;
    border-radius: 10px;
    border: 1px solid #d4d4d4;
+   margin-bottom: 20px;
 `
 const StyledTitle = styled.h1`
    font-family: var(--base-font);

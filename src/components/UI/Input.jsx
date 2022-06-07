@@ -23,7 +23,7 @@ const StyledInput = styled.input`
    ) =>
       css`
          outline: none;
-         width: ${width || '491'}px;
+         width: ${width || '491px'};
          height: ${height || '42'}px;
          padding: ${padding || '10px 8px 10px 18px'} !important;
          margin: ${margin || ''} !important ;
