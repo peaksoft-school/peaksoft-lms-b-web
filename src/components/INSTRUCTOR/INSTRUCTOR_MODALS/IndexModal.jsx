@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { BasicModal } from '../../UI/BasicModal'
-import { BasicSelect } from '../../UI/BasicSelect'
 import { MODAL_TYPES } from '../../../utils/constants/constants'
 import { Inputs } from '../../UI/Input'
 import { Buttons } from '../../UI/Buttons'
@@ -84,10 +83,10 @@ export const IndexModal = ({
    }
 
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
-      return <AddStudentToCourse closeMyCoursesModal={closeMyCoursesModal} />
+      return <AddStudentToCourse closeMyCoursesModal={closeModal} />
    }
    if (modal === MODAL_TYPES.ADDGROUPSTOCOURSE) {
-      return <AddGroupToCourse closeMyCoursesModal={closeMyCoursesModal} />
+      return <AddGroupToCourse closeMyCoursesModal={closeModal} />
    }
 
    if (modal === MODAL_TYPES.ADDNEWLINK) {

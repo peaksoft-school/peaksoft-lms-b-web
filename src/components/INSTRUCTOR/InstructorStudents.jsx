@@ -48,7 +48,11 @@ export const InstructorStudents = () => {
          action: (item) => {
             return (
                <WrapperIcons>
-                  <Buttons style={{ background: 'none' }}>
+                  <Buttons
+                     background="transparent"
+                     hoverback="none"
+                     style={{ background: 'none' }}
+                  >
                      <TrashBinIcon />
                   </Buttons>
                </WrapperIcons>

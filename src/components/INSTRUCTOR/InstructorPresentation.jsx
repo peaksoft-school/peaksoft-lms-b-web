@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getPresentationById } from '../../store/instructorCoursesSlice'
@@ -16,9 +17,13 @@ export const InstructorPresentation = () => {
       <div>
          {presentation ? (
             <>
-               <h1>{presentation.name}</h1>
-               <p>{presentation.description}</p>
-               <iframe title="hello world " src={presentation.file} />
+               <PresentationName>{presentation.name}</PresentationName>
+               <PresentationDescription>
+                  {presentation.description}
+               </PresentationDescription>
+               <PresentationLink href={presentation.file}>
+                  нажмите чтоб скачать файл
+               </PresentationLink>
             </>
          ) : (
             ''
@@ -26,3 +31,16 @@ export const InstructorPresentation = () => {
       </div>
    )
 }
+
+const PresentationName = styled.h1`
+   font-size: 30px;
+   font-family: var(--base-font);
+   margin-bottom: 30px;
+`
+const PresentationDescription = styled.p`
+   font-family: var(--base-font);
+   margin-bottom: 20px;
+`
+const PresentationLink = styled.a`
+   font-family: var(--base-font);
+`

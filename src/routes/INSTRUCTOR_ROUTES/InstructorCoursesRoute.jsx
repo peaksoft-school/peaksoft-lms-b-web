@@ -4,6 +4,7 @@ import { MyCoursesInnerPage } from '../../components/INSTRUCTOR/MyCoursesInnerPa
 import { MyCourses } from '../../components/INSTRUCTOR/MyCourses'
 import { TaskCreater } from '../../components/INSTRUCTOR/TASK_CREATER/TaskCreater'
 import { InstructorPreview } from './InstructorPreview'
+import { TestEditor } from '../../components/INSTRUCTOR/TEST_EDITOR/TestEditor'
 
 export const InstructorCoursesRoute = () => {
    return (
@@ -13,6 +14,10 @@ export const InstructorCoursesRoute = () => {
          <Route
             path="/:coursesId/addTasksForLesson/:lessonId"
             element={<TaskCreater />}
+         />
+         <Route
+            path="/:coursesId/addTestForLesson/:lessonId"
+            element={<TestEditor />}
          />
          <Route
             path="/:coursesId/previewPage/:subtaskId"
