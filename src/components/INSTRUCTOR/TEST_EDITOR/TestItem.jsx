@@ -33,6 +33,10 @@ export const TestItem = ({
          })
       )
    }
+
+   const addNewVariant = () => {
+      dispatch(testCreaterActions.addNewVariantToQuestion(id))
+   }
    return (
       <StyledTestItem>
          <OptionsWrapper>
@@ -66,16 +70,26 @@ export const TestItem = ({
                </StyledRadioGroup>
             </FormControl>
          </OptionsWrapper>
-         {variants.map((answer) => {
+         {variants.map((answer, index) => {
             return (
                <AnswerItem
+                  questionType={questionType}
                   key={answer.id}
                   isChecked={answer.choiceAnswer}
-                  id={answer.id}
+                  optionId={answer.id}
+                  questionId={id}
                   inputValue={answer.options}
+                  placeholder={`Вариант ${index + 1}`}
                />
             )
          })}
+         <StyledWrapper>
+            <StyledAddVariant onClick={addNewVariant}>
+               Добавить вариант{' '}
+            </StyledAddVariant>
+            или
+            <StyledOtherVariant> Добавить вариант `Другое`</StyledOtherVariant>
+         </StyledWrapper>
       </StyledTestItem>
    )
 }
@@ -103,4 +117,20 @@ const Counter = styled.h1`
 const StyledRadioGroup = styled(RadioGroup)`
    display: flex;
    justify-content: space-around;
+`
+
+const StyledWrapper = styled.p`
+   margin-top: 24px;
+   font-family: var(--base-font);
+   color: black;
+`
+
+const StyledOtherVariant = styled.span`
+   color: #1f6ed4;
+   cursor: pointer;
+`
+
+const StyledAddVariant = styled.span`
+   color: #d4d4d4;
+   cursor: pointer;
 `
