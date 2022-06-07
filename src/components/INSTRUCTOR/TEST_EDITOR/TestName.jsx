@@ -2,11 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { Inputs } from '../../UI/Input'
 
-export const TestName = () => {
+export const TestName = ({ value, onChangeTestName }) => {
    return (
       <StyledTestName>
          <StyledTitle>Названия теста</StyledTitle>
-         <Inputs placeholder="Введите название теста " width="100%" />
+         <Inputs
+            value={value}
+            onChange={onChangeTestName}
+            placeholder="Введите название теста "
+            width="100%"
+         />
       </StyledTestName>
    )
 }

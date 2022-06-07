@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import Checkbox from '@mui/material/Checkbox'
 import { Inputs } from '../../UI/Input'
-import { CustomCheckbox } from '../../UI/CustomCheckbox'
 
-export const AnswerItem = () => {
+export const AnswerItem = ({ isChecked, inputValue, id }) => {
    return (
       <StyledAnswerItem>
-         <CustomCheckbox />
-         <Inputs width="95%" />
+         <Checkbox checked={isChecked} />
+         <Inputs width="95%" value={inputValue} />
       </StyledAnswerItem>
    )
 }
 
 export const StyledAnswerItem = styled.div`
-   display: grid;
-   grid-template-columns: 0.1fr 2.5fr;
+   display: flex;
+   justify-content: space-between;
    margin-top: 24px;
 `
