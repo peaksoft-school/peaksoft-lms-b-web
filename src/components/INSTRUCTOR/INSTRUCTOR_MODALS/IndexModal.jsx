@@ -9,6 +9,8 @@ import { Buttons } from '../../UI/Buttons'
 import { useInput } from '../../../hooks/useInput'
 import { ConfirmModal } from '../../UI/ConfirmModal'
 import { FilePickerButton } from '../../UI/FilePickerButton'
+import { AddStudentToCourse } from './AddStudentToCourse'
+import { AddGroupToCourse } from './AddGroupToCourse'
 
 export const IndexModal = ({
    onAddLinkHandler,
@@ -77,33 +79,15 @@ export const IndexModal = ({
       closeModal()
    }
 
+   const closeMyCoursesModal = () => {
+      setSearchParams({})
+   }
+
    if (modal === MODAL_TYPES.ADDSTUDENTTOCOURSE) {
-      return (
-         <BasicModal
-            title="Создать  группу"
-            isActive
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModal}
-         >
-            <BasicSelect data={[]} />
-         </BasicModal>
-      )
+      return <AddStudentToCourse closeMyCoursesModal={closeMyCoursesModal} />
    }
    if (modal === MODAL_TYPES.ADDGROUPSTOCOURSE) {
-      return (
-         <BasicModal
-            title="Создать  группу"
-            isActive
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModal}
-         >
-            <BasicSelect data={[]} />
-         </BasicModal>
-      )
+      return <AddGroupToCourse closeMyCoursesModal={closeMyCoursesModal} />
    }
 
    if (modal === MODAL_TYPES.ADDNEWLINK) {

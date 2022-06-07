@@ -16,6 +16,26 @@ const initState = {
    tasks: [],
 }
 
+export const getAllStudents = createAsyncThunk(
+   'instructor/slice/getAllStudents',
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/students`,
+            method: 'GET',
+            params: {
+               page: 1,
+               size: 10000,
+               studyFormat: 'ALL',
+            },
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
 export const getAllTeacherStudents = createAsyncThunk(
    'instructor/slice/getAllTeacherStudents',
    async (courseId, { rejectWithValue }) => {
@@ -191,6 +211,23 @@ export const addLinkToLesson = createAsyncThunk(
    }
 )
 
+export const AddStudentToCourse = createAsyncThunk(
+   'instrcutor/slice/addStudentToCourse',
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/links`,
+            method: 'POST',
+         })
+         return {
+            ...response,
+         }
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
 export const instructorSlice = createSlice({
    name: 'instructor/slice',
    initialState: initState,
@@ -242,7 +279,6 @@ export const instructorSlice = createSlice({
       },
       [addPresentationForLesson.fulfilled]: (state, actions) => {
          const { lessonId, id: presentationId } = actions.payload
-         console.log(lessonId)
          const currentLesson = state.materials.find(
             (lesson) => lesson.id === Number(lessonId)
          )
@@ -268,6 +304,9 @@ export const instructorSlice = createSlice({
          )
          currentLesson.linkId = linkId
          toast.success('Ссылка успешно добавлена')
+      },
+      [getAllStudents.fulfilled]: (state, actions) => {
+         console.log(actions.payload)
       },
    },
 })

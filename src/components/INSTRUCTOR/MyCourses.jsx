@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import { FlexCards } from '../UI/FlexCards'
 import { Cards } from '../UI/Cards'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
 import { ReactComponent as DoubleStudent } from '../../assets/icons/DoubleStudent.svg'
-import {
-   getAllTeacherCourses,
-   getMaterialsByCourseId,
-} from '../../store/instructorCoursesSlice'
+import { getAllTeacherCourses } from '../../store/instructorCoursesSlice'
+import { MODAL_TYPES } from '../../utils/constants/constants'
+import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 
 export const MyCourses = () => {
    const { courses, pages, currentPage } = useSelector(
@@ -17,6 +17,7 @@ export const MyCourses = () => {
    )
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const [searchPaarams, setSearchParams] = useSearchParams()
    useEffect(() => {
       dispatch(getAllTeacherCourses())
    }, [])
@@ -27,7 +28,9 @@ export const MyCourses = () => {
    const option = [
       {
          id: Math.random().toString(),
-         action: (groupInformation) => {},
+         action: (groupInformation) => {
+            setSearchParams({ modal: MODAL_TYPES.ADDSTUDENTTOCOURSE })
+         },
          content: (
             <>
                <PersonIcon style={{ marginRight: '20px' }} />
@@ -37,7 +40,9 @@ export const MyCourses = () => {
       },
       {
          id: Math.random().toString(),
-         action: (groupInformation) => {},
+         action: (groupInformation) => {
+            setSearchParams({ modal: MODAL_TYPES.ADDGROUPSTOCOURSE })
+         },
          content: (
             <>
                <DoubleStudent style={{ marginRight: '20px' }} />
@@ -60,10 +65,12 @@ export const MyCourses = () => {
                      duration={course.duration}
                      cardId={course.id}
                      option={option}
+                     allInformation={course}
                   />
                )
             })}
          </FlexCards>
+         <IndexModal />
       </Wrapper>
    )
 }
