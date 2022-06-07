@@ -6,7 +6,7 @@ export const TestName = () => {
    return (
       <StyledTestName>
          <StyledTitle>Названия теста</StyledTitle>
-         <Inputs width="100%" />
+         <Inputs placeholder="Введите название теста " width="100%" />
       </StyledTestName>
    )
 }

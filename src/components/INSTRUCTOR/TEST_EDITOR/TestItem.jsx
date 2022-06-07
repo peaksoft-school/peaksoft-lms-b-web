@@ -5,13 +5,14 @@ import FormControl from '@mui/material/FormControl'
 import RadioGroup from '@mui/material/RadioGroup'
 import { Inputs } from '../../UI/Input'
 import { RadioButton } from '../../UI/RadioButton'
+import { AnswerItem } from './AnswerItem'
 
 export const TestItem = () => {
    return (
       <StyledTestItem>
          <OptionsWrapper>
             <Counter>1</Counter>
-            <Inputs width="100%" />
+            <Inputs placeholder="Вопрос" width="100%" />
             <FormControl>
                <StyledRadioGroup
                   row
@@ -33,6 +34,9 @@ export const TestItem = () => {
                </StyledRadioGroup>
             </FormControl>
          </OptionsWrapper>
+         <AnswerItem />
+         <AnswerItem />
+         <AnswerItem />
       </StyledTestItem>
    )
 }
