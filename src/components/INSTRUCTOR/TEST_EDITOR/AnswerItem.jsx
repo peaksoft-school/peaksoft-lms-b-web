@@ -45,7 +45,11 @@ export const AnswerItem = ({
             <Checkbox checked={isChecked} onChange={onToggleCheckbox} />
          )}
          <StyledInputWrapper>
-            <StyledInput value={inputValue} onChange={onChangeOptionValue} />
+            <StyledInput
+               value={inputValue}
+               onChange={onChangeOptionValue}
+               placeholder={placeholder}
+            />
             <DeleteAnswerIcon onClick={onDeleteAnswer} />
          </StyledInputWrapper>
       </StyledAnswerItem>
