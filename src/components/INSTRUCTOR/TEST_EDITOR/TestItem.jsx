@@ -8,6 +8,8 @@ import { Inputs } from '../../UI/Input'
 import { RadioButton } from '../../UI/RadioButton'
 import { AnswerItem } from './AnswerItem'
 import { testCreaterActions } from '../../../store/testCreaterSlice'
+import { ReactComponent as CopyIcon } from '../../../assets/icons/CopyIcon.svg'
+import { ReactComponent as DeleteTestIcon } from '../../../assets/icons/DeleteTestIcon.svg'
 
 export const TestItem = ({
    index,
@@ -36,6 +38,14 @@ export const TestItem = ({
 
    const addNewVariant = () => {
       dispatch(testCreaterActions.addNewVariantToQuestion(id))
+   }
+
+   const onCloneQuestion = () => {
+      dispatch(testCreaterActions.cloneQuestion(id))
+   }
+
+   const onDeleteQuestion = () => {
+      dispatch(testCreaterActions.deleteQuestion(id))
    }
    return (
       <StyledTestItem>
@@ -78,18 +88,27 @@ export const TestItem = ({
                   isChecked={answer.choiceAnswer}
                   optionId={answer.id}
                   questionId={id}
-                  inputValue={answer.options}
+                  inputValue={answer.option}
                   placeholder={`Вариант ${index + 1}`}
                />
             )
          })}
-         <StyledWrapper>
-            <StyledAddVariant onClick={addNewVariant}>
-               Добавить вариант{' '}
-            </StyledAddVariant>
-            или
-            <StyledOtherVariant> Добавить вариант `Другое`</StyledOtherVariant>
-         </StyledWrapper>
+         <StyledFooter>
+            <StyledWrapper>
+               <StyledAddVariant onClick={addNewVariant}>
+                  Добавить вариант{'   '}
+               </StyledAddVariant>
+               или
+               <StyledOtherVariant>
+                  {'    '}
+                  Добавить вариант `Другое`
+               </StyledOtherVariant>
+            </StyledWrapper>
+            <IconsWrapper>
+               <CopyIcon onClick={onCloneQuestion} />
+               <DeleteTestIcon onClick={onDeleteQuestion} />
+            </IconsWrapper>
+         </StyledFooter>
       </StyledTestItem>
    )
 }
@@ -120,7 +139,6 @@ const StyledRadioGroup = styled(RadioGroup)`
 `
 
 const StyledWrapper = styled.p`
-   margin-top: 24px;
    font-family: var(--base-font);
    color: black;
 `
@@ -133,4 +151,18 @@ const StyledOtherVariant = styled.span`
 const StyledAddVariant = styled.span`
    color: #d4d4d4;
    cursor: pointer;
+`
+
+const StyledFooter = styled.footer`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 24px;
+`
+
+const IconsWrapper = styled.div`
+   width: 5%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 `

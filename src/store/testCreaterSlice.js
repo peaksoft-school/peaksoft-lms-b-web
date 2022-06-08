@@ -106,6 +106,31 @@ export const testCreaterSlice = createSlice({
          )
          currentVariant.choiceAnswer = !currentVariant.choiceAnswer
       },
+      cloneQuestion: (state, actions) => {
+         const questionId = actions.payload
+         const currentQuestion = state.questionRequestList.find(
+            (question) => question.id === questionId
+         )
+         state.questionRequestList.push({
+            ...currentQuestion,
+            id: uniqid(),
+         })
+      },
+      deleteQuestion: (state, actions) => {
+         const questionId = actions.payload
+         state.questionRequestList = state.questionRequestList.filter(
+            (question) => question.id !== questionId
+         )
+      },
+      deleteAnswer: (state, actions) => {
+         const { questionId, optionId } = actions.payload
+         const currentQuestion = state.questionRequestList.find(
+            (question) => question.id === questionId
+         )
+         currentQuestion.variants = currentQuestion.variants.filter(
+            (variant) => variant.id !== optionId
+         )
+      },
    },
    extraReducers: {},
 })
