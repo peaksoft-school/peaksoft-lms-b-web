@@ -1,9 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { useParams } from 'react-router'
 import { TestName } from './TestName'
 import { TestItem } from './TestItem'
-import { testCreaterActions } from '../../../store/testCreaterSlice'
+import { saveTest, testCreaterActions } from '../../../store/testCreaterSlice'
 import { Buttons } from '../../UI/Buttons'
 import { ReactComponent as PlusIcon } from '../../../assets/icons/PlusIcon.svg'
 
@@ -12,13 +13,35 @@ export const TestEditor = () => {
    const { testName, questionRequestList } = useSelector(
       (store) => store.testCreaterSlice
    )
-   console.log(questionRequestList)
+   const { lessonId } = useParams()
    const onChangeName = (event) => {
       dispatch(testCreaterActions.changeTestName(event.target.value))
    }
 
    const addNewQuestion = () => {
       dispatch(testCreaterActions.addNewQuestion())
+   }
+
+   const onSaveTest = () => {
+      dispatch(
+         saveTest({
+            testName,
+            questionRequestList: questionRequestList.map((question) => {
+               return {
+                  question: question.question,
+                  questionType: question.questionType,
+                  variants: question.variants.map((variant) => {
+                     return {
+                        option: variant.option,
+                        choiceAnswer: variant.choiceAnswer,
+                     }
+                  }),
+               }
+            }),
+            disable: true,
+            lessonId: Number(lessonId),
+         })
+      )
    }
 
    return (
@@ -46,7 +69,7 @@ export const TestEditor = () => {
                >
                   Отмена
                </Buttons>
-               <Buttons>Сохранить</Buttons>
+               <Buttons onClick={onSaveTest}>Сохранить</Buttons>
             </div>
          </StyledButtonsWrapper>
          <StyledButton onClick={addNewQuestion}>

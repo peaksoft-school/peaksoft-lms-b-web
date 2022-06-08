@@ -21,6 +21,24 @@ const initState = {
    ],
 }
 
+export const saveTest = createAsyncThunk(
+   'instructor/testSlice/saveTest',
+   async (test, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/tests`,
+            method: 'POST',
+            body: test,
+         })
+         return {
+            ...response,
+         }
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
 export const testCreaterSlice = createSlice({
    name: 'testCreaterSlice',
    initialState: initState,
@@ -132,7 +150,14 @@ export const testCreaterSlice = createSlice({
          )
       },
    },
-   extraReducers: {},
+   extraReducers: {
+      [saveTest.fulfilled]: (state, actions) => {
+         toast.success('Тест успешно сохранен')
+      },
+      [saveTest.rejected]: (state, actions) => {
+         toast.error('Уупс что то пошло не так')
+      },
+   },
 })
 
 export const testCreaterActions = testCreaterSlice.actions
