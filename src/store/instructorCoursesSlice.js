@@ -36,12 +36,31 @@ export const getAllStudents = createAsyncThunk(
    }
 )
 
+export const getAllGroups = createAsyncThunk(
+   'instructor/slice/getAllGroups',
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/groups`,
+            method: 'GET',
+            params: {
+               page: 1,
+               size: 10000,
+            },
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
 export const getAllTeacherStudents = createAsyncThunk(
    'instructor/slice/getAllTeacherStudents',
    async (courseId, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/courses/students/${4}`,
+            path: `api/courses/students/${courseId}`,
             method: 'GET',
          })
          return response
@@ -211,13 +230,32 @@ export const addLinkToLesson = createAsyncThunk(
    }
 )
 
-export const AddStudentToCourse = createAsyncThunk(
+export const addStudentToCourse = createAsyncThunk(
    'instrcutor/slice/addStudentToCourse',
-   async (_, { rejectWithValue }) => {
+   async (student, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/links`,
+            path: `api/teachers/assignStudent`,
             method: 'POST',
+            body: student,
+         })
+         return {
+            ...response,
+         }
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
+export const assignGroupToCourse = createAsyncThunk(
+   'instructor/slice/assignGroupToCourse',
+   async (group, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/teachers/assignStudent`,
+            method: 'POST',
+            body: group,
          })
          return {
             ...response,
@@ -305,8 +343,21 @@ export const instructorSlice = createSlice({
          currentLesson.linkId = linkId
          toast.success('Ссылка успешно добавлена')
       },
-      [getAllStudents.fulfilled]: (state, actions) => {
-         console.log(actions.payload)
+      [getAllStudents.fulfilled]: (state, actions) => {},
+      [getAllGroups.fulfilled]: (state, actions) => {},
+      [addStudentToCourse.fulfilled]: (state, actions) => {
+         toast.success('Студент успешно добавлен в курс')
+      },
+      [addStudentToCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
+      },
+      [assignGroupToCourse.fulfilled]: (state, actions) => {
+         toast.success('Студенты успешно добавлены')
+      },
+      [assignGroupToCourse.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
    },
 })

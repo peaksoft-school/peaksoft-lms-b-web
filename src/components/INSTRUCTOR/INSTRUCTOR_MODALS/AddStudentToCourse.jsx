@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getAllStudents } from '../../../store/instructorCoursesSlice'
+import { useSearchParams } from 'react-router-dom'
+import {
+   addStudentToCourse,
+   getAllStudents,
+} from '../../../store/instructorCoursesSlice'
 import { BasicModal } from '../../UI/BasicModal'
 import { StudentItem } from './StudentItem'
 import { SearchInput } from '../../UI/SearchInput'
@@ -11,6 +15,8 @@ export const AddStudentToCourse = ({ closeMyCoursesModal }) => {
    const [searchValue, setSearchValue] = useState(' ')
    const [value, setValue] = useState('')
    const dispatch = useDispatch()
+   const [searchParams] = useSearchParams()
+   const courseId = searchParams.get('courseId')
    const debauncedValue = useDebounce(searchValue, 1500)
    useEffect(() => {
       const fetchStudents = async () => {
@@ -36,12 +42,18 @@ export const AddStudentToCourse = ({ closeMyCoursesModal }) => {
    )
 
    const AddStudentToCourse = (studentId) => {
-      console.log(studentId)
+      dispatch(
+         addStudentToCourse({
+            studentId,
+            courseId: Number(courseId),
+         })
+      )
+      closeMyCoursesModal()
    }
 
    return (
       <BasicModal
-         title="Создать  группу"
+         title="Добавить студента в курс"
          isActive
          cancelTitle="Отмена"
          successTitle="Добавить"

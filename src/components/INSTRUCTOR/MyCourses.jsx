@@ -28,8 +28,11 @@ export const MyCourses = () => {
    const option = [
       {
          id: Math.random().toString(),
-         action: (groupInformation) => {
-            setSearchParams({ modal: MODAL_TYPES.ADDSTUDENTTOCOURSE })
+         action: (courseInformation) => {
+            setSearchParams({
+               modal: MODAL_TYPES.ADDSTUDENTTOCOURSE,
+               courseId: courseInformation.id,
+            })
          },
          content: (
             <>
@@ -40,8 +43,11 @@ export const MyCourses = () => {
       },
       {
          id: Math.random().toString(),
-         action: (groupInformation) => {
-            setSearchParams({ modal: MODAL_TYPES.ADDGROUPSTOCOURSE })
+         action: (courseInformation) => {
+            setSearchParams({
+               modal: MODAL_TYPES.ADDGROUPSTOCOURSE,
+               courseId: courseInformation.id,
+            })
          },
          content: (
             <>
