@@ -97,7 +97,7 @@ export const UpdateCourseModal = ({ onCloseModal, courseId }) => {
                name="courseName"
                value={inputsValue.courseName}
                onChange={InputsChangeHandler}
-               width="327"
+               width="65%"
                placeholder="Название курса"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />

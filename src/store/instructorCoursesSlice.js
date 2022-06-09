@@ -253,7 +253,7 @@ export const assignGroupToCourse = createAsyncThunk(
    async (group, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: `api/teachers/assignStudent`,
+            path: `api/teachers/assignGroup`,
             method: 'POST',
             body: group,
          })
@@ -353,7 +353,8 @@ export const instructorSlice = createSlice({
          toast.error(` ${error}`)
       },
       [assignGroupToCourse.fulfilled]: (state, actions) => {
-         toast.success('Студенты успешно добавлены')
+         const message = actions.payload
+         toast.success(message, 'Студенты успешно добавлены')
       },
       [assignGroupToCourse.rejected]: (state, actions) => {
          const error = actions.payload

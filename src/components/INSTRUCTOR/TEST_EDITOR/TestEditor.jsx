@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { TestName } from './TestName'
 import { TestItem } from './TestItem'
 import { saveTest, testCreaterActions } from '../../../store/testCreaterSlice'
@@ -10,10 +10,11 @@ import { ReactComponent as PlusIcon } from '../../../assets/icons/PlusIcon.svg'
 
 export const TestEditor = () => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { testName, questionRequestList } = useSelector(
       (store) => store.testCreaterSlice
    )
-   const { lessonId } = useParams()
+   const { lessonId, coursesId } = useParams()
    const onChangeName = (event) => {
       dispatch(testCreaterActions.changeTestName(event.target.value))
    }
@@ -39,9 +40,10 @@ export const TestEditor = () => {
                }
             }),
             disable: true,
-            lessonId: Number(lessonId),
+            lessonsId: Number(lessonId),
          })
       )
+      navigate(``)
    }
 
    return (

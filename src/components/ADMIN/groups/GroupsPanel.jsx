@@ -67,7 +67,7 @@ export const GroupsPanel = () => {
                   setSearchParams({ modal: 'addGroup', page })
                }}
             >
-               <AiOutlinePlus fontSize="18px" /> Создать курс
+               <AiOutlinePlus fontSize="18px" /> Создать группу
             </Buttons>
          </Flex>
          <FlexCards>

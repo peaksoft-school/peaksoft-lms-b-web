@@ -109,7 +109,7 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
                name="groupName"
                value={inputsValue.groupName}
                onChange={changeModalInputs}
-               width="327"
+               width="65%"
                placeholder="Название группы"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />
