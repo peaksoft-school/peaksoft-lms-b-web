@@ -74,6 +74,7 @@ export const InstructorStudents = () => {
          modal: MODAL_TYPES.ADDGROUPSTOCOURSE,
       })
    }
+
    return (
       <div style={{ marginTop: '30px' }}>
          <IndexModal />

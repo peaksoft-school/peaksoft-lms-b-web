@@ -153,7 +153,7 @@ export const TaskCreater = () => {
                   value={title}
                   onChange={onChangeTitle}
                   placeholder="Название задания"
-                  width="2000px"
+                  width="100%"
                />
                <EditorButtons onClick={addTextEditor}>
                   <Text />

@@ -96,7 +96,6 @@ export const InstructorMaterials = ({ coursesId }) => {
          </Flex>
          <FlexCards>
             {materials.map((lesson) => {
-               console.log(lesson.testId)
                return (
                   <LessonCard
                      openTaskHandler={() => openTasksPreview(lesson.taskId)}
