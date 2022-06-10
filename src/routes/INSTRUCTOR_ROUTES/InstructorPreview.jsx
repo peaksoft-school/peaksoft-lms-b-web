@@ -4,11 +4,13 @@ import { useSearchParams } from 'react-router-dom'
 import InstructorVideo from '../../components/INSTRUCTOR/InstructorVideo'
 import { InstructorTasks } from '../../components/INSTRUCTOR/InstructorTask'
 import { InstructorPresentation } from '../../components/INSTRUCTOR/InstructorPresentation'
+import { InstructorTest } from '../../components/INSTRUCTOR/InstructorTest'
 
 const views = {
    video: <InstructorVideo />,
    task: <InstructorTasks />,
    presentation: <InstructorPresentation />,
+   test: <InstructorTest />,
 }
 
 export const InstructorPreview = () => {

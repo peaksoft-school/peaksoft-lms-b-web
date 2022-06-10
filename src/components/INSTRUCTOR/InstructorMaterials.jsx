@@ -64,6 +64,12 @@ export const InstructorMaterials = ({ coursesId }) => {
       }
    }
 
+   const openTestPreview = (testId) => {
+      if (testId) {
+         navigate(`previewPage/${testId}?view=test`)
+      }
+   }
+
    const addLink = (linkData) => {
       dispatch(addLinkToLesson(linkData))
    }
@@ -105,6 +111,7 @@ export const InstructorMaterials = ({ coursesId }) => {
                      openPresentationHandler={() =>
                         getPresentation(lesson.presentationId)
                      }
+                     openTestHandler={() => openTestPreview(lesson.testId)}
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
                      lessonName={lesson.name}
                      lessonId={lesson.id}
