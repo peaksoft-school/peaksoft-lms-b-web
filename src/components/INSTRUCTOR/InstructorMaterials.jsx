@@ -120,6 +120,7 @@ export const InstructorMaterials = ({ coursesId }) => {
                      testId={lesson.testId}
                      videoId={lesson.videoLessonId}
                      presentationId={lesson.presentationId}
+                     isVisibleTypeForm
                   />
                )
             })}

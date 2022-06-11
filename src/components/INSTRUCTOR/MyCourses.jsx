@@ -23,7 +23,7 @@ export const MyCourses = () => {
    }, [])
 
    const openInnerPage = (id) => {
-      navigate(`${id}`)
+      navigate(`${id}?tabs=material`)
    }
    const option = [
       {

@@ -17,6 +17,7 @@ import { ReactComponent as HmIcon } from '../../assets/icons/HmIcon.svg'
 import { ReactComponent as LinkIcon } from '../../assets/icons/LinkIcon.svg'
 import { ReactComponent as TestIcon } from '../../assets/icons/TestIcon.svg'
 import { MODAL_TYPES } from '../../utils/constants/constants'
+import { ConditionalRender } from './ConditionalRender'
 
 const StyledText = styled(ListItemText)`
    span {
@@ -63,6 +64,7 @@ export const LessonCard = ({
    openTaskHandler,
    openLinkHandler,
    openTestHandler,
+   isVisibleTypeForm,
 
    ...otherProps
 }) => {
@@ -125,10 +127,13 @@ export const LessonCard = ({
                   <ReedIcon onClick={onEditHandler} />
                </Button>
                <StyledTitle primary={lessonName} />
-               <LessonTypeForm
-                  value={value}
-                  handleChange={selectChangeHandler}
-               />
+               <ConditionalRender isActive={isVisibleTypeForm}>
+                  <LessonTypeForm
+                     value={value}
+                     handleChange={selectChangeHandler}
+                  />
+               </ConditionalRender>
+
                <Button>
                   <DeleteIcon onClick={onDeleteHandler} />
                </Button>
