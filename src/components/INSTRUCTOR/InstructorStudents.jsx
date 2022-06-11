@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Box } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
 import { ReactComponent as PersonIcon } from '../../assets/icons/PersonIcon.svg'
 import { Buttons } from '../UI/Buttons'
 import { ReactComponent as TrashBinIcon } from '../../assets/icons/TrashBinForTable.svg'
@@ -12,10 +11,9 @@ import { IndexModal } from './INSTRUCTOR_MODALS/IndexModal'
 import { MODAL_TYPES } from '../../utils/constants/constants'
 import { getAllTeacherStudents } from '../../store/instructorCoursesSlice'
 
-export const InstructorStudents = () => {
+export const InstructorStudents = ({ coursesId }) => {
    const [searchParams, setSearchParams] = useSearchParams()
    const { students } = useSelector((store) => store.instructorSlice)
-   const { coursesId } = useParams()
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getAllTeacherStudents(coursesId))
@@ -65,6 +63,7 @@ export const InstructorStudents = () => {
       setSearchParams({
          tabs: 'students',
          modal: MODAL_TYPES.ADDSTUDENTTOCOURSE,
+         courseId: coursesId,
       })
    }
 
@@ -72,6 +71,7 @@ export const InstructorStudents = () => {
       setSearchParams({
          tabs: 'students',
          modal: MODAL_TYPES.ADDGROUPSTOCOURSE,
+         courseId: coursesId,
       })
    }
 

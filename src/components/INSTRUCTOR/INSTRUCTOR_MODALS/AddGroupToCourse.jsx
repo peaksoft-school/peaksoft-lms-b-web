@@ -29,6 +29,7 @@ export const AddGroupToCourse = ({ closeMyCoursesModal }) => {
       const { id: groupId } = groups.find(
          (group) => group.groupName === selectValue
       )
+
       dispatch(
          assignGroupToCourse({
             groupId,
