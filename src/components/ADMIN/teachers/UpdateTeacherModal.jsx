@@ -15,7 +15,15 @@ export const UpdateTeacherModal = ({ setSearchParams, teacherId, onClose }) => {
    })
    const onSubmit = (e) => {
       e.preventDefault()
-      dispatch(updateTeachers({ teacherId, value }))
+      dispatch(
+         updateTeachers({
+            teacherId,
+            value: {
+               ...value,
+               phoneNumber: value.phoneNumber.replace(/\s/g, ''),
+            },
+         })
+      )
       setSearchParams()
    }
    const {
@@ -28,15 +36,8 @@ export const UpdateTeacherModal = ({ setSearchParams, teacherId, onClose }) => {
    } = value
 
    const isDisabledModal = useCallback(() => {
-      return (
-         teacherName &&
-         lastName &&
-         phoneNumber &&
-         email &&
-         specialization &&
-         password.trim().length !== 0
-      )
-   }, [teacherName, lastName, phoneNumber, email, specialization, password])
+      return teacherName && lastName && phoneNumber && email && specialization
+   }, [teacherName, lastName, phoneNumber, email, specialization])
    return (
       <BasicModal
          isDisabled={isDisabledModal()}

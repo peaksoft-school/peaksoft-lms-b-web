@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import { baseFetch } from '../api/baseFetch'
 
 const init = {
@@ -28,11 +29,15 @@ export const addTeachers = createAsyncThunk(
 export const getAllTeachers = createAsyncThunk(
    'admin/slice/getAllTeachers',
 
-   async (_, { rejectWithValue }) => {
+   async (page, { rejectWithValue }) => {
       try {
          const response = await baseFetch({
-            path: 'api/teachers/?page=1&size=4',
+            path: 'api/teachers',
             method: 'GET',
+            params: {
+               page,
+               size: 5,
+            },
          })
          return response
       } catch (error) {
@@ -96,10 +101,11 @@ export const teachersSlice = createSlice({
          state.isLoading = true
       },
       [addTeachers.fulfilled]: (state) => {
-         state.isLoading = false
+         toast.success('инструктор успешно добавлен')
       },
-      [addTeachers.rejected]: (state) => {
-         state.isLoading = false
+      [addTeachers.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
       [getAllTeachers.fulfilled]: (state, actions) => {
          const { pages, currentPage, teachers } = actions.payload
@@ -114,6 +120,11 @@ export const teachersSlice = createSlice({
       [deleteTeachers.fulfilled]: (state, actions) => {
          const { id } = actions.payload
          state.teachers = state.teachers.filter((teacher) => teacher.id !== id)
+         toast.success('инструктор успешно удален')
+      },
+      [deleteTeachers.rejected]: (state, actions) => {
+         const error = actions.payload
+         toast.error(` ${error}`)
       },
       [updateTeachers.fulfilled]: (state, actions) => {
          const newTeacherData = actions.payload
@@ -121,6 +132,7 @@ export const teachersSlice = createSlice({
             return teacher.id === newTeacherData.id
          })
          state.teachers.splice(currentIndex, 1, newTeacherData)
+         toast.success('инструктор успешно отредактирован')
       },
    },
 })

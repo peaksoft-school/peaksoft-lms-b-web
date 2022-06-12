@@ -62,7 +62,7 @@ export const CreateCourseModal = ({ onCloseModal }) => {
                value={inputsValue.title}
                onChange={(e) => setInputsValue(e)}
                name="courseName"
-               width="327"
+               width="65%"
                placeholder="Название курса"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />

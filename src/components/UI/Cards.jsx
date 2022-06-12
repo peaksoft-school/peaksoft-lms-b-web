@@ -25,9 +25,10 @@ export const Cards = ({
       action(allInformation)
       closeHandler()
    }
+
    return (
       <Card>
-         {image !== ' ' && image !== undefined ? (
+         {image ? (
             <WrapperImg onClick={onCardClick} src={image} alt="foto" />
          ) : (
             <WrapperImg

@@ -25,3 +25,24 @@ body {
    --disabled-background: #1c1b1f1f;
    --disabled-font-color: #1c1b1f;
 }
+
+.ProseMirror {
+   border: 1px solid #d4d4d4;
+   border-radius: 10px;
+   min-height: 42px;
+   align-items: center;
+   padding: 10px 10px 10px 32px;
+   outline: none;
+   font-family: var(--base-font);
+   color: var(--font-color);
+   max-width: 100%;
+}
+.ProseMirror:focus {
+   border: 1px solid var(--blue-border-color);
+}
+
+.ProseMirror ol,
+.ProseMirror ul {
+   padding: 0, 1rem;
+   margin: 0 auto;
+}

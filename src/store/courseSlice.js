@@ -215,10 +215,6 @@ export const courseSlice = createSlice({
       [assignTeacherToCourse.fulfilled]: (state, actions) => {
          toast.success('учителя успешно добавлены')
       },
-      [assignTeacherToCourse.rejected]: (state, actions) => {
-         const error = actions.payload
-         toast.error(` ${error}`)
-      },
       [getTeachersByCourseId.fulfilled]: (state, actions) => {
          const teachers = actions.payload
          state.coursesDetails = teachers

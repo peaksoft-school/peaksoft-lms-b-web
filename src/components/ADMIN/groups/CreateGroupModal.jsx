@@ -27,7 +27,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
       })
    }
    const createGroupHandler = async () => {
-      if (image.backImage) {
+      if (image.imageLink) {
          const { URL } = await dispatch(sendPhoto(image.imageLink)).unwrap()
          dispatch(
             createGroup({
@@ -70,7 +70,7 @@ export const CreateGroupModal = ({ onCloseModal }) => {
                value={inputsValue.groupName}
                onChange={(e) => setInputsValue(e)}
                name="groupName"
-               width="327"
+               width="65%"
                placeholder="Название группы"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />

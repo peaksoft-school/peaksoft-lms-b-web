@@ -63,7 +63,7 @@ export const Header = ({ roles }) => {
             <div />
             <Routes>
                <Route
-                  path="courses/:id/*"
+                  path="courses/:id"
                   element={<TabsTitle tabs={userRole[roles].tabs} />}
                />
             </Routes>

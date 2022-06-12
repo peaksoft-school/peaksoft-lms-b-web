@@ -11,9 +11,16 @@ import {
    ThemeProvider,
    createTheme,
 } from '@mui/material'
-import media from '../../utils/helpers/media'
+import { PaginationLink } from './BasicPagination'
+import { ConditionalRender } from './ConditionalRender'
 
-export const AppTable = ({ columns = [], data = [] }) => {
+export const AppTable = ({
+   isActivePagination,
+   columns = [],
+   data = [],
+   pathName,
+   page,
+}) => {
    return (
       <ThemeProvider theme={customTheme}>
          <Container component={Paper}>
@@ -48,6 +55,11 @@ export const AppTable = ({ columns = [], data = [] }) => {
                   })}
                </TableBody>
             </Table>
+            <ConditionalRender isActive={isActivePagination}>
+               <PaginationContainer>
+                  <PaginationLink path={pathName} count={page} />
+               </PaginationContainer>
+            </ConditionalRender>
          </Container>
       </ThemeProvider>
    )
@@ -64,6 +76,7 @@ const Container = styled(MuiTableContainer)`
    border: 1px solid #d4d4d4;
    box-sizing: border-box;
    border-radius: 10px;
+   overflow: fixed;
 `
 const TableRowContainer = styled(TableRow)`
    border-bottom: 1.5px solid #f7f8fa; ;
@@ -102,3 +115,9 @@ const StyledTableRow = muiStyled(TableRow)(({ theme }) => ({
       background: theme.palette.hover,
    },
 }))
+
+const PaginationContainer = styled.div`
+   display: flex;
+   justify-content: center;
+   margin: 200px 0 15px 0;
+`

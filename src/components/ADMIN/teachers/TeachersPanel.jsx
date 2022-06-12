@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import IconButton from '@mui/material/IconButton/IconButton'
+import { useLocation } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { Buttons } from '../../UI/Buttons'
 import { AppTable } from '../../UI/Table'
@@ -36,17 +37,20 @@ const WrapperIcons = styled.div`
 export const TeachersPanel = () => {
    const dispatch = useDispatch()
    const [searchParams, setSearchParams] = useSearchParams()
+   const { pathname } = useLocation()
+   const pages = searchParams.get('page')
 
    useEffect(() => {
-      dispatch(getAllTeachers())
-   }, [])
-   const { teachers } = useSelector((store) => store.teacher)
+      dispatch(getAllTeachers(pages || 1))
+   }, [pages])
+   const { teachers, page } = useSelector((store) => store.teacher)
 
    const getTeacherInformation = async (teacherId) => {
       await dispatch(getTeacherById(teacherId))
       await setSearchParams({
          modal: 'updateTeacher',
          teacherId,
+         page: pages,
       })
    }
 
@@ -89,7 +93,11 @@ export const TeachersPanel = () => {
                   </IconButton>
                   <IconButton
                      onClick={() => {
-                        setSearchParams({ modal: 'deleteTeacher', teacherId })
+                        setSearchParams({
+                           modal: 'deleteTeacher',
+                           teacherId,
+                           page: pages,
+                        })
                      }}
                   >
                      <TrashBinIcon />
@@ -113,8 +121,14 @@ export const TeachersPanel = () => {
                <AiOutlinePlus fontSize="25px" /> Добавить учителя
             </Buttons>
          </Btn>
-         <TeachersModal />
-         <AppTable columns={headers} data={teachers} />
+         <TeachersModal page={pages} />
+         <AppTable
+            isActivePagination={page > 1}
+            columns={headers}
+            data={teachers}
+            page={page}
+            pathName={pathname}
+         />
       </>
    )
 }

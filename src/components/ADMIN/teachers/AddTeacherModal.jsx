@@ -18,7 +18,12 @@ export const AddTeacherModal = ({ setSearchParams, onClose }) => {
    })
    const onSubmit = (e) => {
       e.preventDefault()
-      dispatch(addTeachers(value))
+      dispatch(
+         addTeachers({
+            ...value,
+            phoneNumber: value.phoneNumber.replace(/\s/g, ''),
+         })
+      )
       setSearchParams()
    }
    const {

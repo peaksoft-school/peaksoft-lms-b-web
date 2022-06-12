@@ -21,8 +21,8 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          ).unwrap()
 
          setImage({
-            binaryImage: image,
-            imageLink: null,
+            binaryImage: null,
+            imageLink: image,
          })
          setInputsValue({
             groupName,
@@ -56,13 +56,14 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
    }
    const updatePhotoHandler = (photo) => {
       setImage({
-         binaryImage: URL.createObjectURL(photo),
-         imageLink: photo,
+         binaryImage: photo,
+         imageLink: URL.createObjectURL(photo),
       })
    }
    const updateGroupHandler = async () => {
       if (image.binaryImage) {
          const { URL } = await dispatch(sendPhoto(image.binaryImage)).unwrap()
+
          dispatch(
             updateGroup({
                groupInfo: {
@@ -101,14 +102,14 @@ export const UpdateGroupModal = ({ onCloseModal, groupId }) => {
          modalCloseHanlder={onCloseModal}
          addHandler={updateGroupHandler}
       >
-         <ImagePicker image={image.binaryImage} getPhoto={updatePhotoHandler} />
+         <ImagePicker image={image.imageLink} getPhoto={updatePhotoHandler} />
 
          <FlexInput>
             <Inputs
                name="groupName"
                value={inputsValue.groupName}
                onChange={changeModalInputs}
-               width="327"
+               width="65%"
                placeholder="Название группы"
             />
             <CustomDatePicker value={date} setDate={setDate} width="149px" />

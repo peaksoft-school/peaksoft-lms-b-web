@@ -9,10 +9,7 @@ import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
-import {
-   adminGroupActions,
-   getGroupsList,
-} from '../../../store/adminGroupSlice'
+import { getGroupsList } from '../../../store/adminGroupSlice'
 import { PaginationLink } from '../../UI/BasicPagination'
 import { ConditionalRender } from '../../UI/ConditionalRender'
 import { GroupModal } from './GroupModal'
@@ -70,23 +67,26 @@ export const GroupsPanel = () => {
                   setSearchParams({ modal: 'addGroup', page })
                }}
             >
-               <AiOutlinePlus fontSize="18px" /> Создать курс
+               <AiOutlinePlus fontSize="18px" /> Создать группу
             </Buttons>
          </Flex>
          <FlexCards>
-            {groups.map((el) => (
-               <Cards
-                  onCardClick={() => openInnerPage(el.id)}
-                  key={el.id}
-                  title={el.groupName}
-                  image={el.image}
-                  description={el.description}
-                  duration={el.duration}
-                  cardId={el.id}
-                  option={option}
-                  allInformation={el}
-               />
-            ))}
+            {groups.map((el) => {
+               console.log(el)
+               return (
+                  <Cards
+                     onCardClick={() => openInnerPage(el.id)}
+                     key={el.id}
+                     title={el.groupName}
+                     image={el.image}
+                     description={el.description}
+                     duration={el.duration}
+                     cardId={el.id}
+                     option={option}
+                     allInformation={el}
+                  />
+               )
+            })}
          </FlexCards>
          <ConditionalRender isActive={pages > 1}>
             <StyledFooter>
