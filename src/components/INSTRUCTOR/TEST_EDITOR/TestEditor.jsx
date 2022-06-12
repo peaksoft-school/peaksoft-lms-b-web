@@ -43,7 +43,7 @@ export const TestEditor = () => {
             lessonsId: Number(lessonId),
          })
       )
-      navigate(``)
+      navigate(-1)
    }
 
    return (

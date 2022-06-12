@@ -65,6 +65,16 @@ export const LessonCard = ({
    openLinkHandler,
    openTestHandler,
    isVisibleTypeForm,
+   onEditVideoLesson,
+   onDeleteVideoLesson,
+   onEditPresentation,
+   onDeletePresentation,
+   onEditTask,
+   onDeleteTask,
+   onEditLink,
+   onDeleteLink,
+   onEditTest,
+   onDeleteTest,
 
    ...otherProps
 }) => {
@@ -150,7 +160,10 @@ export const LessonCard = ({
             >
                <VideoIcon />
                <StyledText primary="Видеоурок" />
-               <CardSettings />
+               <CardSettings
+                  onEditHandler={onEditVideoLesson}
+                  onDeleteHandler={onDeleteVideoLesson}
+               />
             </ListItemButton>
 
             <ListItemButton
@@ -160,7 +173,10 @@ export const LessonCard = ({
             >
                <PrezentationIcon />
                <StyledText primary="Презентация" />
-               <CardSettings />
+               <CardSettings
+                  onEditHandler={onEditPresentation}
+                  onDeleteHandler={onDeletePresentation}
+               />
             </ListItemButton>
 
             <ListItemButton
@@ -170,7 +186,10 @@ export const LessonCard = ({
             >
                <HmIcon />
                <StyledText primary="Задание" />
-               <CardSettings />
+               <CardSettings
+                  onEditHandler={onEditTask}
+                  onDeleteHandler={onDeleteTask}
+               />
             </ListItemButton>
 
             <ListItemButton
@@ -180,7 +199,10 @@ export const LessonCard = ({
             >
                <LinkIcon />
                <StyledText primary="Ссылка" />
-               <CardSettings />
+               <CardSettings
+                  onEditHandler={onEditLink}
+                  onDeleteHandler={onDeleteLink}
+               />
             </ListItemButton>
 
             <ListItemButton
@@ -190,7 +212,10 @@ export const LessonCard = ({
             >
                <TestIcon />
                <StyledText primary="Тест" />
-               <CardSettings />
+               <CardSettings
+                  onEditHandler={onEditTest}
+                  onDeleteHandler={onDeleteTest}
+               />
             </ListItemButton>
          </List>
       </Box>

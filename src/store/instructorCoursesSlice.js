@@ -266,6 +266,23 @@ export const assignGroupToCourse = createAsyncThunk(
    }
 )
 
+export const deleteVideoLessonById = createAsyncThunk(
+   'instructor/slice/deleteVideoLesson',
+   async (videoId, { rejectWithValue }) => {
+      try {
+         const response = await baseFetch({
+            path: `api/videoLessons/${videoId}`,
+            method: 'DELETE',
+         })
+         return {
+            ...response,
+         }
+      } catch (error) {
+         return rejectWithValue(error.messages)
+      }
+   }
+)
+
 export const instructorSlice = createSlice({
    name: 'instructor/slice',
    initialState: initState,
@@ -359,6 +376,9 @@ export const instructorSlice = createSlice({
       [assignGroupToCourse.rejected]: (state, actions) => {
          const error = actions.payload
          toast.error(` ${error}`)
+      },
+      [deleteVideoLessonById.fulfilled]: (state, actions) => {
+         toast.success('Видеоурок успешно удален')
       },
    },
 })

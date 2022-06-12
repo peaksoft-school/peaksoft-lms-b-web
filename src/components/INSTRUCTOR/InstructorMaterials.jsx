@@ -94,6 +94,46 @@ export const InstructorMaterials = ({ coursesId }) => {
       }
    }
 
+   const deleteVideoLesson = (videoId) => {
+      console.log(videoId)
+   }
+
+   const deletePresentation = (presentationId) => {
+      console.log(presentationId)
+   }
+
+   const deleteTask = (taskId) => {
+      console.log(taskId)
+   }
+
+   const deleteLink = (linkId) => {
+      console.log(linkId)
+   }
+
+   const deleteTest = (testId) => {
+      console.log(testId)
+   }
+
+   const editVideoLesson = (videoId) => {
+      console.log(videoId)
+   }
+
+   const editPresentation = (presentationId) => {
+      console.log(presentationId)
+   }
+
+   const editTask = (taskId) => {
+      console.log(taskId)
+   }
+
+   const editLink = (linkId) => {
+      console.log(linkId)
+   }
+
+   const editTest = (testId) => {
+      console.log(testId)
+   }
+
    return (
       <>
          <Flex>
@@ -113,6 +153,15 @@ export const InstructorMaterials = ({ coursesId }) => {
                      }
                      openTestHandler={() => openTestPreview(lesson.testId)}
                      onDeleteHandler={() => openDeleteLessonModal(lesson.id)}
+                     onDeleteVideoLesson={() =>
+                        deleteVideoLesson(lesson.videoLessonId)
+                     }
+                     onDeleteLink={() => deleteLink(lesson.linkId)}
+                     onDeletePresentation={() =>
+                        deletePresentation(lesson.presentationId)
+                     }
+                     onDeleteTask={() => deleteTask(lesson.taskId)}
+                     onDeleteTest={() => deleteTest(lesson.testId)}
                      lessonName={lesson.name}
                      lessonId={lesson.id}
                      taskId={lesson.taskId}

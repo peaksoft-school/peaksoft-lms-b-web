@@ -24,7 +24,6 @@ export const InstructorTasks = () => {
          <StyledHeader>{name}</StyledHeader>
          {resources
             ? resources.map((task) => {
-                 console.log(task)
                  if (task.resourceType === 'FILE') {
                     return (
                        <FileItem fileLink={task.value} fileName={task.name} />

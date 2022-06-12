@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { BreadCrumb } from '../../UI/BreadCrumb'
 import { TextEditor } from '../TEXT_EDITOR/TextEditor'
 import { Inputs } from '../../UI/Input'
@@ -25,6 +25,7 @@ import { TaskLinkItem } from './TaskLinkItem'
 import { Buttons } from '../../UI/Buttons'
 
 export const TaskCreater = () => {
+   const navigate = useNavigate()
    const dispatch = useDispatch()
    const { lessonId } = useParams()
    const [title, setTitle] = useState('')
@@ -139,9 +140,8 @@ export const TaskCreater = () => {
             lessonId,
          })
       )
-      setSearchParams({
-         tabs: 'materialss',
-      })
+
+      navigate(-1)
    }
    return (
       <Wrapper>
